@@ -29,7 +29,7 @@
         <!--<div class="panel-heading">Rumours</div>-->
         <div class="panel-body">
 
-            <div class="col-sm-12" ng-controller="ChartCtrl">
+            <div class="col-sm-12" ng-controller="ChartCtrl" ng-init="init()">
 
                 <div class="col-sm-4" id="line-chart">
                     <canvas id="line customline-v" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true"
@@ -419,6 +419,7 @@
 //calc number of edges (on each row -> if retweeted then add one, otherwise dont add an edge.)
 
 //calculate the list of nodes and edges before counting the number of nodes and edges. (remove duplicate nodes / edges)
+
 
 
 //end

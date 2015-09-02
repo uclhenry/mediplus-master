@@ -9,6 +9,51 @@
 var sbAdminApp = angular.module('sbAdminApp')
   .controller('ChartCtrl', ['$scope', '$timeout', '$q', function ($scope, $timeout, $q) {
 
+function displayTopUsers(param){
+
+        var $http = angular.injector(['ng']).get('$http');
+                
+                if (param != "") {
+                    param+= "/Jul/2015";
+                }
+
+
+                var defer = $q.defer();
+
+
+
+                $http.get("../api/topusers/"+param)
+                .success(function (response) {
+                    
+
+                    defer.resolve(response);
+                    //console.log(response.data);
+                    //$scope.rows = response.data;
+                    //alert("past");
+                })
+                .error(function(err, status) {
+                    defer.reject(err);
+                })
+
+                $scope.promise = defer.promise;
+                $scope.promise.then(
+                    function(v){return v},
+                    function(err){return err}
+                    )
+                .then(
+
+                    function(v){$scope.rows = v},
+                    function(err){$scope.rows = err}
+
+                    )
+
+}
+$scope.init = function () {
+    // do something on loaded
+    displayTopUsers("");
+  };
+//displayTopUsers("");
+
 /*
 
 { "_id" : "VeronicaNadan", "count" : 2735 }
@@ -76,6 +121,8 @@ angular.element(document).ready(function () {
 	    onClick: function (points, evt) {
 	      console.log(points, evt);
           var selectedPoint = points[0]['label'];
+
+
           //add table refresh/update here.....
 
           //////////////////loadTable(JSON.stringify(points[0]['label']));
@@ -88,39 +135,9 @@ angular.element(document).ready(function () {
             //$scope.rows = [];
             //$scope.rows.push('response');
 
-                var $http = angular.injector(['ng']).get('$http');
+            displayTopUsers(selectedPoint);
+
                 
-                
-
-
-                var defer = $q.defer();
-
-
-
-                $http.get("../api/topusers/"+ selectedPoint +"/Jul/2015")
-                .success(function (response) {
-                    
-
-                    defer.resolve(response);
-                    //console.log(response.data);
-                    //$scope.rows = response.data;
-                    //alert("past");
-                })
-                .error(function(err, status) {
-                    defer.reject(err);
-                })
-
-                $scope.promise = defer.promise;
-                $scope.promise.then(
-                    function(v){return v},
-                    function(err){return err}
-                    )
-                .then(
-
-                    function(v){$scope.rows = v},
-                    function(err){$scope.rows = err}
-
-                    )
                 //console.log(defer.promise);
                 //$scope.rows = defer.promise.data;
 
