@@ -180,7 +180,7 @@ json = JSON.stringify([obj]);*/
               db.close();
             };
 
-              db.collection('medisys').insert(obj, {continueOnError: true, safe: true}, function(err, docs){
+              db.collection('medisys').save(obj[0], function(err, docs){
                 console.log('err: ' + err);
                 if(!err) console.log('data inserted successfully!\n');
               });
