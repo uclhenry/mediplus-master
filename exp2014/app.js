@@ -49,7 +49,8 @@ var url = 'mongodb://localhost/test';
 
 
 var CronJob = require('cron').CronJob;
-new CronJob('*/10 * * * *', function() {
+//new CronJob('*/10 * * * *', function() {
+new CronJob('* * * * *', function() {
 
   // Don't worry about this. It's just a localhost file server so you can be
     // certain the "remote" feed is available when you run this example.
@@ -65,7 +66,7 @@ new CronJob('*/10 * * * *', function() {
 
 
 
-  console.log('Medisys RSS feed checked and added to mongodb (freq: every 10 mins)');
+  console.log('Medisys RSS feed checked and added to mongodb (freq: every 1 mins)');
 }, null, true);
 
 
@@ -180,7 +181,7 @@ json = JSON.stringify([obj]);*/
             };
 
               db.collection('medisys').insert(obj, {continueOnError: true, safe: true}, function(err, docs){
-                //console.log('err: ' + err);
+                console.log('err: ' + err);
                 if(!err) console.log('data inserted successfully!\n');
               });
 
