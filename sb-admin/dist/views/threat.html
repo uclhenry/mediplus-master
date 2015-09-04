@@ -1,0 +1,462 @@
+<div class="row"> <div class="col-lg-12"> <p> </p> </div> <!-- /.col-lg-12 --> </div> <div class="row"> <div class="col-lg-12 col-sm-12"> <div class="panel panel-default" style="border:0;margin-bottom:0"> <!--<div class="panel-heading">Timeline</div>--> <div class="panel-body" style="padding:0"> <!--<canvas></canvas>--> <div id="timeline"></div> </div> </div> </div> <script src="bower_components/timelinejs/js/timeline.js"></script> <script>var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/welcome.json', {
+        timenav_position:"top",
+    });</script> </div> <div class="row col-lg-12"> <div class="panel panel-default"> <!--<div class="panel-heading">Rumours</div>--> <div class="panel-body"> <div class="col-sm-12" ng-controller="ChartCtrl"> <div class="col-sm-4" id="line-chart"> <canvas id="line customline-v" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true" click="line.onClick" series="line.series"></canvas> </div> <div class="col-sm-4" id="bar-chart"> <canvas id="bar custombar-v" class="chart chart-bar chart-xl" data="bar.data" labels="bar.labels" legend="true" click="line.onClick" series="line.series"></canvas> </div> <div class="col-sm-4" id="map" style="height: 220px"> </div> <!--<div class="col-sm-4 pre-scrollable" style="max-height:250px" id="rumourinfo" ng-controller="ChartCtrl">
+                    <table class="table" id="lineTable-v">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Top Users
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="rowContent in rows">
+                                <td style="padding:0px;border-top:0;">{{rowContent._id}}</td>
+                                <td style="padding:0px;border-top:0;">{{rowContent.count}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> --> <!--<div class="col-sm-4" id="rumourinfo" ng-controller="ChartCtrl">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h5>D. Marie</h5>
+                            <p>@itsmepanda1</p>
+                        </div>
+                        <div class="col-sm-3 pull-right">
+                            <img style="width:100%" src="bower_components/additions/profilepic.jpg">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Bio: <em>#America, forced medicine is #tyranny! If you value #freedom, stand against any attempts to remove vaccine exemptions. Vaccination is a medical prodedure!</em></p>
+                        <p>Joined: <em>January 2011</em></p>
+                    </div>
+                </div> --> </div> </div> </div> </div> <div class="row col-lg-12"> <div class="panel panel-default"> <div class="panel-body"> <div class="col-sm-6"> <div class="col-sm-3"> <ul class="list-group"> <li class="list-group-item select_custom_v" id="stage0" onclick="loadThreatAnalysis(0)">Stage 0</li> <li class="list-group-item select_custom_v" id="stage1" onclick="loadThreatAnalysis(1)">Stage 1</li> <li class="list-group-item select_custom_v" id="stage2" onclick="loadThreatAnalysis(2)">Stage 2</li> <li class="list-group-item select_custom_v" id="stage3" onclick="loadThreatAnalysis(3)">Stage 3</li> <li class="list-group-item select_custom_v" id="stage4" onclick="loadThreatAnalysis(4)">Stage 4</li> <li class="list-group-item select_custom_v" id="stage5" onclick="loadThreatAnalysis(5)">Stage 5</li> </ul> </div> <div class="col-sm-9" id="threatAnalysisDisplay"> <!--testing --> <ul class="list-group"> <li class="list-group-item" onclick="loadThreatAnalysis(0)">Preparation</li> <li class="list-group-item" onclick="loadThreatAnalysis(1)">Collect event info</li> <li class="list-group-item" onclick="loadThreatAnalysis(2)">Perform structured literature search/systematically collect info about the (potential) aetiologic agent</li> <li class="list-group-item" onclick="loadThreatAnalysis(3)">Extract relevant evidence</li> <li class="list-group-item" onclick="loadThreatAnalysis(4)">Appraise evidence</li> <li class="list-group-item" onclick="loadThreatAnalysis(5)">Estimate risk</li> </ul> </div> </div> <div class="col-sm-6"> <ul class="list-group"> <li class="list-group-item"><strong>Discussions</strong></li> <li class="list-group-item">NFD</li> <li class="list-group-item">EWRS</li> <li class="list-group-item">DPIS</li> <li class="list-group-item">WHO reports</li> </ul> <ul class="list-group"> <li class="list-group-item">Round Table Discussion</li> </ul> </div> </div> </div> </div> <!--<div class="row col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="col-sm-12" ng-controller="ChartCtrl" style="height:500px;">
+
+                <div class="col-sm-12" id="network-graph">
+
+                    <div id="container">
+                      <style>
+                        #graph-container {
+                          top: 0;
+                          bottom: 0;
+                          left: 0;
+                          right: 0;
+                          position: absolute;
+                          height:500px;
+                        }
+                      </style>
+                      <div id="graph-container"></div>
+                    </div>
+
+                    click="line.onClick" series="line.series"></canvas>
+                </div>
+
+                <div ng-mouseover="tweetData" class="col-sm-3" id="network-graph-info" style="border-left:1px solid #666; position:absolute; right:0; background:#FFF;">
+                </div>
+
+
+
+
+                    <table class="table" id="lineTable-v">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Top Links
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="rowContent in rows">
+                                <td style="padding:0px;border-top:0;">{{rowContent._id}}</td>
+                                <td style="padding:0px;border-top:0;">{{rowContent.count}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+
+
+                    <table class="table" id="lineTable-v">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Top Users
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="rowContent in rows">
+                                <td style="padding:0px;border-top:0;">{{rowContent._id}}</td>
+                                <td style="padding:0px;border-top:0;">{{rowContent.count}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-4" id="rumourinfo" ng-controller="ChartCtrl">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <h5>D. Marie</h5>
+                            <p>@itsmepanda1</p>
+                        </div>
+                        <div class="col-sm-3 pull-right">
+                            <img style="width:100%" src="bower_components/additions/profilepic.jpg">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p>Bio: <em>#America, forced medicine is #tyranny! If you value #freedom, stand against any attempts to remove vaccine exemptions. Vaccination is a medical prodedure!</em></p>
+                        <p>Joined: <em>January 2011</em></p>
+                    </div>
+                </div>
+
+
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+<div class="row col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="col-sm-12" ng-controller="ChartCtrl" style="height:250px;">
+                    <div class="col-sm-4 pre-scrollable" style="max-height:250px" id="toplinksinfo" ng-controller="ChartCtrl">
+                        <table class="table" id="lineTable-v">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Top Links
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="sendReq('http://t.co/ueqE5H09b9');">
+                                    <td style="padding:0px;border-top:0;">
+                                        CDC Scientist: ‘We scheduled meeting to destroy...
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        389
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/YUZdXihFXh');">
+                                    <td style="padding:0px;border-top:0;">
+                                        Posey CSPAN 7/29/15
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        364
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/lKfcemnsei');">
+                                    <td style="padding:0px;border-top:0;">
+                                        Mr Posey | Video
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        329
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/86sAqE8U00');">
+                                    <td style="padding:0px;border-top:0;">
+                                        REVEALED: Cancer industry profits 'locked in'...
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        209
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/52iRcjF9ns');">    
+                                    <td style="padding:0px;border-top:0;">
+                                        Mr Posey | Video
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        198
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/TNr6DCkR2k');">
+                                    <td style="padding:0px;border-top:0;">
+                                        CONGRESSMAN POESY DELIVERS BOMBSHE...
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        185
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/nviSACNLKY');">
+                                    <td style="padding:0px;border-top:0;">
+                                        Mr Posey | Video
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        176
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('https://t.co/G5OiweFSos');">
+                                    <td style="padding:0px;border-top:0;">
+                                        CDC Scientist: ‘We scheduled meeting to destroy...
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        160
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/Ge1e86sQgi');">
+                                    <td style="padding:0px;border-top:0;">
+                                        Posey CSPAN 7/29/15
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        121
+                                    </td>
+                                </tr>
+                                <tr onclick="sendReq('http://t.co/jLM6rf2zH4');">
+                                    <td style="padding:0px;border-top:0;">
+                                        Mr Posey | Video
+                                    </td>
+                                    <td style="padding:0px;border-top:0;">
+                                        103
+                                    </td>
+                                </tr>
+                                    
+                                    
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-8 pre-scrollable" id="linkDisplayWidget" style="height:100%">
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>--> <!--<div class="row">
+
+    <div class="col-lg-4 col-sm-12" id="line-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Rumours</div>
+            <div class="panel-body">
+                <canvas id="line" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true"
+                click="line.onClick" series="line.series"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="rumourinfo" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Rumour information</div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="rumourinfo" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Rumour information</div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-sm-12" id="bar-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Bar Chart / Other analysis</div>
+            <div class="panel-body">
+                <canvas id="bar" class="chart chart-bar" data="bar.data" labels="bar.labels" series="bar.series"
+                options="bar.options"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="bar-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Bar Chart / Other analysis</div>
+            <div class="panel-body">
+                <canvas id="bar" class="chart chart-bar" data="bar.data" labels="bar.labels" series="bar.series"
+                options="bar.options"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="doughnut-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Doughnut Chart</div>
+            <div class="panel-body">
+                <canvas id="doughnut" class="chart chart-doughnut chart-xs" data="donut.data" labels="donut.labels" legend="false"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-sm-12" id="radar-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Radar Chart</div>
+            <div class="panel-body">
+                <canvas id="area" class="chart chart-radar" data="radar.data" labels="radar.labels" click="onClick"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="pie-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Pie Chart</div>
+            <div class="panel-body">
+                <canvas id="pie" class="chart chart-pie chart-xs" data="pie.data" labels="pie.labels"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="polar area-chart" ng-controller="ChartCtrl">
+      <div class="panel panel-default">
+        <div class="panel-heading">Polar Area Chart</div>
+        <div class="panel-body">
+          <canvas id="polar" class="chart chart-polar-area" data="polar.data" labels="polar.labels"></canvas>
+      </div>
+  </div>
+</div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-sm-12" id="base-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dynamic Chart</div>
+            <div class="panel-body">
+                <canvas id="base" class="chart chart-base" chart-type="dynamic.type" data="dynamic.data" labels="dynamic.labels" legend="true"></canvas>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary pull-right" ng-click="dynamic.toggle()">Toggle</button>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="base-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dynamic Chart</div>
+            <div class="panel-body">
+                <canvas id="base" class="chart chart-base" chart-type="dynamic.type" data="dynamic.data" labels="dynamic.labels" legend="true"></canvas>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary pull-right" ng-click="dynamic.toggle()">Toggle</button>
+    </div>
+    <div class="col-lg-4 col-sm-12" id="base-chart" ng-controller="ChartCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Dynamic Chart</div>
+            <div class="panel-body">
+                <canvas id="base" class="chart chart-base" chart-type="dynamic.type" data="dynamic.data" labels="dynamic.labels" legend="true"></canvas>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary pull-right" ng-click="dynamic.toggle()">Toggle</button>
+    </div>
+</div> --> <script type="text/javascript">/**
+ * This is a basic example on how to instantiate sigma. A random graph is
+ * generated and stored in the "graph" variable, and then sigma is instantiated
+ * directly with the graph.
+ *
+ * The simple instance of sigma is enough to make it render the graph on the on
+ * the screen, since the graph is given directly to the constructor.
+ */
+
+
+/*Section for custom graph code (twitter analysis)*/
+
+//calculate number of nodes and edges first of all ( on each row -> if retweeted exists then add 2 nodes otherwise only add 1 node)
+
+//calc number of edges (on each row -> if retweeted then add one, otherwise dont add an edge.)
+
+//calculate the list of nodes and edges before counting the number of nodes and edges. (remove duplicate nodes / edges)
+
+
+//end 
+/*var i,
+    s,
+    N = 10,
+    E = 50,
+    g = {};
+
+
+$(document).ready(function(){
+
+        $.getJSON("../api/networkgraph", function(result){
+                g = result;
+                console.log(g);
+
+
+                // Instantiate sigma:
+                s = new sigma({
+                  graph: g,
+                  container: 'graph-container'
+                });
+
+                sigma.plugins.relativeSize(s, 1);
+                s.startForceAtlas2({linLogMode: false, barnesHutOptimize: true, gravity:3});
+
+
+                setTimeout(function(){
+                    s.stopForceAtlas2();
+                }, 10000);
+
+
+                //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+                s.bind('clickNode', function(e) {
+                    console.log(e.type, e.data.node.label, e.data.captor, e.data.node.label);
+                    document.getElementById('network-graph-info').innerHTML = "<p><h3>@"+e.data.node.label+"</h3></p><p> Content: " +  e.data.node.text + "</p>"
+                    //$scope.tweetData = e.data.node.label;
+                });
+
+
+        });
+});
+
+
+
+function createRequestObject() {
+    var obj;
+    var browser = navigator.appName;
+    if (browser == "Microsoft Internet Explorer") {
+        obj = new ActiveXObject("Microsoft.XMLHTTP");
+    } else {
+        obj = new XMLHttpRequest();
+    }
+    return obj;
+}
+
+function sendReq(req) {   
+
+
+    document.getElementById('linkDisplayWidget').innerHTML = "<iframe id='extFrame' src='"+req+"' style='height:100%;width:100%;'></iframe>";
+
+
+  
+}
+
+function handleResponse() {    
+    if (http.readyState == 4) {
+        var response = http.responseText;
+        document.getElementById('linkDisplayWidget').innerHTML=response;
+    }
+} */
+
+$(document).ready(function(){
+
+    var map = new L.Map('map', {
+        center: new L.LatLng(30, 0),
+        zoom: 1,
+        layers: new L.TileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+            attribution: '© <a href="http://openstreetmap.org">OpenStreetMap</a> | Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">'
+        })
+    });
+
+
+});
+
+function loadThreatAnalysis(stageNum) {
+    if(stageNum <=5 && stageNum>=0) {
+
+        $('#threatAnalysisDisplay').load('bower_components/additions/threatanalysis/stage' + stageNum + '.html');
+
+        document.getElementById('stage0').classList.remove('active');
+        document.getElementById('stage1').classList.remove('active');
+        document.getElementById('stage2').classList.remove('active');
+        document.getElementById('stage3').classList.remove('active');
+        document.getElementById('stage4').classList.remove('active');
+        document.getElementById('stage5').classList.remove('active');
+
+        document.getElementById('stage'+stageNum).classList.add('active');
+
+    }
+}
+
+/*<iframe width='100%' height='500px' frameBorder='0' src='https://a.tiles.mapbox.com/v4/vinom.73bc84e5/attribution,zoompan,zoomwheel,geocoder,share.html?access_token=pk.eyJ1Ijoidmlub20iLCJhIjoiOWMwZmRlN2U2M2RlNGZmMDMyMzYyMmQ4ZjZkOWNkMmUifQ.gw-9LYgMa09bLk41K4FjYQ'></iframe>
+*/
+
+    //var mainTimeline = new VCO.Timeline('mainTimeline', 'bower_components/timelinejs/data.json', options);
+    /*window.onresize = function(event) {
+        timeline.updateDisplay();
+    }*/</script>

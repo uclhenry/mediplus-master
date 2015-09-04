@@ -1,0 +1,42 @@
+{
+    "scale": "human",
+	"title": {
+		        
+	    },
+    "events": [
+        
+        {
+            "background": {
+                "color": "#000",
+                "opacity": 50,
+                "url": null
+            },
+            "start_date": {
+                "year":			"2015",
+                "month":		"08",
+                "day": 			"01",
+                "hour": 		"",
+                "minute": 		"",
+                "second": 		"",
+                "millisecond": 	"",
+                "thumbnail": 	"",
+                "format": 		""
+            },
+            "end_date": {
+                "year":         "2015",
+                "month":        "08",
+                "day":          "06",
+                "hour":         "",
+                "minute":       "",
+                "second":       "",
+                "millisecond":  "",
+                "format":       ""
+            },
+            "text": {
+                "headline": " ",
+                "text": ""
+            },
+            "uniqueid": ""
+        }
+    ]
+}

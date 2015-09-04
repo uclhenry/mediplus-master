@@ -1,0 +1,820 @@
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
+
+npm ERR! Linux 3.10.0-229.7.2.el7.x86_64
+npm ERR! argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "dist" "/home/vinomano/mediboard/sb-admin/"
+npm ERR! node v0.12.7
+npm ERR! npm  v2.11.3
+npm ERR! code ELIFECYCLE
+npm ERR! sb-admin@0.0.0 dist: `grunt serve:dist "/home/vinomano/mediboard/sb-admin/"`
+npm ERR! Exit status 3
+npm ERR! 
+npm ERR! Failed at the sb-admin@0.0.0 dist script 'grunt serve:dist "/home/vinomano/mediboard/sb-admin/"'.
+npm ERR! This is most likely a problem with the sb-admin package,
+npm ERR! not with npm itself.
+npm ERR! Tell the author that this fails on your system:
+npm ERR!     grunt serve:dist "/home/vinomano/mediboard/sb-admin/"
+npm ERR! You can get their info via:
+npm ERR!     npm owner ls sb-admin
+npm ERR! There is likely additional logging output above.
+
+npm ERR! Please include the following file with any support request:
+npm ERR!     /home/vinomano/mediboard/sb-admin/npm-debug.log
