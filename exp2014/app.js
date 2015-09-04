@@ -10,6 +10,15 @@ var routes = require('./routes/index');
 
 var app = express();
 
+var FeedParser = require('feedparser')
+var request = require('request');
+var Iconv = require('iconv').Iconv;
+
+var server;
+var rssOutput = [];
+//////
+
+
 // view engine setup
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +47,159 @@ var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/test';
 
+
+var CronJob = require('cron').CronJob;
+new CronJob('*/10 * * * *', function() {
+
+  // Don't worry about this. It's just a localhost file server so you can be
+    // certain the "remote" feed is available when you run this example.
+    server = require('http').createServer(function (req, res) {
+      var stream = require('fs').createReadStream(require('path').resolve(__dirname, '../test/feeds' + req.url));
+      res.setHeader('Content-Type', 'text/xml; charset=Windows-1251');
+      stream.pipe(res);
+    });
+    server.listen(0, function () {
+      //fetch('http://localhost:' + this.address().port + '/iconv.xml');
+      fetch('http://medusa.jrc.it/rss?type=category&id=Vaccination&language=en');
+    });
+
+
+
+  console.log('Medisys RSS feed checked and added to mongodb (freq: every 10 mins)');
+}, null, true);
+
+
+
+function fetch(feed) {
+    // Define our streams
+    var req = request(feed, {timeout: 10000, pool: false});
+    req.setMaxListeners(50);
+    // Some feeds do not respond without user-agent and accept headers.
+    req.setHeader('user-agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/31.0.1650.63 Safari/537.36')
+    req.setHeader('accept', 'text/html,application/xhtml+xml');
+
+    var feedparser = new FeedParser();
+
+    // Define our handlers
+    req.on('error', done);
+    req.on('response', function(res) {
+      if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+      var charset = getParams(res.headers['content-type'] || '').charset;
+      res = maybeTranslate(res, charset);
+      // And boom goes the dynamite
+      res.pipe(feedparser);
+    });
+
+    feedparser.on('error', done);
+    feedparser.on('end', done);
+    feedparser.on('readable', function() {
+      var post;
+      while (post = this.read()) {
+        rssOutput.push(post);
+        //console.log(post);
+      }
+    });
+  }
+
+  function maybeTranslate (res, charset) {
+    var iconv;
+    // Use iconv if its not utf8 already.
+    if (!iconv && charset && !/utf-*8/i.test(charset)) {
+      try {
+        iconv = new Iconv(charset, 'utf-8');
+        console.log('Converting from charset %s to utf-8', charset);
+        iconv.on('error', done);
+        // If we're using iconv, stream will be the output of iconv
+        // otherwise it will remain the output of request
+        res = res.pipe(iconv);
+      } catch(err) {
+        res.emit('error', err);
+      }
+    }
+    return res;
+  }
+
+  function getParams(str) {
+    var params = str.split(';').reduce(function (params, param) {
+      var parts = param.split('=').map(function (part) { return part.trim(); });
+      if (parts.length === 2) {
+        params[parts[0]] = parts[1];
+      }
+      return params;
+    }, {});
+    return params;
+  }
+
+  function done(err) {
+    if (err) {
+      console.log(err, err.stack);
+      return process.exit(1);
+    }
+    server.close();
+    //console.log(JSON.stringify(rssOutput));
+
+    /*var json = '[{"_id":"5078c3a803ff4197dc81fbfb","email":"user1@gmail.com","image":"some_image_url","name":"Name 1"},{"_id":"5078c3a803ff4197dc81fbfc","email":"user2@gmail.com","image":"some_image_url","name":"Name 2"}]';
+
+var obj = JSON.parse(json)[0];
+obj.id = obj._id;
+delete obj._id;
+
+json = JSON.stringify([obj]);*/
+
+    var processedJson = [];
+
+    var json = JSON.stringify(rssOutput);
+    var obj = JSON.parse(json);
+
+    for (article in obj){
+      //console.log(obj[article].guid);
+      //break;
+      obj[article]._id = obj[article].guid;
+      delete obj[article].guid;
+
+
+
+      //processedJson.push(JSON.stringify(article));
+
+
+    }
+
+    //'0 0/10 * 1/1 * ? *'
+
+    //var finalJson = JSON.stringify(obj);
+    //console.log(finalJson);
+    //json = JSON.stringify()
+    //console.log(json);
+    //set up mongo such that json.stringify(output) is imported into mongo test db collection medisys.
+    //such that field guid is id of collection, and skip import of elements with same id.
+
+    MongoClient.connect(url, function(err,db) {
+            assert.equal(null, err);
+            var callback = function() {
+              db.close();
+            };
+
+              db.collection('medisys').insert(obj, {continueOnError: true, safe: true}, function(err, docs){
+                //console.log('err: ' + err);
+                if(!err) console.log('data inserted successfully!\n');
+              });
+
+                //[
+
+                //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+                //{}
+                //]
+                //finalJson
+
+                //);
+                        
+          });
+
+
+
+
+    //process.exit();
+  }
 
 // error handlers
 
@@ -155,6 +317,15 @@ if (app.get('env') === 'development') {
           });
 
 });
+
+//app.get('/medisys', function(req, res) {
+
+  
+  
+
+  
+
+//})
 
 app.get('/topusers', function(req, res) {
 
