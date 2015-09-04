@@ -180,10 +180,13 @@ json = JSON.stringify([obj]);*/
               db.close();
             };
 
-              db.collection('medisys').save(obj[0], function(err, docs){
+            for (article in obj){
+              db.collection('medisys').save(obj[article], function(err, docs){
                 console.log('err: ' + err);
-                if(!err) console.log('data inserted successfully!\n');
+                if(!err) console.log(obj[1]._id+' : data inserted successfully!\n');
               });
+            }
+              
 
                 //[
 
