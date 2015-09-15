@@ -495,12 +495,17 @@ var i,
 
 
 $(document).ready(function(){
+var hashes;
 
+    try{
+            var url = window.location.href
+hashes = url.split("?")[1];
+hashes = hashes.split("#")[0];
 
+    }catch(e){
+        hashes = "";
+    }
 
-    var url = window.location.href
-var hashes = url.split("?")[1];
-var hashes = hashes.split("#")[0];
 if(hashes == ""){
     hashes = "generic";
 }else{
