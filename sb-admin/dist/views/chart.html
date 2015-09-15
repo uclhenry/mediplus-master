@@ -208,12 +208,12 @@ $(document).ready(function(){
                 });
 
                 sigma.plugins.relativeSize(s, 1);
-                s.startForceAtlas2({linLogMode: false, barnesHutOptimize: true, gravity:3});
+                s.startForceAtlas2({linLogMode: false, barnesHutOptimize: false, gravity:2});
 
 
                 setTimeout(function(){
                     s.stopForceAtlas2();
-                }, 10000);
+                }, 5000);
 
 
                 //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
