@@ -23,18 +23,56 @@
 
   </script>
 </div>
+<div class="row col-lg-12" style="margin-top:10px;">
+        <div class="col-lg-3 pull-right">
+
+            <div class="input-group input-group-sm">
+                <input id="searchtextbox" type="text" class="form-control" placeholder="Search for...">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" onclick="searchProcess()" type="button">Go!</button>
+                </span>
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-4 -->
+                <div class="col-lg-1 pull-right">
+
+                    <span id="searchcriteriaremovespan" onclick="removesearchcriteriabutton()" ></span>
+                </div>
+
+            <ul class="list-inline">
+                <li class="list-group-item select_custom_v active" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="twitterTab" onclick="loadTabData('twitter');" ng-click="globalTab = 0">Twitter</li>
+                <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="newsTab" onclick="loadTabData('news');" ng-click="globalTab = 1">News</li>
+                <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="bothTab" onclick="loadTabData('both');" ng-click="globalTab = 2">Both</li>
+            </ul>
+
+
+</div>
+<script type="text/javascript">
+    function searchProcess(){
+        var searchcriteria = document.getElementById('searchtextbox').value;
+        window.location.search = '?'+searchcriteria;
+    }
+    function removesearchcriteriabutton(){
+        window.location.search = "";
+    }
+
+</script>
 
 <div class="row col-lg-12">
     <div class="panel panel-default">
         <!--<div class="panel-heading">Rumours</div>-->
-        <div class="panel-body">
+        <div class="panel-body" ng-init="globalTab=0;init()">
 
-            <div class="col-sm-12" ng-controller="ChartCtrl" ng-init="init()">
+            <div class="col-sm-12" ng-controller="ChartCtrl" id="twitterchart" ng-if="globalTab == 0">
 
-                <div class="col-sm-4" id="line-chart">
-                    <canvas id="line customline-v" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true"
-                    click="line.onClick" series="line.series"></canvas>
+                <div class="col-sm-4" >
+                    <canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true"
+                    click="twitterline.onClick" series="twitterline.series"></canvas>
                 </div>
+
+                
+                
+
+                
 
                 <div class="col-sm-4 pre-scrollable" style="max-height:250px" id="rumourinfo" ng-controller="ChartCtrl">
                     <table class="table" id="lineTable-v">
@@ -74,6 +112,29 @@
 
 
             </div>
+
+            <div class="col-sm-12" ng-controller="ChartCtrl" id="newschart" ng-if="globalTab == 1">
+                <div class="col-sm-4" >
+                        <canvas id="newsline customline-v" class="chart chart-line chart-xl" data="newsline.data" labels="newsline.labels" legend="true"
+                        click="newsline.onClick" series="newsline.series"></canvas>
+                </div>
+
+                    
+
+
+            </div>
+
+            <div class="col-sm-12" ng-controller="ChartCtrl" id="bothchart" ng-if="globalTab == 2">
+                <div class="col-sm-4" >
+                        <canvas id="bothline customline-v" class="chart chart-line chart-xl" data="bothline.data" labels="bothline.labels" legend="true"
+                        click="bothline.onClick" series="bothline.series"></canvas>
+                </div>
+
+                    
+
+
+            </div>
+
             
 
         </div>
@@ -85,7 +146,9 @@
         <!--<div class="panel-heading">Rumours</div>-->
         <div class="panel-body">
 
+
             <div class="col-sm-12" ng-controller="ChartCtrl" style="height:500px;">
+            <div id="graphtitle" class="col-sm-3" style="border-bottom:1px solid #666; position:absolute; left:0; background:#FFF;"><h4>Top 1000 Tweets: General</h4></div>
 
                 <div class="col-sm-12" id="network-graph">
 
@@ -402,6 +465,7 @@
 <script type="text/javascript">
 
 
+
 /**
  * This is a basic example on how to instantiate sigma. A random graph is
  * generated and stored in the "graph" variable, and then sigma is instantiated
@@ -432,7 +496,26 @@ var i,
 
 $(document).ready(function(){
 
-        $.getJSON("../api/networkgraph", function(result){
+
+
+    var url = window.location.href
+var hashes = url.split("?")[1];
+var hashes = hashes.split("#")[0];
+if(hashes == ""){
+    hashes = "generic";
+}else{
+     document.getElementById('graphtitle').innerHTML = "<h5>Top 1000 tweets on '"+hashes+"'</h5>"
+
+    document.getElementById('searchcriteriaremovespan').innerHTML = "<button type='button' class='btn btn-default btn-xs' > "+ hashes +" <span class='glyphicon glyphicon-remove'></span></button>";
+
+
+}
+   
+
+console.log("vars0: "+JSON.stringify(hashes));
+    loadTabData("twitter");
+
+        $.getJSON("../api/networkgraph/"+hashes, function(result){
                 g = result;
                 console.log(g);
 
@@ -449,7 +532,7 @@ $(document).ready(function(){
 
                 setTimeout(function(){
                     s.stopForceAtlas2();
-                }, 5000);
+                }, 7500);
 
 
                 //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
@@ -494,6 +577,47 @@ function handleResponse() {
         document.getElementById('linkDisplayWidget').innerHTML=response;
     }
 }
+    
+function loadTabData(selection) {
+    console.log(selection);
+    if (selection === "twitter" || selection === "news" || selection === "both") {
+        document.getElementById('twitterTab').classList.remove('active');
+        document.getElementById('newsTab').classList.remove('active');
+        document.getElementById('bothTab').classList.remove('active');
+        document.getElementById(selection + "Tab").classList.add('active');
+
+        //if(selection === "twitter"){
+            //document.getElementById('twitterchart').style.display = 'inline-block';
+            //document.getElementById('newschart').style.display = 'none';
+            //$scope.globalTab = 0;
+        //}else if (selection === "news"){
+            //document.getElementById('twitterchart').style.display = 'none';
+            //document.getElementById('newschart').style.display = 'inline-block';
+            //$scope.globalTab = 1;
+
+        //}else if (selection === "both"){
+            //$scope.globalTab = 2;
+        //}
+        //document.getElementById('line-chart').innerHTML = '<canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>';
+
+
+        //refreshLineGraph(selection);
+    }
+}
+/*function refreshLineGraph(globalTab) {
+
+
+    if (globalTab === 0) {
+        document.getElementById('line-chart').innerHTML = "<canvas id='twitterline customline-v' class='chart chart-line chart-xl' data='twitterline.data' labels='twitterline.labels' legend='true' click='twitterline.onClick' series='twitterline.series'></canvas>";
+    } else if (globalTab === 1) {
+        document.getElementById('line-chart').innerHTML = "";
+    }; else if (globalTab === 2) {
+        document.getElementById('line-chart').innerHTML = "<canvas id='bothline customline-v' class='chart chart-line chart-xl' data='bothline.data' labels='bothline.labels' legend='true' click='bothline.onClick' series='bothline.series'></canvas>";
+    };
+}*/
+
+
+
 
 
 

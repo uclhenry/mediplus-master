@@ -112,7 +112,7 @@ angular.element(document).ready(function () {
     
     
 
-    $scope.line = {
+    $scope.twitterline = {
 	    labels: ['07','08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
 	    series: ['Twitter'],
 	    data: [
@@ -166,6 +166,113 @@ angular.element(document).ready(function () {
 	    
     };
 
+    $scope.newsline = {
+        labels: ['07','08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
+        series: ['News'],
+        data: [
+          [3399,6802,6290,6279,2026,0,0,0,0,197,3780,2975,2772,2985,4228,3252,3331,3712,2148,2225,3324,3952,2479]
+        ],
+        onClick: function (points, evt) {
+          console.log(points, evt);
+          var selectedPoint = points[0]['label'];
+
+
+          //add table refresh/update here.....
+
+          //////////////////loadTable(JSON.stringify(points[0]['label']));
+          //$scope.rows = [];
+
+          //$http.get("http://localhost:3000/api/topusers/07/07/2015").success(funtion (response) {
+        //});
+
+
+            //$scope.rows = [];
+            //$scope.rows.push('response');
+
+            displayTopUsers(selectedPoint);
+
+                
+                //console.log(defer.promise);
+                //$scope.rows = defer.promise.data;
+
+            
+
+          }
+
+          
+
+
+          //$scope.counter = 3;
+
+          //$scope.addRow = function() {
+
+            //////////////////////////////////$scope.rows.push('Testing');
+            //$scope.counter++;
+
+          //}
+
+
+                    //angular.element(document.getElementById('lineTable-v')).append($compile("<table><tr><td>RandomUser</td><td>939</td></tr></table>")(scope));
+
+
+
+
+        
+    };
+
+    $scope.bothline = {
+        labels: ['07','08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
+        series: ['News'],
+        data: [
+          [0,0,6290,6279,2026,0,0,0,0,197,3780,2975,2772,2985,4228,3252,3331,3712,2148,2225,3324,3952,2479]
+        ],
+        onClick: function (points, evt) {
+          console.log(points, evt);
+          var selectedPoint = points[0]['label'];
+
+
+          //add table refresh/update here.....
+
+          //////////////////loadTable(JSON.stringify(points[0]['label']));
+          //$scope.rows = [];
+
+          //$http.get("http://localhost:3000/api/topusers/07/07/2015").success(funtion (response) {
+        //});
+
+
+            //$scope.rows = [];
+            //$scope.rows.push('response');
+
+            displayTopUsers(selectedPoint);
+
+                
+                //console.log(defer.promise);
+                //$scope.rows = defer.promise.data;
+
+            
+
+          }
+
+          
+
+
+          //$scope.counter = 3;
+
+          //$scope.addRow = function() {
+
+            //////////////////////////////////$scope.rows.push('Testing');
+            //$scope.counter++;
+
+          //}
+
+
+                    //angular.element(document.getElementById('lineTable-v')).append($compile("<table><tr><td>RandomUser</td><td>939</td></tr></table>")(scope));
+
+
+
+
+        
+    };
 
     $scope.bar = {
 	    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
