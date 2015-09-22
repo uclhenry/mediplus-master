@@ -55,6 +55,10 @@
         window.location.search = "";
     }
 
+
+
+
+
 </script>
 
 <div class="row col-lg-12">
@@ -64,9 +68,11 @@
 
             <div class="col-sm-12" ng-controller="ChartCtrl" id="twitterchart" ng-if="globalTab == 0">
 
-                <div class="col-sm-4" >
+                <div class="col-sm-4" id="twitterreload">
                     <canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true"
                     click="twitterline.onClick" series="twitterline.series"></canvas>
+
+
                 </div>
 
                 
@@ -170,7 +176,7 @@
                     click="line.onClick" series="line.series"></canvas>-->
                 </div>
 
-                <div ng-mouseover="tweetData" class="col-sm-3" id="network-graph-info" style="border-left:1px solid #666; position:absolute; right:0; background:#FFF;">
+                <div ng-mouseover="tweetData" class="col-sm-3" id="network-graph-info" style="border-left:1px solid #666; position:absolute; right:0; background:#FFF; max-height:500px; overflow:scroll;">
                 <!--<p><h3>Tweet info</h3></p>-->
                 </div>
 
@@ -531,7 +537,7 @@ console.log("vars0: "+JSON.stringify(hashes));
                   container: 'graph-container'
                 });
 
-                sigma.plugins.relativeSize(s, 1);
+                //sigma.plugins.relativeSize(s, 1);
                 s.startForceAtlas2({linLogMode: false, barnesHutOptimize: false, gravity:2});
 
 
@@ -543,7 +549,7 @@ console.log("vars0: "+JSON.stringify(hashes));
                 //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
                 s.bind('clickNode', function(e) {
                     console.log(e.type, e.data.node.label, e.data.captor, e.data.node.label);
-                    document.getElementById('network-graph-info').innerHTML = "<p><h3>@"+e.data.node.label+"</h3></p><p> Content: " + /*tweet data here*/ e.data.node.text + "</p>"
+                    document.getElementById('network-graph-info').innerHTML = "<p><h3>@"+e.data.node.label+"</h3></p><p> " + /*tweet data here*/ e.data.node.text + "</p>"
                     //$scope.tweetData = e.data.node.label;
                 });
 

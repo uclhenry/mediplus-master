@@ -394,6 +394,51 @@ app.get('/topusers/:day/:month/:year', function(req, res) {
 
 });
 
+app.get('/twittercount/:day/:month/:year', function(req, res) {
+
+    var day = req.params.day;
+    var month = req.params.month;
+    var year = req.params.year;
+
+    var regexString = ".*" + month + " " + day + ".*" + year;
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        var callback = function() {
+            db.close();
+        };
+
+        db.collection('mediboard1').aggregate(
+
+            [
+
+                //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+                {
+                    $match: {
+                        "created_at": new RegExp(regexString, 'i')
+                    }
+                }, {
+                    $group: {
+                        _id: null,
+                        count: {
+                            $sum: 1
+                        }
+                    }
+                }
+
+            ]
+
+        ).toArray(function(err, result) {
+            assert.equal(err, null);
+            console.log(result);
+            res.send(result);
+            callback(result);
+        });
+
+    });
+
+});
+
 //app.get('/medisys', function(req, res) {
 
 
@@ -471,7 +516,7 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
                         "retweeted_status.user.screen_name": 1
                     }
                 }, {
-                    $limit: 10000
+                    $limit: 100000
                 }
 
 
@@ -686,10 +731,10 @@ app.get('/networkgraph/:category', function(req, res) {
     //var regexString = ".*"+hashtag+".*";
     //var result = [];
 
-                var i = 0,
-                N = 10,
-                E = 50/*,
-                g = {
+                var i = 0//,
+                //N = 10,
+                //E = 50,
+                /*g = {
                     nodes: [],
                     edges: []
                 }*/;
@@ -816,7 +861,9 @@ app.get('/networkgraph/:category', function(req, res) {
                                     size: Math.random(),
                                     color: "#" + genColor(tweetSegmentMap[tweetIdStr]),
                                     segment: tweetSegmentMap[tweetIdStr],
-                                    text: tweetText
+                                    text: tweetText,
+                                    type: "retweet"
+
 
                                 });
 
@@ -850,7 +897,8 @@ app.get('/networkgraph/:category', function(req, res) {
                                     size: Math.random(),
                                     color: "#" + genColor(tweetSegmentMap[retweetIdStr]),
                                     segment: tweetSegmentMap[retweetIdStr],
-                                    text: retweetText
+                                    text: retweetText + "<p><h5>Retweeted users:</h5></p>",
+                                    type: "tweet"
 
                                 });
 
@@ -1070,17 +1118,33 @@ app.get('/networkgraph/:category', function(req, res) {
 
 
             edgeMap.forEach(function(value, key) {
-                        if(segmentSizes.get(parseInt(value.segment)) < minsegsize) {
-                            edgeMap.remove(key);
-                            //console.log("something removed...");
+                        //if(segmentSizes.get(parseInt(value.segment)) < minsegsize) {
+                            if(true){
+                                if(nodeMap.get(value.source).type == "retweet" ){
+                                    var userNameToAppend = nodeMap.get(value.source).label;
+                                    var node = nodeMap.get(value.target);
+                                    node.text += "<p>"+userNameToAppend+"</p>";
+                                    nodeMap.set(value.target,node);
+                                }else if(nodeMap.get(value.target).type == "retweet" ){
+                                    var userNameToAppend = nodeMap.get(value.target).label;
+                                    var node = nodeMap.get(value.source);
+                                    node.text += "<p>"+userNameToAppend+"</p>";
+                                    nodeMap.set(value.source,node);
+                                }
+                                edgeMap.remove(key);
+                                //console.log("something removed...");
                         }
                     });
 
             nodeMap.forEach(function(value, key) {
-                        if(segmentSizes.get(parseInt(value.segment)) < minsegsize) {
+                        if((segmentSizes.get(parseInt(value.segment)) < minsegsize) || value.type == "retweet") {
                             nodeMap.remove(key);
                                                         //console.log("something removed...");
 
+                        }else{
+                            value.size = segmentSizes.get(parseInt(value.segment));
+                            //value.text += "<p>Retweeted users:<p>";
+                            nodeMap.set(key,value);
                         }
                     });
 
