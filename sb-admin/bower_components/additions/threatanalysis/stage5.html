@@ -16,13 +16,13 @@
 <ol class="list-group">
 	<li class="list-group-item">
 		Are there specific groups at increased risk of infection?
-		<button type="button" class="btn btn-default">Yes</button>
-		<button type="button" class="btn btn-default">No</button>
+		<button type="button" id="1Yes" class="btn btn-default" onclick="document.getElementById('1No').classList.remove('active');document.getElementById('1Yes').classList.add('active');">Yes</button>
+		<button type="button" id="1No" class="btn btn-default" onclick="document.getElementById('1Yes').classList.remove('active');document.getElementById('1No').classList.add('active');">No</button>
 	</li>
 	<li class="list-group-item">
 		What is the potential for transmission within the Member State?
-		<button type="button" class="btn btn-default">High</button>
-		<button type="button" class="btn btn-default">Low</button>
+		<button type="button" id="2High" class="btn btn-default" onclick="document.getElementById('2Low').classList.remove('active');document.getElementById('2High').classList.add('active');">High</button>
+		<button type="button" id="2Low" class="btn btn-default" onclick="document.getElementById('2High').classList.remove('active');document.getElementById('2Low').classList.add('active');">Low</button>
 	</li>
 	<li class="list-group-item">......</li>
 

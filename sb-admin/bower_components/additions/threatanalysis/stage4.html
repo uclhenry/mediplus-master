@@ -14,7 +14,9 @@
 
 
 <p>Quality of evidence:</p>
-<button type="button" class="btn btn-default">Good</button><button type="button" class="btn btn-default">Satisfactory</button><button type="button" class="btn btn-default">Unsatisfactory</button>
+<button type="button" id="1Good" class="btn btn-default" onclick="document.getElementById('1Satisfactory').classList.remove('active');document.getElementById('1Unsatisfactory').classList.remove('active');document.getElementById('1Good').classList.add('active');" >Good</button>
+<button type="button" id="1Satisfactory" class="btn btn-default" onclick="document.getElementById('1Unsatisfactory').classList.remove('active');document.getElementById('1Good').classList.remove('active');document.getElementById('1Satisfactory').classList.add('active');" >Satisfactory</button>
+<button type="button" id="1Unsatisfactory" class="btn btn-default" onclick="document.getElementById('1Satisfactory').classList.remove('active');document.getElementById('1Good').classList.remove('active');document.getElementById('1Unsatisfactory').classList.add('active');" >Unsatisfactory</button>
 
 <p><u>Good</u> - Further research unlikely to change confidence in information.</p>
 <p><u>Satisfactory</u> - Further research likely to have impact on confidence of information and may change assessment. </p>
