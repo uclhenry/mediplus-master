@@ -1103,7 +1103,7 @@ app.get('/networktweetgraph/:category', function(req, res) {
             var tobesorted = segmentSizes.values();
 
             tobesorted.sort(function(a, b){return b-a});
-            console.log("sorted: "+JSON.stringify(tobesorted));
+            //console.log("sorted: "+JSON.stringify(tobesorted));
 
             /*var minsegsize = Number.MAX_VALUE;
             var subtotal = 0;
