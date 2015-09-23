@@ -1117,6 +1117,8 @@ app.get('/networktweetgraph/:category', function(req, res) {
             while(i<1000){
                 if(tobesorted[i]){
                     i++;
+                }else{
+                    break;
                 }
             }
             var minsegsize = tobesorted[i]
