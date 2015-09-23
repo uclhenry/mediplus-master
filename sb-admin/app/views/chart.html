@@ -526,7 +526,7 @@ if(hashes == ""){
 console.log("vars0: "+JSON.stringify(hashes));
     loadTabData("twitter");
 
-        $.getJSON("../api/networkgraph/"+hashes, function(result){
+        $.getJSON("../api/networktweetgraph/"+hashes, function(result){
                 g = result;
                 console.log(g);
 
