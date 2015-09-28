@@ -5,7 +5,7 @@
     <!-- /.col-lg-12 -->
 </div>
 <div class="row">
-    <div class="col-lg-12 col-sm-12" >
+    <div class="col-lg-12 col-sm-12">
         <div class="panel panel-default" style="border:0;margin-bottom:0;">
 
             <!--<div class="panel-heading">Timeline</div>-->
@@ -17,48 +17,54 @@
     </div>
     <script src="bower_components/timelinejs/js/timeline.js"></script>
     <script>
-      var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/welcome.json', {
-        timenav_position:"top",
-    });
-
-  </script>
+        var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/welcome.json', {
+            timenav_position: "top",
+        });
+    </script>
 </div>
 <div class="row col-lg-12" style="margin-top:10px;">
-        <div class="col-lg-3 pull-right">
+    <div class="col-lg-3 pull-right">
 
-            <div class="input-group input-group-sm">
-                <input id="searchtextbox" type="text" class="form-control" placeholder="Search for...">
-                <span class="input-group-btn">
+        <div class="input-group input-group-sm">
+            <input id="searchtextbox" type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
                     <button class="btn btn-default" onclick="searchProcess()" type="button">Go!</button>
                 </span>
-            </div><!-- /input-group -->
-        </div><!-- /.col-lg-4 -->
-                <div class="col-lg-1 pull-right">
+        </div>
+        <!-- /input-group -->
+    </div>
+    <!-- /.col-lg-4 -->
+    <div class="col-lg-1 pull-right">
 
-                    <span id="searchcriteriaremovespan" onclick="removesearchcriteriabutton()" ></span>
-                </div>
+        <span id="searchcriteriaremovespan" onclick="removesearchcriteriabutton()"></span>
+    </div>
 
-            <ul class="list-inline">
-                <li class="list-group-item select_custom_v active" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="twitterTab" onclick="loadTabData('twitter');" ng-click="globalTab = 0">Twitter</li>
-                <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="newsTab" onclick="loadTabData('news');" ng-click="globalTab = 1">News</li>
-                <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="bothTab" onclick="loadTabData('both');" ng-click="globalTab = 2">Both</li>
-            </ul>
+    <ul class="list-inline">
+        <li class="list-group-item select_custom_v active" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="twitterTab" onclick="loadTabData('twitter');" ng-click="globalTab = 0">Twitter</li>
+        <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="newsTab" onclick="loadTabData('news');" ng-click="globalTab = 1">News</li>
+        <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="bothTab" onclick="loadTabData('both');" ng-click="globalTab = 2">Both</li>
+    </ul>
 
 
 </div>
 <script type="text/javascript">
-    function searchProcess(){
+    function searchProcess() {
+
+        var url = window.location.href
+        var mode = "tweet";
+            hashes = url.split("?")[1];
+            hashes = hashes.split("#")[0];
+            if(hashes.split("-")[1]){
+                mode = hashes.split("-")[1];
+                console.log("mode: "+mode);
+            }
         var searchcriteria = document.getElementById('searchtextbox').value;
-        window.location.search = '?'+searchcriteria;
+        window.location.search = '?' + searchcriteria + "-" + mode;
     }
-    function removesearchcriteriabutton(){
+
+    function removesearchcriteriabutton() {
         window.location.search = "";
     }
-
-
-
-
-
 </script>
 
 <div class="row col-lg-12">
@@ -69,16 +75,14 @@
             <div class="col-sm-12" ng-controller="ChartCtrl" id="twitterchart" ng-if="globalTab == 0">
 
                 <div class="col-sm-4" id="twitterreload">
-                    <canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true"
-                    click="twitterline.onClick" series="twitterline.series"></canvas>
+                    <canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>
 
 
                 </div>
 
-                
-                
 
-                
+
+
 
                 <div class="col-sm-4 pre-scrollable" style="max-height:250px" id="rumourinfo" ng-controller="ChartCtrl">
                     <table class="table" id="lineTable-v">
@@ -120,28 +124,26 @@
             </div>
 
             <div class="col-sm-12" ng-controller="ChartCtrl" id="newschart" ng-if="globalTab == 1">
-                <div class="col-sm-4" >
-                        <canvas id="newsline customline-v" class="chart chart-line chart-xl" data="newsline.data" labels="newsline.labels" legend="true"
-                        click="newsline.onClick" series="newsline.series"></canvas>
+                <div class="col-sm-4">
+                    <canvas id="newsline customline-v" class="chart chart-line chart-xl" data="newsline.data" labels="newsline.labels" legend="true" click="newsline.onClick" series="newsline.series"></canvas>
                 </div>
 
-                    
+
 
 
             </div>
 
             <div class="col-sm-12" ng-controller="ChartCtrl" id="bothchart" ng-if="globalTab == 2">
-                <div class="col-sm-4" >
-                        <canvas id="bothline customline-v" class="chart chart-line chart-xl" data="bothline.data" labels="bothline.labels" legend="true"
-                        click="bothline.onClick" series="bothline.series"></canvas>
+                <div class="col-sm-4">
+                    <canvas id="bothline customline-v" class="chart chart-line chart-xl" data="bothline.data" labels="bothline.labels" legend="true" click="bothline.onClick" series="bothline.series"></canvas>
                 </div>
 
-                    
+
 
 
             </div>
 
-            
+
 
         </div>
     </div>
@@ -151,25 +153,34 @@
     <div class="panel panel-default">
         <!--<div class="panel-heading">Rumours</div>-->
         <div class="panel-body">
-
+<ul class="list-inline">
+        
+<li class="list-group-item select_custom_v active" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="tweetgraphtab" onclick="loadGraphTab('tweet');" >Tweets</li>
+        <li class="list-group-item select_custom_v" style="border-radius:5px; min-width:100px; text-align:center; padding:5px;" id="usergraphtab" onclick="loadGraphTab('user');" >Users</li>
+        
+    </ul>
 
             <div class="col-sm-12" ng-controller="ChartCtrl" style="height:500px;">
-            <div id="graphtitle" class="col-sm-3" style="border-bottom:1px solid #666; position:absolute; left:0; background:#FFF;"><h4>Top 1000 Tweets: General</h4></div>
+
+                     
+                <div id="graphtitle" class="col-sm-3" style="border-bottom:1px solid #666; position:absolute; left:0; background:#FFF;">
+                    <h4 id="graphtitlevalue">Top 1000 Tweets: General</h4></div>
+           
 
                 <div class="col-sm-12" id="network-graph">
 
                     <div id="container">
-                      <style>
-                        #graph-container {
-                          top: 0;
-                          bottom: 0;
-                          left: 0;
-                          right: 0;
-                          position: absolute;
-                          height:500px;
-                        }
-                      </style>
-                      <div id="graph-container"></div>
+                        <style>
+                            #graph-container {
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                right: 0;
+                                position: absolute;
+                                height: 500px;
+                            }
+                        </style>
+                        <div id="graph-container"></div>
                     </div>
 
                     <!--<canvas id="network customnetwork-v" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true"
@@ -177,7 +188,7 @@
                 </div>
 
                 <div ng-mouseover="tweetData" class="col-sm-3" id="network-graph-info" style="border-left:1px solid #666; position:absolute; right:0; background:#FFF; max-height:500px; overflow:scroll;">
-                <!--<p><h3>Tweet info</h3></p>-->
+                    <!--<p><h3>Tweet info</h3></p>-->
                 </div>
 
 
@@ -238,7 +249,7 @@
 
 
             </div>
-            
+
 
         </div>
     </div>
@@ -250,105 +261,105 @@
         <div class="panel-body">
 
             <div class="col-sm-12" ng-controller="ChartCtrl" style="height:250px;">
-                    <div class="col-sm-4 pre-scrollable" style="max-height:250px" id="toplinksinfo" ng-controller="ChartCtrl">
-                        <table class="table" id="lineTable-v">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Top Links
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr onclick="sendReq('http://t.co/ueqE5H09b9');">
-                                    <td style="padding:0px;border-top:0;">
-                                        CDC Scientist: ‘We scheduled meeting to destroy...
-                                        <!--https://t.co/ueqE5H09b9-->
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        389
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/YUZdXihFXh');">
-                                    <td style="padding:0px;border-top:0;">
-                                        Posey CSPAN 7/29/15
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        364
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/lKfcemnsei');">
-                                    <td style="padding:0px;border-top:0;">
-                                        Mr Posey | Video
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        329
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/86sAqE8U00');">
-                                    <td style="padding:0px;border-top:0;">
-                                        REVEALED: Cancer industry profits 'locked in'...
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        209
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/52iRcjF9ns');">    
-                                    <td style="padding:0px;border-top:0;">
-                                        Mr Posey | Video
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        198
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/TNr6DCkR2k');">
-                                    <td style="padding:0px;border-top:0;">
-                                        CONGRESSMAN POESY DELIVERS BOMBSHE...
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        185
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/nviSACNLKY');">
-                                    <td style="padding:0px;border-top:0;">
-                                        Mr Posey | Video
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        176
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('https://t.co/G5OiweFSos');">
-                                    <td style="padding:0px;border-top:0;">
-                                        CDC Scientist: ‘We scheduled meeting to destroy...
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        160
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/Ge1e86sQgi');">
-                                    <td style="padding:0px;border-top:0;">
-                                        Posey CSPAN 7/29/15
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        121
-                                    </td>
-                                </tr>
-                                <tr onclick="sendReq('http://t.co/jLM6rf2zH4');">
-                                    <td style="padding:0px;border-top:0;">
-                                        Mr Posey | Video
-                                    </td>
-                                    <td style="padding:0px;border-top:0;">
-                                        103
-                                    </td>
-                                </tr>
-                                    
-                                    
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-sm-8 pre-scrollable" id="linkDisplayWidget" style="height:100%">
-                        <!--testing div-->
-                    </div>
+                <div class="col-sm-4 pre-scrollable" style="max-height:250px" id="toplinksinfo" ng-controller="ChartCtrl">
+                    <table class="table" id="lineTable-v">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Top Links
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr onclick="sendReq('http://t.co/ueqE5H09b9');">
+                                <td style="padding:0px;border-top:0;">
+                                    CDC Scientist: ‘We scheduled meeting to destroy...
+                                    <!--https://t.co/ueqE5H09b9-->
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    389
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/YUZdXihFXh');">
+                                <td style="padding:0px;border-top:0;">
+                                    Posey CSPAN 7/29/15
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    364
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/lKfcemnsei');">
+                                <td style="padding:0px;border-top:0;">
+                                    Mr Posey | Video
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    329
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/86sAqE8U00');">
+                                <td style="padding:0px;border-top:0;">
+                                    REVEALED: Cancer industry profits 'locked in'...
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    209
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/52iRcjF9ns');">
+                                <td style="padding:0px;border-top:0;">
+                                    Mr Posey | Video
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    198
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/TNr6DCkR2k');">
+                                <td style="padding:0px;border-top:0;">
+                                    CONGRESSMAN POESY DELIVERS BOMBSHE...
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    185
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/nviSACNLKY');">
+                                <td style="padding:0px;border-top:0;">
+                                    Mr Posey | Video
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    176
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('https://t.co/G5OiweFSos');">
+                                <td style="padding:0px;border-top:0;">
+                                    CDC Scientist: ‘We scheduled meeting to destroy...
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    160
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/Ge1e86sQgi');">
+                                <td style="padding:0px;border-top:0;">
+                                    Posey CSPAN 7/29/15
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    121
+                                </td>
+                            </tr>
+                            <tr onclick="sendReq('http://t.co/jLM6rf2zH4');">
+                                <td style="padding:0px;border-top:0;">
+                                    Mr Posey | Video
+                                </td>
+                                <td style="padding:0px;border-top:0;">
+                                    103
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-8 pre-scrollable" id="linkDisplayWidget" style="height:100%">
+                    <!--testing div-->
+                </div>
             </div>
         </div>
     </div>
@@ -469,166 +480,316 @@
 
 
 <script type="text/javascript">
+    /**
+     * This is a basic example on how to instantiate sigma. A random graph is
+     * generated and stored in the "graph" variable, and then sigma is instantiated
+     * directly with the graph.
+     *
+     * The simple instance of sigma is enough to make it render the graph on the on
+     * the screen, since the graph is given directly to the constructor.
+     */
+
+
+    /*Section for custom graph code (twitter analysis)*/
+
+    //calculate number of nodes and edges first of all ( on each row -> if retweeted exists then add 2 nodes otherwise only add 1 node)
+
+    //calc number of edges (on each row -> if retweeted then add one, otherwise dont add an edge.)
+
+    //calculate the list of nodes and edges before counting the number of nodes and edges. (remove duplicate nodes / edges)
 
 
 
-/**
- * This is a basic example on how to instantiate sigma. A random graph is
- * generated and stored in the "graph" variable, and then sigma is instantiated
- * directly with the graph.
- *
- * The simple instance of sigma is enough to make it render the graph on the on
- * the screen, since the graph is given directly to the constructor.
- */
+    //end
+    var i,
+        s,
+        N = 10,
+        E = 50,
+        g = {};
 
 
-/*Section for custom graph code (twitter analysis)*/
+    $(document).ready(function() {
+        var hashes;
+        var mode = "tweet";
 
-//calculate number of nodes and edges first of all ( on each row -> if retweeted exists then add 2 nodes otherwise only add 1 node)
-
-//calc number of edges (on each row -> if retweeted then add one, otherwise dont add an edge.)
-
-//calculate the list of nodes and edges before counting the number of nodes and edges. (remove duplicate nodes / edges)
-
-
-
-//end
-var i,
-    s,
-    N = 10,
-    E = 50,
-    g = {};
-
-
-$(document).ready(function(){
-var hashes;
-
-    try{
+        try {
             var url = window.location.href
-hashes = url.split("?")[1];
-hashes = hashes.split("#")[0];
+            hashes = url.split("?")[1];
+            hashes = hashes.split("#")[0];
+            if(hashes.split("-")[1]){
+                mode = hashes.split("-")[1];
+                console.log("mode: "+mode);
+            }
 
-    }catch(e){
-        hashes = "";
-    }
+            if(mode == "user"){
+                document.getElementById('tweetgraphtab').classList.remove('active');
+                document.getElementById('usergraphtab').classList.add('active');
+                document.getElementById('graphtitlevalue').innerHTML = "Top 1000 Users: General";
+            }else if (mode == "tweet"){
+                document.getElementById('usergraphtab').classList.remove('active');
+                document.getElementById('tweetgraphtab').classList.add('active');
+            }
 
-if(hashes == ""){
-    hashes = "generic";
-}else{
-     document.getElementById('graphtitle').innerHTML = "<h5>Top 1000 tweets on '"+hashes+"'</h5>"
+            hashes = hashes.split("-")[0];
+            //console.log("mode: "+hashes);
 
-    document.getElementById('searchcriteriaremovespan').innerHTML = "<button type='button' class='btn btn-default btn-xs' > "+ hashes +" <span class='glyphicon glyphicon-remove'></span></button>";
+            
+
+        } catch (e) {
+            hashes = "";
+        }
+
+        if (hashes == "") {
+            hashes = "generic";
+        } else {
+            document.getElementById('graphtitle').innerHTML = "<h5>Top 1000 "+mode+"s on '" + hashes + "'</h5>"
+
+            document.getElementById('searchcriteriaremovespan').innerHTML = "<button type='button' class='btn btn-default btn-xs' > " + hashes + " <span class='glyphicon glyphicon-remove'></span></button>";
 
 
-}
-   
+        }
 
-console.log("vars0: "+JSON.stringify(hashes));
-    loadTabData("twitter");
 
-        $.getJSON("../api/networktweetgraph/"+hashes, function(result){
-                g = result;
-                console.log(g);
+        console.log("vars0: " + JSON.stringify(hashes));
+        loadTabData("twitter");
+
+        $.getJSON("../api/network" + mode + "graph/" + hashes, function(result) {
+            var g = result;
+            console.log(g);
+            //var mode = "user";
+
+            if (mode == "user") {
+
+                // Instantiate sigma:
+                var s = new sigma({
+                    graph: g,
+                    renderer: {
+                        container: document.getElementById('graph-container'),
+                        type: 'canvas'
+                    },
+                    settings: {
+                        doubleClickEnabled: true,
+                        /*minEdgeSize: 0.5,
+                        maxEdgeSize: 4,*/
+                        enableEdgeHovering: true,
+                        edgeHoverColor: 'edge',
+                        defaultEdgeHoverColor: '#000',
+                        edgeHoverSizeRatio: 2,
+                        edgeHoverExtremities: true,
+                    }
+                });
+
+
+                s.graph.edges().forEach(function(e) { //might be double size cause of multiple checking or might not be because both updating independently...?
+                    var edgecount = 0;
+                    s.graph.edges().forEach(function(f) {
+                        if (parseInt(f.source) == parseInt(e.source) && parseInt(f.target) == parseInt(e.target)) {
+                            edgecount++;
+                        }
+                    });
+                    console.log(edgecount + "duplicate edge detected :)")
+
+                    e.size = edgecount;
+                });
+                s.refresh();
 
 
                 // Instantiate sigma:
-                s = new sigma({
+                /*s = new sigma({
                   graph: g,
-                  container: 'graph-container'
+                  container: 'graph-container',
+                });*/
+
+                /*s.graph.nodes().forEach(function(n) {
+                  n.originalColor = n.color;
+                });
+                s.graph.edges().forEach(function(e) {
+                  e.originalColor = e.color;
+                });*/
+
+                sigma.plugins.relativeSize(s, 1);
+                /*sigma.classes.graph.addMethod('neighbors', function(nodeId) {
+                    var k,
+                    neighbors = {},
+                    index = this.allNeighborsIndex[nodeId] || {};
+
+                    for (k in index)
+                      neighbors[k] = this.nodesIndex[k];
+
+                    return neighbors;
+                });*/
+                s.startForceAtlas2({
+                    linLogMode: false,
+                    barnesHutOptimize: false,
+                    gravity: 1
                 });
 
-                //sigma.plugins.relativeSize(s, 1);
-                s.startForceAtlas2({linLogMode: false, barnesHutOptimize: false, gravity:2});
 
-
-                setTimeout(function(){
+                setTimeout(function() {
                     s.stopForceAtlas2();
                 }, 7500);
 
 
-                //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+
+
                 s.bind('clickNode', function(e) {
-                    console.log(e.type, e.data.node.label, e.data.captor, e.data.node.label);
-                    document.getElementById('network-graph-info').innerHTML = "<p><h3>@"+e.data.node.label+"</h3></p><p> " + /*tweet data here*/ e.data.node.text + "</p>"
-                    //$scope.tweetData = e.data.node.label;
+                  console.log(e.type, e.data.node, e.data.captor);
+                  
+
+                });
+                s.bind('clickEdge', function(e) {
+                    var tweetsText = "";
+                    var edgecount = 0;
+                    s.graph.edges().forEach(function(f) {
+                        if (parseInt(f.source) == parseInt(e.data.edge.source) && parseInt(f.target) == parseInt(e.data.edge.target)) {
+                            tweetsText += "<h5>" + f.timestamp + "</h5><p>" + f.text + "</p>";
+                            edgecount++;
+                        }
+                    });
+                    //console.log(edgecount + "duplicate edge detected :)")
+
+                    e.data.edge.size = edgecount;
+                    console.log(e.type, e.data.edge, e.data.captor);
+                    document.getElementById('network-graph-info').innerHTML = "<p><h4><strong>@" + e.data.edge.targetName + "</strong> retweeted <strong>@" + e.data.edge.sourceName + "</strong>'s tweet:</h4></p> " + tweetsText /*tweet data here*/ /*e.data.edge.text*/ ;
+                    //$scope.tweetData = e.data.node.edge.label;
                 });
 
 
+
+                /*s.bind('clickStage', function(e) {
+                  s.graph.nodes().forEach(function(n) {
+                    n.color = n.originalColor;
+                  });
+
+                  s.graph.edges().forEach(function(e) {
+                    e.color = e.originalColor;
+                  });
+
+                  // Same as in the previous event:
+                  s.refresh();
+                });*/
+
+
+                //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+                //s.bind('clickEdge', function(e) {
+                //  console.log(e.type, e.data.edge, e.data.captor);
+                //document.getElementById('network-graph-info').innerHTML = "<p><h3>@"+e.data.edge+"</h3></p><p> " + /*tweet data here*/ /*e.data.edge.text*/ + "</p>"
+                //$scope.tweetData = e.data.node.label;
+                //});
+
+                /*s.graph.edges().forEach(function(e) {
+                    e.type = 'parallel';
+                    });
+                */
+            } else if (mode == "tweet") {
+                // Instantiate sigma:
+                s = new sigma({
+                    graph: g,
+                    container: 'graph-container'
+                });
+                //sigma.plugins.relativeSize(s, 1);
+                s.startForceAtlas2({
+                    linLogMode: false,
+                    barnesHutOptimize: false,
+                    gravity: 2
+                });
+                setTimeout(function() {
+                    s.stopForceAtlas2();
+                }, 7500);
+                //s.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+                s.bind('clickNode', function(e) {
+                    //hardcoded profile info for when damonayoung is clicked.
+                    if(e.data.node.username == "damonayoung"){
+                        document.getElementById('network-graph-info').innerHTML = "<p><h3>@" + e.data.node.username + "</h3></p><div class='col-sm-4 pull-right'><img style='width:100%'' src='https://pbs.twimg.com/profile_images/550169850899734528/CHb6FeiV.jpeg'></div><p>Bio: <em>Philosopher/author. New: Voltaire's Vine (Random House), How to Think About Exercise (Picador/Macmillan). For kids: My Pop is a Pirate/My Nanna is a Ninja.</em></p><p> " + /*tweet data here*/ e.data.node.text + "</p>"
+                    }else{
+                        console.log(e.type, e.data.node.label, e.data.captor, e.data.node.label);
+                        document.getElementById('network-graph-info').innerHTML = "<p><h3>@" + e.data.node.username + "</h3></p><p> " + /*tweet data here*/ e.data.node.text + "</p>"
+                            //$scope.tweetData = e.data.node.label;
+                    }
+                });
+            }
         });
-});
+    });
 
 
 
-function createRequestObject() {
-    var obj;
-    var browser = navigator.appName;
-    if (browser == "Microsoft Internet Explorer") {
-        obj = new ActiveXObject("Microsoft.XMLHTTP");
-    } else {
-        obj = new XMLHttpRequest();
+    function createRequestObject() {
+        var obj;
+        var browser = navigator.appName;
+        if (browser == "Microsoft Internet Explorer") {
+            obj = new ActiveXObject("Microsoft.XMLHTTP");
+        } else {
+            obj = new XMLHttpRequest();
+        }
+        return obj;
     }
-    return obj;
-}
 
-function sendReq(req) {   
+    function sendReq(req) {
 
 
-    document.getElementById('linkDisplayWidget').innerHTML = "<iframe id='extFrame' src='"+req+"' style='height:100%;width:100%;'></iframe>";
+        document.getElementById('linkDisplayWidget').innerHTML = "<iframe id='extFrame' src='" + req + "' style='height:100%;width:100%;'></iframe>";
 
 
-    /*var http = createRequestObject();
-    http.open('get', req);
-    http.onreadystatechange = handleResponse;
-    http.send(null);)*/
-}
-
-function handleResponse() {    
-    if (http.readyState == 4) {
-        var response = http.responseText;
-        document.getElementById('linkDisplayWidget').innerHTML=response;
+        /*var http = createRequestObject();
+        http.open('get', req);
+        http.onreadystatechange = handleResponse;
+        http.send(null);)*/
     }
-}
-    
-function loadTabData(selection) {
-    console.log(selection);
-    if (selection === "twitter" || selection === "news" || selection === "both") {
-        document.getElementById('twitterTab').classList.remove('active');
-        document.getElementById('newsTab').classList.remove('active');
-        document.getElementById('bothTab').classList.remove('active');
-        document.getElementById(selection + "Tab").classList.add('active');
 
-        //if(selection === "twitter"){
+    function handleResponse() {
+        if (http.readyState == 4) {
+            var response = http.responseText;
+            document.getElementById('linkDisplayWidget').innerHTML = response;
+        }
+    }
+
+    function loadTabData(selection) {
+        console.log(selection);
+        if (selection === "twitter" || selection === "news" || selection === "both") {
+            document.getElementById('twitterTab').classList.remove('active');
+            document.getElementById('newsTab').classList.remove('active');
+            document.getElementById('bothTab').classList.remove('active');
+            document.getElementById(selection + "Tab").classList.add('active');
+
+            //if(selection === "twitter"){
             //document.getElementById('twitterchart').style.display = 'inline-block';
             //document.getElementById('newschart').style.display = 'none';
             //$scope.globalTab = 0;
-        //}else if (selection === "news"){
+            //}else if (selection === "news"){
             //document.getElementById('twitterchart').style.display = 'none';
             //document.getElementById('newschart').style.display = 'inline-block';
             //$scope.globalTab = 1;
 
-        //}else if (selection === "both"){
+            //}else if (selection === "both"){
             //$scope.globalTab = 2;
-        //}
-        //document.getElementById('line-chart').innerHTML = '<canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>';
+            //}
+            //document.getElementById('line-chart').innerHTML = '<canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>';
 
 
-        //refreshLineGraph(selection);
+            //refreshLineGraph(selection);
+        }
     }
-}
-/*function refreshLineGraph(globalTab) {
+    function loadGraphTab(selection) {
+        console.log(selection);
+        if (selection === "tweet" || selection === "user"){
+            document.getElementById('tweetgraphtab').classList.remove('active');
+            document.getElementById('usergraphtab').classList.remove('active');
+            document.getElementById(selection+'graphtab').classList.add('active');
+            window.location.search = '?-'+selection;
+
+        }
+    }
+    /*function refreshLineGraph(globalTab) {
 
 
-    if (globalTab === 0) {
-        document.getElementById('line-chart').innerHTML = "<canvas id='twitterline customline-v' class='chart chart-line chart-xl' data='twitterline.data' labels='twitterline.labels' legend='true' click='twitterline.onClick' series='twitterline.series'></canvas>";
-    } else if (globalTab === 1) {
-        document.getElementById('line-chart').innerHTML = "";
-    }; else if (globalTab === 2) {
-        document.getElementById('line-chart').innerHTML = "<canvas id='bothline customline-v' class='chart chart-line chart-xl' data='bothline.data' labels='bothline.labels' legend='true' click='bothline.onClick' series='bothline.series'></canvas>";
-    };
-}*/
-
-
-
+        if (globalTab === 0) {
+            document.getElementById('line-chart').innerHTML = "<canvas id='twitterline customline-v' class='chart chart-line chart-xl' data='twitterline.data' labels='twitterline.labels' legend='true' click='twitterline.onClick' series='twitterline.series'></canvas>";
+        } else if (globalTab === 1) {
+            document.getElementById('line-chart').innerHTML = "";
+        }; else if (globalTab === 2) {
+            document.getElementById('line-chart').innerHTML = "<canvas id='bothline customline-v' class='chart chart-line chart-xl' data='bothline.data' labels='bothline.labels' legend='true' click='bothline.onClick' series='bothline.series'></canvas>";
+        };
+    }*/
 
 
 
@@ -638,4 +799,3 @@ function loadTabData(selection) {
         timeline.updateDisplay();
     }*/
 </script>
-
