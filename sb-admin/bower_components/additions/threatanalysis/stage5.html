@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div>
@@ -10,19 +11,288 @@
     </div>
   </div>
 </nav>
+
+<div class="container" style="width:350px;">
+    <div class="progress active">
+        <div class="progress-bar" style="width: 0%; background-color: grey;"></div>
+    </div>
+</div>
+ 
+ <script type="text/javascript">
+
+    var $bar = $('.progress-bar');
+
+    /**/if ($bar.width() >= 350) {
+        clearInterval(progress);
+        $('.progress').removeClass('active');
+    }
+        $bar.width(175);
+    
+function updateBar(){
+
+		if($('#2High').hasClass('active')){
+			if($('#3No').hasClass('active')){
+				if($('#4Low').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(35);
+        					updatebartext(35);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}
+        			}
+        		}else if($('#4High').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}
+        			}
+        		}
+        	}else if($('#3Yes').hasClass('active')){
+				if($('#4Low').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}
+        			}
+        		}else if($('#4High').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(300);
+        					updatebartext(300);
+        				}
+        			}
+        		}
+        	}
+
+
+		}else if($('#2Low').hasClass('active')){
+			if($('#3No').hasClass('active')){
+				if($('#4Low').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(35);
+        					updatebartext(35);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}
+        			}
+        		}else if($('#4High').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}
+        			}
+        		}
+        	}else if($('#3Yes').hasClass('active')){
+				if($('#4Low').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(75);
+        					updatebartext(75);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}
+        			}
+        		}else if($('#4High').hasClass('active')){
+					if($('#5No').hasClass('active')){
+						if($('#6Yes').hasClass('active')){
+							$bar.width(160);
+        					updatebartext(160);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}
+        			}else if ($('#5Yes').hasClass('active')){
+        				if($('#6Yes').hasClass('active')){
+							$bar.width(240);
+        					updatebartext(240);
+        				}else if($('#6No').hasClass('active')){
+							$bar.width(300);
+        					updatebartext(300);
+        				}
+        			}
+        		}
+        	}
+
+
+
+			
+
+		}
+
+		if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active') ) {
+        	$bar.width(300);
+        	updatebartext(300);
+		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
+			
+		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
+			
+		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
+			
+		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
+			
+		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
+			
+		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
+			
+		}
+
+
+        
+
+
+
+
+
+}
+
+
+function updatebartext(val){
+	    var $bar = $('.progress-bar');
+
+
+	if(val < 70){
+        	$bar.text("Very low risk");
+        	    		        	$bar.css("background-color", "#006400");
+    	}else if (val >= 70 && val < 140){
+    		        	$bar.text("Low risk");
+    		        	$bar.css("background-color", "#ADFF2F");
+
+    	}else if (val >= 141 && val < 210){
+    		        	$bar.text("Moderate risk");
+    		        	    		        	$bar.css("background-color", "#DAA520");
+
+
+    	}else if (val >= 211 && val < 280){
+    		        	$bar.text("High risk");
+    		        	    		      $bar.css("background-color", "#AB3F09");
+
+
+
+    	}else if (val >= 281 && val < 350){
+    		        	$bar.text("Very high risk");
+    		        	$bar.className = "progress-bar";
+    		           	    		        	$bar.css("background-color", "#B22222");
+
+    		        	
+
+    	}else{
+    		$bar.text("Unknown risk");
+    	}
+}
+
+
+ </script>
+
+
 <h4>Stage 5: Estimate risk</h4>
 
 
 <ol class="list-group">
 	<li class="list-group-item">
 		Are there specific groups at increased risk of infection?
-		<button type="button" id="1Yes" class="btn btn-default" onclick="document.getElementById('1No').classList.remove('active');document.getElementById('1Yes').classList.add('active');">Yes</button>
-		<button type="button" id="1No" class="btn btn-default" onclick="document.getElementById('1Yes').classList.remove('active');document.getElementById('1No').classList.add('active');">No</button>
+		<button type="button" id="1Yes" class="btn btn-default" onclick="document.getElementById('1No').classList.remove('active');document.getElementById('1Yes').classList.add('active');updateBar();">Yes</button>
+		<button type="button" id="1No" class="btn btn-default" onclick="document.getElementById('1Yes').classList.remove('active');document.getElementById('1No').classList.add('active');updateBar();">No</button>
 	</li>
 	<li class="list-group-item">
 		What is the potential for transmission within the Member State?
-		<button type="button" id="2High" class="btn btn-default" onclick="document.getElementById('2Low').classList.remove('active');document.getElementById('2High').classList.add('active');">High</button>
-		<button type="button" id="2Low" class="btn btn-default" onclick="document.getElementById('2High').classList.remove('active');document.getElementById('2Low').classList.add('active');">Low</button>
+		<button type="button" id="2High" class="btn btn-default" onclick="document.getElementById('2Low').classList.remove('active');document.getElementById('2High').classList.add('active');updateBar();">High</button>
+		<button type="button" id="2Low" class="btn btn-default" onclick="document.getElementById('2High').classList.remove('active');document.getElementById('2Low').classList.add('active');updateBar();">Low</button>
+	</li>
+	<li class="list-group-item">
+		Is this threat unusual or unexpected?
+		<button type="button" id="3Yes" class="btn btn-default" onclick="document.getElementById('3No').classList.remove('active');document.getElementById('3Yes').classList.add('active');updateBar();">Yes</button>
+		<button type="button" id="3No" class="btn btn-default" onclick="document.getElementById('3Yes').classList.remove('active');document.getElementById('3No').classList.add('active');updateBar();">No</button>
+	</li>
+	<li class="list-group-item">
+		What is the probability of further spread within the EU?
+		<button type="button" id="4High" class="btn btn-default" onclick="document.getElementById('4Low').classList.remove('active');document.getElementById('4High').classList.add('active');updateBar();">High</button>
+		<button type="button" id="4Low" class="btn btn-default" onclick="document.getElementById('4High').classList.remove('active');document.getElementById('4Low').classList.add('active');updateBar();">Low</button>
+	</li>
+	<li class="list-group-item">
+		Is the threat likely to cause severe disease in this population/group?
+		<button type="button" id="5Yes" class="btn btn-default" onclick="document.getElementById('5No').classList.remove('active');document.getElementById('5Yes').classList.add('active');updateBar();">Yes</button>
+		<button type="button" id="5No" class="btn btn-default" onclick="document.getElementById('5Yes').classList.remove('active');document.getElementById('5No').classList.add('active');updateBar();">No</button>
+	</li>
+	<li class="list-group-item">
+		Are effective treatments and control measures available?
+		<button type="button" id="6Yes" class="btn btn-default" onclick="document.getElementById('6No').classList.remove('active');document.getElementById('6Yes').classList.add('active');updateBar();">Yes</button>
+		<button type="button" id="6No" class="btn btn-default" onclick="document.getElementById('6Yes').classList.remove('active');document.getElementById('6No').classList.add('active');updateBar();">No</button>
 	</li>
 	<li class="list-group-item">......</li>
 
