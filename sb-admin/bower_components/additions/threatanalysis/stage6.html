@@ -1,0 +1,414 @@
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div>
+      <ul class="nav navbar-nav navbar-left">
+        <li><a onclick="loadThreatAnalysis(5);"><span class="glyphicon glyphicon-chevron-left"></span>Back</a></li>
+      </ul>
+      <!--<ul class="nav navbar-nav navbar-right">
+        <li><a onclick="loadThreatAnalysis(6);">Review <span class="glyphicon glyphicon-ok"></span></a></li>
+      </ul>-->
+    </div>
+  </div>
+</nav>
+
+
+ 
+<script type="text/javascript">
+
+    console.log(JSON.stringify(riskAlgorithmStates));
+
+    var g = {
+                nodes: [
+                    {
+                        id: 1,
+                        label: "Are there specific groups at increased risk of infection?",
+                        x: 0,
+                        y: 0,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 2,
+                        label: "",
+                        x: 0,
+                        y: 0.1,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 3,
+                        label: "Is this threat unusual or unexpected?",
+                        x: -0.6,
+                        y: 0.2,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 4,
+                        label: "",
+                        x: 0.6,
+                        y: 0.2,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 5,
+                        label: "What is the probability of further spread within the EU?",
+                        x: -0.6,
+                        y: 0.3,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 6,
+                        label: "",
+                        x: 0.6,
+                        y: 0.3,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 7,
+                        label: "Is the threat likely to cause severe disease in this population/group?",
+                        x: -0.6,
+                        y: 0.4,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 8,
+                        label: "",
+                        x: 0,
+                        y: 0.4,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 9,
+                        label: "",
+                        x: 0.6,
+                        y: 0.4,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 10,
+                        label: "Are effective treatments and control measures available?",
+                        x: -0.9,
+                        y: 0.5,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 11,
+                        label: "",
+                        x: -0.3,
+                        y: 0.5,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 12,
+                        label: "",
+                        x: 0.3,
+                        y: 0.5,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 13,
+                        label: "",
+                        x: 0.9,
+                        y: 0.5,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 14,
+                        label: "Very low risk",
+                        x: -1.2,
+                        y: 0.6,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 15,
+                        label: "Low risk",
+                        x: -0.6,
+                        y: 0.6,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 16,
+                        label: "Moderate risk",
+                        x: 0,
+                        y: 0.6,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 17,
+                        label: "High risk",
+                        x: 0.6,
+                        y: 0.6,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: 18,
+                        label: "Very high risk",
+                        x: 1.2,
+                        y: 0.6,
+                        size: 1,
+                        color: "#666"
+                    }
+
+                ],
+                edges: [
+                    {
+                        id: Math.random(),
+                        source: 1,
+                        target: 2,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 2,
+                        target: 3,
+                        label: "Low",
+                        size: 1,
+                        color: "#666",
+                    },{
+                        id: Math.random(),
+                        source: 2,
+                        target: 4,
+                        label: "High",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 3,
+                        target: 6,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 4,
+                        target: 5,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 3,
+                        target: 5,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 4,
+                        target: 6,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 5,
+                        target: 7,
+                        label: "Low",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 6,
+                        target: 9,
+                        label: "High",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 5,
+                        target: 8,
+                        label: "High",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 6,
+                        target: 8,
+                        label: "Low",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 1,
+                        target: 2,
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 7,
+                        target: 10,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 7,
+                        target: 11,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 8,
+                        target: 11,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 8,
+                        target: 12,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 9,
+                        target: 12,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 9,
+                        target: 13,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 10,
+                        target: 14,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 10,
+                        target: 15,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 11,
+                        target: 15,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 11,
+                        target: 16,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 12,
+                        target: 16,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 12,
+                        target: 17,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 13,
+                        target: 17,
+                        label: "Yes",
+                        size: 1,
+                        color: "#666"
+                    },{
+                        id: Math.random(),
+                        source: 13,
+                        target: 18,
+                        label: "No",
+                        size: 1,
+                        color: "#666"
+                    },
+                ]
+            };
+            var replacementColor = "#666";
+            if(riskAlgorithmStates[6] == 14){
+                replacementColor = "#006400";
+            }else if(riskAlgorithmStates[6] == 15){
+                replacementColor = "#ADFF2F";
+
+            }else if(riskAlgorithmStates[6] == 16){
+                replacementColor = "#DAA520";
+
+            }else if(riskAlgorithmStates[6] == 17){
+                replacementColor = "#AB3F09";
+
+            }else if(riskAlgorithmStates[6] == 18){
+                replacementColor = "#B22222";
+
+            }
+
+            for (riskstate in riskAlgorithmStates){
+                for(node in g.nodes){
+                    if (g.nodes[node].id == riskAlgorithmStates[riskstate]) {
+                        //console.log(riskstate + ", " + g.nodes[node].id)
+                        g.nodes[node].color = replacementColor;
+                    }
+                }
+            }
+
+            var state;
+            for (state = 0; state < 6; state++){
+                var comp1 = riskAlgorithmStates[state];
+                var comp2 = riskAlgorithmStates[state+1];
+                console.log(comp1 + ", " +comp2)
+                for (edge in g.edges){
+                    if(g.edges[edge].source == comp1 && g.edges[edge].target == comp2){
+                        g.edges[edge].color = replacementColor;
+                    }
+                }
+            }
+
+            //s.refresh();
+
+
+    $(document).ready(function() {
+    var s = new sigma({
+        graph: g,
+        renderer: {
+            container: document.getElementById('graph-container'),
+            type: 'canvas'
+        },
+        settings: {
+            labelAlignment: "left",
+            edgeLabelSize: 'proportional'
+        }
+    });
+    s.refresh();
+
+});
+
+
+
+
+</script>
+
+
+<h4>Stage 6: Review</h4>
+
+
+<div id="container">
+                        <style>
+                            #graph-container {
+                                top: 0;
+                                bottom: 0;
+                                left: 0;
+                                right: 0;
+                                /*position: absolute;*/
+                                height: 250px;
+                            }
+                        </style>
+                        <div id="graph-container"></div>
+                    </div>

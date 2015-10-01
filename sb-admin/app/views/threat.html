@@ -17,9 +17,11 @@
     </div>
     <script src="bower_components/timelinejs/js/timeline.js"></script>
     <script>
-      var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/welcome.json', {
+      var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/threat.json', {
         timenav_position:"top",
     });
+
+
 
   </script>
 </div>
@@ -33,13 +35,15 @@
 
                 <div class="col-sm-4" id="line-chart">
                     <canvas id="line customline-v" class="chart chart-line chart-xl" data="swineline.data" labels="swineline.labels" legend="true"
-                    click="line.onClick" series="swineline.series" options="swineline.options"></canvas>
+                    click="line.onClick" series="swineline.series" options="swineline.options" colours="swineline.colours"></canvas>
                 </div>
 
-                <div class="col-sm-4" id="bar-chart">
-                    <canvas id="bar custombar-v" class="chart chart-bar chart-xl" data="bar.data" labels="bar.labels" legend="true"
-                    click="line.onClick" series="line.series"></canvas>
+                <div class="col-sm-4" id="line-chart">
+                    <canvas id="line customline-v" class="chart chart-line chart-xl" data="survellianceline.data" labels="survellianceline.labels" legend="true"
+                    click="survellianceline.onClick" series="survellianceline.series" options="survellianceline.options" colours="survellianceline.colours"></canvas>
                 </div>
+
+                
 
                 <div class="col-sm-4" id="map" style="height: 220px;">
 
@@ -89,18 +93,18 @@
 <div class="row col-lg-12">
     <div class="panel panel-default">
             <div class="panel-body">
-                <div class="col-sm-6">
-                    <div class="col-sm-3">
+                <div class="col-sm-9">
+                    <div class="col-sm-2">
                         <ul class="list-group">
                             <li class="list-group-item select_custom_v" id="stage0" onclick="loadThreatAnalysis(0);">Stage 0</li>
                             <li class="list-group-item select_custom_v" id="stage1" onclick="loadThreatAnalysis(1);">Stage 1</li>
-                            <li class="list-group-item select_custom_v" id="stage2" onclick="loadThreatAnalysis(2);">Stage 2</br></br></li>
+                            <li class="list-group-item select_custom_v" id="stage2" onclick="loadThreatAnalysis(2);">Stage 2</br></li>
                             <li class="list-group-item select_custom_v" id="stage3" onclick="loadThreatAnalysis(3);">Stage 3</li>
                             <li class="list-group-item select_custom_v" id="stage4" onclick="loadThreatAnalysis(4);">Stage 4</li>
                             <li class="list-group-item select_custom_v" id="stage5" onclick="loadThreatAnalysis(5);">Stage 5</li>
                             </ul>
                     </div>
-                    <div class="col-sm-9" id="threatAnalysisDisplay">
+                    <div class="col-sm-10" id="threatAnalysisDisplay">
                     <!--testing -->
                         <ul class="list-group">
                             <li class="list-group-item" onclick="loadThreatAnalysis(0);">Preparation</li>
@@ -112,7 +116,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <ul class="list-group">
                         <li class="list-group-item"><strong>Discussions</strong></li>
                         <li class="list-group-item">NFD</li>
@@ -532,13 +536,38 @@ function handleResponse() {
 
 $(document).ready(function(){
 
+// This earthquake data is sourced from New Zealand’s Geonet
+// site over a date range that covers a period of reasonable
+// activity in July/August 2013.
+var quakePoints = [
+[51.490393,-0.109152,2183], //lnglat and radius
+[51.536117, -0.122885,2138],
+[51.536117, -0.122885,2643],
+[51.536117, -0.122885,2315],
+[51.190784, -1.992544,2536],
+[50.715424, -3.621795,2314],
+[53.249595, -0.637693,574],
+[53.901294, -2.104019,2533],
+[55.125738, -1.898219,1575],
+[55.936173, -3.433145,3000],
+[53.508247, -2.735988,864]
+];
+
+
+
     var map = new L.Map('map', {
-        center: new L.LatLng(30, 0),
-        zoom: 1,
+        center: new L.LatLng(54.093409, -2.89479),
+        zoom: 4,
         layers: new L.TileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
             attribution: '© <a href="http://openstreetmap.org">OpenStreetMap</a> | Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">'
         })
     });
+
+    var heat = L.heatLayer(quakePoints,{
+            radius: 20,
+            blur: 15, 
+            maxZoom: 17,
+        }).addTo(map);
 
 
     
@@ -546,7 +575,7 @@ $(document).ready(function(){
 });
 
 function loadThreatAnalysis(stageNum) {
-    if(stageNum <=5 && stageNum>=0) {
+    if(stageNum <=6 && stageNum>=0) {
 
         $('#threatAnalysisDisplay').load('bower_components/additions/threatanalysis/stage' + stageNum + '.html');
 
@@ -557,7 +586,9 @@ function loadThreatAnalysis(stageNum) {
         document.getElementById('stage4').classList.remove('active');
         document.getElementById('stage5').classList.remove('active');
 
-        document.getElementById('stage'+stageNum).classList.add('active');
+        if(stageNum != 6){
+            document.getElementById('stage'+stageNum).classList.add('active');
+        }
 
     }
 }
