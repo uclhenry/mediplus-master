@@ -6,7 +6,7 @@
         <li><a onclick="loadThreatAnalysis(4);"><span class="glyphicon glyphicon-chevron-left"></span>Back</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a >Review <span class="glyphicon glyphicon-ok"></span></a></li>
+        <li><a onclick="loadThreatAnalysis(6);">Review <span class="glyphicon glyphicon-ok"></span></a></li>
       </ul>
     </div>
   </div>
@@ -19,6 +19,8 @@
 </div>
  
  <script type="text/javascript">
+
+ var riskAlgorithmStates = [];
 
     var $bar = $('.progress-bar');
 
@@ -35,17 +37,21 @@ function updateBar(){
 				if($('#4Low').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,4,5,7,10,14];
 							$bar.width(35);
         					updatebartext(35);
         				}else if($('#6No').hasClass('active')){
+							riskAlgorithmStates = [1,2,4,5,7,10,15];
 							$bar.width(75);
         					updatebartext(75);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+       						riskAlgorithmStates = [1,2,4,5,7,11,15];
 							$bar.width(75);
         					updatebartext(75);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,5,7,11,16];
 							$bar.width(160);
         					updatebartext(160);
         				}
@@ -53,17 +59,21 @@ function updateBar(){
         		}else if($('#4High').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,4,5,8,11,15];
 							$bar.width(75);
         					updatebartext(75);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,5,8,11,16];
 							$bar.width(160);
         					updatebartext(160);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,5,8,12,16];
 							$bar.width(160);
         					updatebartext(160);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,5,8,12,17];
 							$bar.width(240);
         					updatebartext(240);
         				}
@@ -73,17 +83,21 @@ function updateBar(){
 				if($('#4Low').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,4,6,8,11,15];
 							$bar.width(75);
         					updatebartext(75);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,6,8,11,16];
 							$bar.width(160);
         					updatebartext(160);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,6,8,12,16];
 							$bar.width(160);
         					updatebartext(160);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,6,8,12,17];
 							$bar.width(240);
         					updatebartext(240);
         				}
@@ -91,17 +105,21 @@ function updateBar(){
         		}else if($('#4High').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,4,6,9,12,16];
 							$bar.width(160);
         					updatebartext(160);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,6,9,12,17];
 							$bar.width(240);
         					updatebartext(240);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,6,9,13,17];
 							$bar.width(240);
         					updatebartext(240);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,4,6,9,13,18];
 							$bar.width(300);
         					updatebartext(300);
         				}
@@ -115,17 +133,21 @@ function updateBar(){
 				if($('#4Low').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,3,5,7,10,14];
 							$bar.width(35);
         					updatebartext(35);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,5,7,10,15];
 							$bar.width(75);
         					updatebartext(75);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,5,7,11,15];
 							$bar.width(75);
         					updatebartext(75);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,5,7,11,16];
 							$bar.width(160);
         					updatebartext(160);
         				}
@@ -133,17 +155,21 @@ function updateBar(){
         		}else if($('#4High').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,3,5,8,11,15];
 							$bar.width(75);
         					updatebartext(75);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,5,8,11,16];
 							$bar.width(160);
         					updatebartext(160);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,5,8,11,15];
 							$bar.width(160);
         					updatebartext(160);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,5,8,11,16];
 							$bar.width(240);
         					updatebartext(240);
         				}
@@ -153,17 +179,21 @@ function updateBar(){
 				if($('#4Low').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,3,6,8,11,15];
 							$bar.width(75);
         					updatebartext(75);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,6,8,11,16];
 							$bar.width(160);
         					updatebartext(160);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,6,8,12,16];
 							$bar.width(160);
         					updatebartext(160);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,6,8,12,17];
 							$bar.width(240);
         					updatebartext(240);
         				}
@@ -171,17 +201,21 @@ function updateBar(){
         		}else if($('#4High').hasClass('active')){
 					if($('#5No').hasClass('active')){
 						if($('#6Yes').hasClass('active')){
+							riskAlgorithmStates = [1,2,3,6,9,12,16];
 							$bar.width(160);
         					updatebartext(160);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,6,9,12,17];
 							$bar.width(240);
         					updatebartext(240);
         				}
         			}else if ($('#5Yes').hasClass('active')){
         				if($('#6Yes').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,6,9,13,17];
 							$bar.width(240);
         					updatebartext(240);
         				}else if($('#6No').hasClass('active')){
+        					riskAlgorithmStates = [1,2,3,6,9,13,18];
 							$bar.width(300);
         					updatebartext(300);
         				}
@@ -195,7 +229,7 @@ function updateBar(){
 
 		}
 
-		if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active') ) {
+		/*if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active') ) {
         	$bar.width(300);
         	updatebartext(300);
 		}else if($('#2High').hasClass('active') && $('#2High').hasClass('active') && $('#3Yes').hasClass('active') && $('#4High').hasClass('active') && $('#5Yes').hasClass('active') && $('#6No').hasClass('active')) {
@@ -212,7 +246,7 @@ function updateBar(){
 			
 		}
 
-
+*/
         
 
 

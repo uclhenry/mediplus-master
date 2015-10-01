@@ -40,6 +40,8 @@
     defaultNodeColor: '#000',
     // {string}
     defaultLabelSize: 14,
+    // {string}
+    defaultLabelAlignment: 'right',
     // {string} Indicates how to choose the edges color. Available values:
     //          "source", "target", "default"
     edgeColor: 'source',
@@ -108,7 +110,7 @@
     drawEdges: true,
     drawNodes: true,
     drawLabels: true,
-    drawEdgeLabels: false,
+    drawEdgeLabels: true,
     // {boolean} Indicates if the edges must be drawn in several frames or in
     //           one frame, as the nodes and labels are drawn.
     batchEdgesDrawing: false,
