@@ -19,10 +19,9 @@
     <script>
       var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/threat.json', {
         timenav_position:"top",
+        scale_factor: "0.5",
     });
-
-
-
+     //timeline._timenav.zoomOut();
   </script>
 </div>
 
@@ -92,8 +91,9 @@
 
 <div class="row col-lg-12">
     <div class="panel panel-default">
+            <div class="panel-heading">Risk assessment Questions</div>
             <div class="panel-body">
-                <div class="col-sm-9">
+                <div class="col-sm-12">
                     <div class="col-sm-2">
                         <ul class="list-group">
                             <li class="list-group-item select_custom_v" id="stage0" onclick="loadThreatAnalysis(0);">Stage 0</li>
@@ -116,17 +116,19 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <ul class="list-group">
-                        <li class="list-group-item"><strong>Discussions</strong></li>
-                        <li class="list-group-item">NFD</li>
-                        <li class="list-group-item">EWRS</li>
-                        <li class="list-group-item">DPIS</li>
-                        <li class="list-group-item">WHO reports</li>
-                    </ul>
-                    <ul class="list-group">
-                        <li class="list-group-item">Round Table Discussion</li>
-                    </ul>
+                <div class="col-sm-12">
+                    <div class="list-inline col-sm-6">
+                            <span><strong>Discussion Fora/Networks:   </strong></span>
+                            <button type="button" class="btn btn-default btn-sm">IHR</button>
+                            <button type="button" class="btn btn-default btn-sm">EWRS</button>
+                            <button type="button" class="btn btn-default btn-sm">EPIS</button>
+                            
+                        
+                    </div>
+                    <div class="list-inline col-sm-6">
+                            <span><button type="button" class="btn btn-default btn-sm pull-right">Round Table Discussions Archive</button> </span>
+                            <span><button type="button" class="btn btn-default btn-sm pull-right">Communicable Diseases Threats/WHO Reports</button></span>                            
+                    </div>
                 </div>
             </div>
     </div>
