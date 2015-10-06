@@ -6,6 +6,18 @@
  * # MainCtrl
  * Controller of the sbAdminApp
  */
+
+var startDateRange = 1443657600;
+var endDateRange = 1446335999;
+
+function isInTimelineRange(timestamp){
+  if(startDateRange <= timestamp && timestamp <= endDateRange){
+    return true;
+  }else{
+    return false;
+  }
+}
+
 var sbAdminApp = angular.module('sbAdminApp')
   .controller('ChartCtrl', ['$scope', '$timeout', '$q', function ($scope, $timeout, $q) {
 
@@ -21,7 +33,7 @@ function displayTopUsers(param){
         var $http = angular.injector(['ng']).get('$http');
                 
                 if (param != "") {
-                    param+= "/Jul/2015";
+                    param+= "/Oct/2015";
                 }
 
 
@@ -57,102 +69,191 @@ function displayTopUsers(param){
 }
 var twittergraphvalues = 1;
 var twitterdataarray = [];
-function loadTwitterGraphValues(start, end){
-  var $http = angular.injector(['ng']).get('$http');
+
+
+/*window.setInterval(function(){
+  /// call your function here
+  console.log('interval');
+    //$scope.labels.push('');
+    //$scope.data[0].push(9);
+    $scope.twitterline.data[0][0] = Math.round(Math.random() * 1000);
+}, 5000);*/
+
+
+
+
+
+function loadTwitterGraphValues(){
+  $scope.twitterline = {
+      labels: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'],
+      series: ['Twitter'],
+      data: [
+        [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+      ],
+      onClick: function (points, evt) {
+        console.log(points, evt);
+        console.log(twittergraphvalues);
+          var selectedPoint = points[0]['label'];
+
+
+          //add table refresh/update here.....
+
+          //////////////////loadTable(JSON.stringify(points[0]['label']));
+          //$scope.rows = [];
+
+          //$http.get("http://localhost:3000/api/topusers/07/07/2015").success(funtion (response) {
+        //});
+
+
+            //$scope.rows = [];
+            //$scope.rows.push('response');
+
+            displayTopUsers(selectedPoint);
+
                 
-                if (start != "") {
-                    start+= "/Jul/2015";
-                }
-                if(end !="") {
-                  end += "Jul/2015"
-                }
+                //console.log(defer.promise);
+                //$scope.rows = defer.promise.data;
+
+            
+
+          }
+
+          
 
 
-                var defer = $q.defer();
+          //$scope.counter = 3;
+
+          //$scope.addRow = function() {
+
+            //////////////////////////////////$scope.rows.push('Testing');
+            //$scope.counter++;
+
+          //}
 
 
-
-                $http.get("../api/twittercount/"+start)
-                .success(function (response) {
-                    
-
-                    defer.resolve(response);
-                    console.log(response.data);
-                    //$scope.rows = response.data;
-                    //alert("past");
-                })
-                .error(function(err, status) {
-                    defer.reject(err);
-                })
-
-                $scope.promise = defer.promise;
-                $scope.promise.then(
-                    function(v){
-                      //console.log("loadedtwittergraphfunctonresult: "+JSON.stringify(v));
-                      return v;
-                    },
-                    function(err){return err}
-                    )
-                .then(
-
-                    function(v){
-                      twittergraphvalues =  10;
-                          var result = v[0].count;
-                          twitterdataarray.push(result);
-                      //console.log()
-                      //$scope.twitterline.data[0][0] = 10;
-                      //console.log("print: "+JSON.stringify($scope.twitterline));
-                      //$('#twitterreload').load("m");
-                      //document.getElementById('twitterreload').innerHTML = "";
+                    //angular.element(document.getElementById('lineTable-v')).append($compile("<table><tr><td>RandomUser</td><td>939</td></tr></table>")(scope));
 
 
 
 
-//var ctx2d = canvas.getContext("2d");
-//new Chart(ctx).Line($scope.twitterline);
-                      //$scope.twitterline.destroy();
-                      //$scope.twitterline.update();
-                      //$('#twitterline').load(document.URL +  ' #twitterline');
-                      //console.log($scope.twitterline);
+      
+    };
+    //////
 
 
-                      //window.document.getElementById('twitterline').innerHTML ='<canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>';
-                      //$('#twitterline').replaceWith('testing');
-                      console.log(twittergraphvalues);
-                    },
-                    function(err){twittergraphvalues = err}
 
-                    )
+    
+
+
+
+    //////
+  /*var $http = angular.injector(['ng']).get('$http');
+                
+                var month = "Jul";
+                var days = ['07','06','06','06','06','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
+
+                //var day = "10";
+
+                return $q.all(
+                for (var dayVal in days){
+                  var day = days[dayVal];
+                  console.log("day: "+dayVal);
+                  var defer = $q.defer();
+
+
+
+                  $http.get("../api/twittercount/"+day+"/"+month)
+                  .success(function (response) {
+                      
+                      $scope.twitterline.data[0][Number(response._id)-1] = response.count;
+                      defer.resolve(response);
+                      //console.log(response);
+                      //$scope.rows = response.data;
+                      //alert("past");
+                  })
+                  .error(function(err, status) {
+                      defer.reject(err);
+                  })
+                }).then(
+
+                  //$scope.promise = defer.promise;
+                  //$scope.promise.all.then(
+
+                      function(){
+                        //twittergraphvalues =  10;
+                            //var result = v;
+                            //twitterdataarray.push(result);
+
+
+                            console.log(JSON.stringify(result));
+
+                            
+                            //console.log($scope.twitterline);
+                            //$digest();
+
+                        
+
+                        
+                        //console.log(twittergraphvalues);
+                      }//,
+                      //function(err){}
+
+                      );*/
+
+
+
+                //}
+                
 
 }
+
+function getSearchData() {
+    var $http = angular.injector(['ng']).get('$http');
+
+    return {
+        // returns a promise for an object like:
+        // { abo: resultFromAbo, ser: resultFromSer, ... }
+        loadDataFromUrls: function () {
+            var month = "Jul";
+            var days = ['07','06','06','06','06','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
+
+
+            return $q.all(days.map(function (day) {
+                return $http({
+                    method: 'GET',
+                    url: '../api/twittercount/' + day + '/' + month
+                });
+            }))
+            .then(function (results) {
+                var resultObj = {};
+                results.forEach(function (val, i) {
+                    resultObj[days[i]] = val.data;
+                });
+                console.log(resultObj);
+                for (var obj in resultObj){
+                  if(resultObj[obj]._id){
+                    $scope.twitterline.data[0][Number(resultObj[obj]._id)-1] = resultObj[obj].count;
+                  }
+
+                }
+
+                return resultObj;        
+            });
+        }
+    };
+};
+
+
 $scope.init = function () {
     // do something on loaded
+    //console.log(getSearchData()());
+      loadTwitterGraphValues();
+
+    var getSearchDataout = getSearchData().loadDataFromUrls; 
+    console.log(getSearchDataout());
     displayTopUsers("");
-    loadTwitterGraphValues("07");
-    //twitterdataarray.push(JSON.parse(result)[0].count);
-    //twitterdataarray.push(loadTwitterGraphValues("07"));
-    /*twitterdataarray.push(loadTwitterGraphValues("08"));
-    twitterdataarray.push(loadTwitterGraphValues("09"));
-    twitterdataarray.push(loadTwitterGraphValues("10"));
-    twitterdataarray.push(loadTwitterGraphValues("11"));
-    twitterdataarray.push(loadTwitterGraphValues("12"));
-    twitterdataarray.push(loadTwitterGraphValues("13"));
-    twitterdataarray.push(loadTwitterGraphValues("14"));
-    twitterdataarray.push(loadTwitterGraphValues("15"));
-    twitterdataarray.push(loadTwitterGraphValues("16"));
-    twitterdataarray.push(loadTwitterGraphValues("17"));
-    twitterdataarray.push(loadTwitterGraphValues("18"));
-    twitterdataarray.push(loadTwitterGraphValues("19"));
-    twitterdataarray.push(loadTwitterGraphValues("20"));
-    twitterdataarray.push(loadTwitterGraphValues("21"));
-    twitterdataarray.push(loadTwitterGraphValues("22"));
-    twitterdataarray.push(loadTwitterGraphValues("23"));
-    twitterdataarray.push(loadTwitterGraphValues("24"));
-    twitterdataarray.push(loadTwitterGraphValues("25"));
-    twitterdataarray.push(loadTwitterGraphValues("26"));
-    twitterdataarray.push(loadTwitterGraphValues("27"));
-    twitterdataarray.push(loadTwitterGraphValues("28"));
-    twitterdataarray.push(loadTwitterGraphValues("29"));*/
+
+    
   };
 //displayTopUsers("");
 
@@ -215,60 +316,7 @@ angular.element(document).ready(function () {
     
     
 
-    $scope.twitterline = {
-	    labels: ['07','08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
-	    series: ['Twitter'],
-	    data: [
-        [9933,6802,6290,6279,2026,0,0,0,0,197,3780,2975,2772,2985,4228,3252,3331,3712,2148,2225,3324,3952,2479]
-	    ],
-	    onClick: function (points, evt) {
-	      console.log(points, evt);
-        console.log(twittergraphvalues);
-          var selectedPoint = points[0]['label'];
-
-
-          //add table refresh/update here.....
-
-          //////////////////loadTable(JSON.stringify(points[0]['label']));
-          //$scope.rows = [];
-
-          //$http.get("http://localhost:3000/api/topusers/07/07/2015").success(funtion (response) {
-        //});
-
-
-            //$scope.rows = [];
-            //$scope.rows.push('response');
-
-            displayTopUsers(selectedPoint);
-
-                
-                //console.log(defer.promise);
-                //$scope.rows = defer.promise.data;
-
-            
-
-          }
-
-          
-
-
-          //$scope.counter = 3;
-
-          //$scope.addRow = function() {
-
-            //////////////////////////////////$scope.rows.push('Testing');
-            //$scope.counter++;
-
-          //}
-
-
-                    //angular.element(document.getElementById('lineTable-v')).append($compile("<table><tr><td>RandomUser</td><td>939</td></tr></table>")(scope));
-
-
-
-
-	    
-    };
+    
 
 
     // Update the dataset at 25FPS for a smoothly-animating chart
@@ -335,7 +383,8 @@ angular.element(document).ready(function () {
         labels: ['07','08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29'],
         series: ['News'],
         data: [
-          [0,0,6290,6279,2026,0,0,0,0,197,3780,2975,2772,2985,4228,3252,3331,3712,2148,2225,3324,3952,2479]
+          [9933,6802,6290,6279,2026,0,0,0,0,197,3780,2975,2772,2985,4228,3252,3331,3712,2148,2225,3324,3952,2479],
+          [50,22,27,87,59,73,75,48,30,41,59,53,47,179,92,35,61]
         ],
         onClick: function (points, evt) {
           console.log(points, evt);
@@ -386,23 +435,23 @@ angular.element(document).ready(function () {
     };
 
     $scope.swineline = {
-      labels: ['May 09','Jun 09', 'Jul 09', 'Aug 09', 'Sep 09', 'Oct 09', 'Nov 09', 'Dec 09'],
+      labels: ['Jan 09','Feb 09','Mar 09','Apr 09','May 09','Jun 09', 'Jul 09', 'Aug 09', 'Sep 09', 'Oct 09', 'Nov 09', 'Dec 09'],
         series: ['Twitter','News (x2)','Influenzanet (x25)'],
         data: [
-          [6240,16325,25737,15424,22334,51680,27937,7822],
-          [7354*2,8559*2,6991*2,9249*2,7167*2,8764*2,8230*2,2734*2],
-          [19.3*25,36.5*25,636.5*25,112.8*25,67.7*25,196.7*25,191*25,118.1*25]
+          [null,null,null,null,6240,16325,25737,15424,22334,51680,27937,7822],
+          [null,null,null,null,7354*2,8559*2,6991*2,9249*2,7167*2,8764*2,8230*2,2734*2],
+          [null,null,null,null,19.3*25,36.5*25,636.5*25,112.8*25,67.7*25,196.7*25,191*25,118.1*25]
         ],
         colours: ['#97BBCD','#46BFBD','#F7464A']
 
     }
 
     $scope.survellianceline = {
-      labels: ['May 09','Jun 09', 'Jul 09', 'Aug 09', 'Sep 09', 'Oct 09', 'Nov 09', 'Dec 09'],
+      labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52],
         series: ['Rate of ILI episodes','Historical survelliance rate per 100,000'],
         data: [
-          [50,40,401,99,48,120,193,104],
-          [80,45,53,30,34,61,62,69,76]
+          [50,46,42,25,15,10,8,9,8,9,10,8,4,5,5,4,4,7,11,14,10,8,6,7,8,19,31,50,100,158,62,42,22,19,16,12,10,12,14,22,23,32,43,45,37,35,35,41,35,30,26,13],
+          [21,21,18,21,20,22,35,25,32,33,36,25,21,18,17,21,11,13,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,14,18,18,12,14,19,18,18,11,8,19,18,20]
         ],
         colours: ['#97BBCD','#46BFBD','#F7464A']
 
