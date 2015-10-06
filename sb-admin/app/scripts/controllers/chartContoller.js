@@ -33,7 +33,7 @@ function displayTopUsers(param){
         var $http = angular.injector(['ng']).get('$http');
                 
                 if (param != "") {
-                    param+= "/Oct/2015";
+                    param+= "/Jul/2015";
                 }
 
 
@@ -207,6 +207,9 @@ function loadTwitterGraphValues(){
 
 }
 
+function loadNewsGraphValues(){
+
+
 function getSearchData() {
     var $http = angular.injector(['ng']).get('$http');
 
@@ -215,7 +218,7 @@ function getSearchData() {
         // { abo: resultFromAbo, ser: resultFromSer, ... }
         loadDataFromUrls: function () {
             var month = "Jul";
-            var days = ['07','06','06','06','06','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
+            var days = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
 
 
             return $q.all(days.map(function (day) {
