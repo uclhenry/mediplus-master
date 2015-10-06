@@ -22,14 +22,7 @@
         });
     </script>
 </div>
-<div class="row col-lg-12" style="margin-top:10px;margin-left:12px;">
-    <div class="col-lg-1 pull-right">
-
-        <button type="button" class="btn btn-default btn-sm" aria-label="Add keywords" onclick="addKeywords()">
-          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-        </button>
-
-    </div>
+<div class="row col-lg-12" style="margin-top:10px;">
     <div class="col-lg-3 pull-right">
 
         <div class="input-group input-group-sm">
@@ -279,83 +272,83 @@
                         </thead>
                         <tbody>
                             <tr onclick="sendReq('http://t.co/ueqE5H09b9');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     CDC Scientist: ‘We scheduled meeting to destroy...
                                     <!--https://t.co/ueqE5H09b9-->
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     389
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/YUZdXihFXh');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     Posey CSPAN 7/29/15
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     364
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/lKfcemnsei');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     Mr Posey | Video
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     329
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/86sAqE8U00');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     REVEALED: Cancer industry profits 'locked in'...
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     209
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/52iRcjF9ns');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     Mr Posey | Video
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     198
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/TNr6DCkR2k');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     CONGRESSMAN POESY DELIVERS BOMBSHE...
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     185
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/nviSACNLKY');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     Mr Posey | Video
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     176
                                 </td>
                             </tr>
                             <tr onclick="sendReq('https://t.co/G5OiweFSos');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     CDC Scientist: ‘We scheduled meeting to destroy...
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     160
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/Ge1e86sQgi');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     Posey CSPAN 7/29/15
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     121
                                 </td>
                             </tr>
                             <tr onclick="sendReq('http://t.co/jLM6rf2zH4');">
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     Mr Posey | Video
                                 </td>
-                                <td style="padding:0px;border-top:0;">
+                                <td >
                                     103
                                 </td>
                             </tr>
@@ -785,53 +778,6 @@
             window.location.search = '?-'+selection;
 
         }
-    }
-
-    function addKeywords(){
-        /*vex.dialog.confirm({
-          message: 'Are you absolutely sure you want to destroy the alien planet?',
-          callback: function(value) {
-            return console.log(value ? 'Successfully destroyed the planet.' : 'Chicken.');
-          }
-        });*/
-
-
-        $.getJSON("../api/keywords/vaccination/get", function(result) {
-            console.log(result[0].value);
-
-            var keywordslist = "";
-            var entered = false;
-            for (keyword in result[0].value){
-                if(entered){
-                    keywordslist += ", "+result[0].value[keyword];
-                }else{
-                    keywordslist += result[0].value[keyword];
-                    entered = true;
-                }
-            }
-
-            var todayDateString;
-
-            todayDateString = new Date().toJSON().slice(0, 10);
-
-            vex.dialog.open({
-              message: '<h3>Keywords</h3>',
-              input: "<div>\n    <label for=\"addkeyword\">Amend keywords:</label>\n    <div>\n        <input name=\"keywords\" type=\"text\" value=\"" + keywordslist + "\" />\n    </div>\n</div>\n",
-              callback: function(data) {
-                if (data === false) {
-                  return console.log('Cancelled');
-                }else{
-                    return $.getJSON("../api/keywords/vaccination/post/"+JSON.stringify(data.keywords) , function(result) {console.log("request to update sent with result: "+result)});
-                    //return console.log(data.keywords);
-
-                }
-                //console.log('Date', data.date, 'Color', data.color);
-                //return $('.demo-result-custom-vex-dialog').show().html("<h4>Result</h4>\n<p>\n    Date: <b>" + data.date + "</b><br/>\n    Color: <input type=\"color\" value=\"" + data.color + "\" readonly />\n</p>");
-              }
-            });
-        });
-
-        
     }
     /*function refreshLineGraph(globalTab) {
 
