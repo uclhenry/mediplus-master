@@ -22,7 +22,14 @@
         });
     </script>
 </div>
-<div class="row col-lg-12" style="margin-top:10px;">
+<div class="row col-lg-12" style="margin-top:10px;margin-left:12px;">
+    <div class="col-lg-1 pull-right">
+
+        <button type="button" class="btn btn-default btn-sm" aria-label="Add keywords" onclick="addKeywords()">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+
+   </div>
     <div class="col-lg-3 pull-right">
 
         <div class="input-group input-group-sm">
@@ -480,6 +487,55 @@
 
 
 <script type="text/javascript">
+
+
+function addKeywords(){
+        /*vex.dialog.confirm({
+          message: 'Are you absolutely sure you want to destroy the alien planet?',
+          callback: function(value) {
+            return console.log(value ? 'Successfully destroyed the planet.' : 'Chicken.');
+          }
+        });*/
+
+
+        $.getJSON("../api/keywords/vaccination/get", function(result) {
+            console.log(result[0].value);
+
+            var keywordslist = "";
+            var entered = false;
+            for (keyword in result[0].value){
+                if(entered){
+                    keywordslist += ", "+result[0].value[keyword];
+                }else{
+                    keywordslist += result[0].value[keyword];
+                    entered = true;
+                }
+            }
+
+            var todayDateString;
+
+            todayDateString = new Date().toJSON().slice(0, 10);
+
+            vex.dialog.open({
+              message: '<h3>Keywords</h3>',
+              input: "<div>\n    <label for=\"addkeyword\">Amend keywords:</label>\n    <div>\n        <input name=\"keywords\" type=\"text\" value=\"" + keywordslist + "\" />\n    </div>\n</div>\n",
+              callback: function(data) {
+                if (data === false) {
+                  return console.log('Cancelled');
+                }else{
+                    return $.getJSON("../api/keywords/vaccination/post/"+JSON.stringify(data.keywords) , function(result) {console.log("request to update sent with result: "+result)});
+                    //return console.log(data.keywords);
+
+                }
+                //console.log('Date', data.date, 'Color', data.color);
+                //return $('.demo-result-custom-vex-dialog').show().html("<h4>Result</h4>\n<p>\n    Date: <b>" + data.date + "</b><br/>\n    Color: <input type=\"color\" value=\"" + data.color + "\" readonly />\n</p>");
+              }
+            });
+        });
+
+        
+    }
+
     /**
      * This is a basic example on how to instantiate sigma. A random graph is
      * generated and stored in the "graph" variable, and then sigma is instantiated

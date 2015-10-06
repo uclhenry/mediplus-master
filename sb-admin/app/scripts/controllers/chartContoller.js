@@ -207,9 +207,6 @@ function loadTwitterGraphValues(){
 
 }
 
-function loadNewsGraphValues(){
-
-
 function getSearchData() {
     var $http = angular.injector(['ng']).get('$http');
 
@@ -438,23 +435,23 @@ angular.element(document).ready(function () {
     };
 
     $scope.swineline = {
-      labels: ['Jan 09','Feb 09','Mar 09','Apr 09','May 09','Jun 09', 'Jul 09', 'Aug 09', 'Sep 09', 'Oct 09', 'Nov 09', 'Dec 09'],
+      labels: ['May 09','Jun 09', 'Jul 09', 'Aug 09', 'Sep 09', 'Oct 09', 'Nov 09', 'Dec 09'],
         series: ['Twitter','News (x2)','Influenzanet (x25)'],
         data: [
-          [null,null,null,null,6240,16325,25737,15424,22334,51680,27937,7822],
-          [null,null,null,null,7354*2,8559*2,6991*2,9249*2,7167*2,8764*2,8230*2,2734*2],
-          [null,null,null,null,19.3*25,36.5*25,636.5*25,112.8*25,67.7*25,196.7*25,191*25,118.1*25]
+          [6240,16325,25737,15424,22334,51680,27937,7822],
+          [7354*2,8559*2,6991*2,9249*2,7167*2,8764*2,8230*2,2734*2],
+          [19.3*25,36.5*25,636.5*25,112.8*25,67.7*25,196.7*25,191*25,118.1*25]
         ],
         colours: ['#97BBCD','#46BFBD','#F7464A']
 
     }
 
     $scope.survellianceline = {
-      labels: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52],
+      labels: ['May 09','Jun 09', 'Jul 09', 'Aug 09', 'Sep 09', 'Oct 09', 'Nov 09', 'Dec 09'],
         series: ['Rate of ILI episodes','Historical survelliance rate per 100,000'],
         data: [
-          [50,46,42,25,15,10,8,9,8,9,10,8,4,5,5,4,4,7,11,14,10,8,6,7,8,19,31,50,100,158,62,42,22,19,16,12,10,12,14,22,23,32,43,45,37,35,35,41,35,30,26,13],
-          [21,21,18,21,20,22,35,25,32,33,36,25,21,18,17,21,11,13,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,14,18,18,12,14,19,18,18,11,8,19,18,20]
+          [50,40,401,99,48,120,193,104],
+          [80,45,53,30,34,61,62,69,76]
         ],
         colours: ['#97BBCD','#46BFBD','#F7464A']
 

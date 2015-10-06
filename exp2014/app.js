@@ -343,6 +343,90 @@ app.get('/topusers/summary/:day/:month/:year', function(req, res) {
 
 })
 
+
+app.get('/keywords/vaccination/get', function(req, res) {
+
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        var callback = function() {
+            db.close();
+        };
+
+        db.collection('keywords').aggregate(
+
+            [
+
+                //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+                {
+                    $match: {
+                        "_id": "vaccination"
+                   }
+                },
+               {
+                    $limit: 1000
+                }
+
+            ]
+
+        ).toArray(function(err, result) {
+            assert.equal(err, null);
+            console.log(result);
+            res.send(result);
+            callback(result);
+        });
+
+    });
+
+});
+app.get('/keywords/vaccination/post/:value', function(req, res) {
+
+    var keywordsArray = JSON.parse(req.params.value).split(/[ ,]+/);
+    var insert = {};
+    insert._id = "vaccination";
+    insert.value = [];
+    for(keyword in keywordsArray){
+        insert.value.push(keywordsArray[keyword]);
+    }
+    console.log(insert)
+
+    MongoClient.connect(url, function(err, db) {
+        assert.equal(null, err);
+        var callback = function() {
+            db.close();
+        };
+
+
+            db.collection('keywords').save(insert, function(err, docs) {
+                if (err) {
+                    console.log('err: ' + err);
+                    db.close();
+                }else{
+                    console.log("result saved!: "+docs);
+                }
+                //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
+                db.close();
+            });
+            
+
+
+        //[
+
+        //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+        //{}
+        //]
+        //finalJson
+
+        //);
+
+    });
+    //console.log("result: "+keywordsArray[0]);
+    //res.send("OK");
+    //callback("OK");
+});
+
+
+
 app.get('/topusers/:day/:month/:year', function(req, res) {
 
     var day = req.params.day;
