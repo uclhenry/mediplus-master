@@ -13,11 +13,12 @@
 
 package com.twitter.hbc.httpclient.auth;
 
-import com.google.common.base.Preconditions;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.AbstractHttpClient;
+
+import com.google.common.base.Preconditions;
 
 public class BasicAuth implements Authentication {
 

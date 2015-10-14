@@ -13,10 +13,11 @@
 
 package com.twitter.hbc.core.processor;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
 
 /**
  * An abstract class for processing the stream and putting it onto the blockingQueue.

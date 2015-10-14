@@ -13,6 +13,22 @@
 
 package com.twitter.hbc;
 
+import static com.twitter.hbc.core.Constants.DEFAULT_CHARSET;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collection;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
@@ -25,21 +41,6 @@ import com.twitter.hbc.core.endpoint.Endpoint;
 import com.twitter.hbc.core.endpoint.SitestreamEndpoint;
 import com.twitter.hbc.httpclient.ControlStreamException;
 import com.twitter.hbc.httpclient.auth.Authentication;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
-import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collection;
-
-import static com.twitter.hbc.core.Constants.DEFAULT_CHARSET;
 
 /**
  * SitestreamController is used to issue controlstream requests. The sitestream connection that these

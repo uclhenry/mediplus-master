@@ -14,10 +14,11 @@ package com.twitter.joauth;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * A Signer takes a string, a token secret and a consumer secret, and produces a signed string

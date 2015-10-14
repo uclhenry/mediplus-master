@@ -13,14 +13,14 @@
 
 package com.twitter.hbc.core;
 
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
-
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
 
 public class HttpHosts implements Hosts {
 

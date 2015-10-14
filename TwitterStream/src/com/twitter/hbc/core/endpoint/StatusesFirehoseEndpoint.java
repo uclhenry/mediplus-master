@@ -13,11 +13,11 @@
 
 package com.twitter.hbc.core.endpoint;
 
+import java.util.Set;
+
 import com.google.common.base.Joiner;
 import com.twitter.hbc.core.Constants;
 import com.twitter.hbc.core.HttpConstants;
-
-import java.util.Set;
 
 public class StatusesFirehoseEndpoint extends DefaultStreamingEndpoint implements PartitionableEndpoint {
 

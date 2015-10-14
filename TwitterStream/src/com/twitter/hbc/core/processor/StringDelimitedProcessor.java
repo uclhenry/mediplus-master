@@ -13,15 +13,17 @@
 
 package com.twitter.hbc.core.processor;
 
-import com.twitter.hbc.common.DelimitedStreamReader;
-import com.twitter.hbc.core.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
+
+import javax.annotation.Nullable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.twitter.hbc.common.DelimitedStreamReader;
+import com.twitter.hbc.core.Constants;
 
 public class StringDelimitedProcessor extends AbstractProcessor<String> {
 

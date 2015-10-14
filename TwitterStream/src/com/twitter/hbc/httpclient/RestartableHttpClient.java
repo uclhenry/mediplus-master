@@ -13,9 +13,12 @@
 
 package com.twitter.hbc.httpclient;
 
-import com.google.common.base.Preconditions;
-import com.twitter.hbc.httpclient.auth.Authentication;
-import org.apache.http.*;
+import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
+
+import org.apache.http.HttpHost;
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
@@ -28,8 +31,8 @@ import org.apache.http.impl.conn.PoolingClientConnectionManager;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
-import java.util.concurrent.atomic.AtomicReference;
+import com.google.common.base.Preconditions;
+import com.twitter.hbc.httpclient.auth.Authentication;
 
 /**
  * There's currently a bug in DecompressingHttpClient that does not allow it to properly abort requests.

@@ -12,9 +12,9 @@
 
 package com.twitter.joauth.keyvalue;
 
-import com.twitter.joauth.Request;
-
 import java.util.List;
+
+import com.twitter.joauth.Request;
 
 /**
  * The KeyValueParser trait describes a parser that takes a String and a Seq[KeyValueHandler],

@@ -13,13 +13,13 @@
 
 package com.twitter.hbc.core.endpoint;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.twitter.hbc.core.HttpConstants;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 public abstract class EnterpriseStreamingEndpoint implements StreamingEndpoint {
   private static final String BASE_PATH = "/accounts/%s/publishers/twitter/streams/%s/%s.json";

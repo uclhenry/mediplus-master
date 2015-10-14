@@ -1,14 +1,5 @@
 package Twitter.Streaming;
 
-import com.google.common.collect.Lists;
-import com.twitter.hbc.ClientBuilder;
-import com.twitter.hbc.core.Client;
-import com.twitter.hbc.core.Constants;
-import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
-import com.twitter.hbc.core.processor.StringDelimitedProcessor;
-import com.twitter.hbc.httpclient.auth.Authentication;
-import com.twitter.hbc.httpclient.auth.OAuth1;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,6 +10,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.google.common.collect.Lists;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -27,6 +19,13 @@ import com.mongodb.MongoCredential;
 import com.mongodb.MongoException;
 import com.mongodb.ServerAddress;
 import com.mongodb.util.JSON;
+import com.twitter.hbc.ClientBuilder;
+import com.twitter.hbc.core.Client;
+import com.twitter.hbc.core.Constants;
+import com.twitter.hbc.core.endpoint.StatusesFilterEndpoint;
+import com.twitter.hbc.core.processor.StringDelimitedProcessor;
+import com.twitter.hbc.httpclient.auth.Authentication;
+import com.twitter.hbc.httpclient.auth.OAuth1;
 
 
 public class TwitterStream {
@@ -204,7 +203,9 @@ public class TwitterStream {
 			        
 					// convert JSON to DBObject directly
 					DBObject dbObject = (DBObject) JSON.parse(msg);
-
+					DBObject dbObjectId = dbObject.get(_id);
+					System.out.println(dbObject.put("_id", ));
+					
 					collection.insert(dbObject);
 						
 					System.out.println("Added Tweet : [" + msg.substring(0, 20) + " ... ].");

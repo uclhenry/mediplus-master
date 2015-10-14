@@ -13,12 +13,12 @@
 
 package com.twitter.hbc.core.endpoint;
 
+import java.util.List;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.twitter.hbc.core.Constants;
 import com.twitter.hbc.core.HttpConstants;
-
-import java.util.List;
 
 public class SitestreamEndpoint extends UserstreamEndpoint {
 

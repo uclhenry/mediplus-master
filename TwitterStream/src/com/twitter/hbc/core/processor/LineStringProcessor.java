@@ -13,13 +13,14 @@
 
 package com.twitter.hbc.core.processor;
 
-import com.google.common.base.Charsets;
-import com.twitter.hbc.common.DelimitedStreamReader;
-
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.BlockingQueue;
+
+import javax.annotation.Nullable;
+
+import com.google.common.base.Charsets;
+import com.twitter.hbc.common.DelimitedStreamReader;
 
 /**
  * Reads new line delimited strings according to {@link com.twitter.hbc.common.DelimitedStreamReader#readLine() }

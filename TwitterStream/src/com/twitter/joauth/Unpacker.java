@@ -12,16 +12,16 @@
 
 package com.twitter.joauth;
 
-import com.twitter.joauth.keyvalue.KeyValueHandler;
-import com.twitter.joauth.keyvalue.KeyValueParser;
-import com.twitter.joauth.keyvalue.Transformer;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.twitter.joauth.keyvalue.KeyValueHandler;
+import com.twitter.joauth.keyvalue.KeyValueParser;
+import com.twitter.joauth.keyvalue.Transformer;
 
 /**
  * An Unpacker takes an Request and optionally a Seq[KeyValueHandler],

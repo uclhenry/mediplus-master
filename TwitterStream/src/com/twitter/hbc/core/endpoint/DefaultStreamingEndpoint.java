@@ -14,6 +14,7 @@
 package com.twitter.hbc.core.endpoint;
 
 import java.util.List;
+
 import com.google.common.base.Joiner;
 import com.twitter.hbc.core.Constants;
 

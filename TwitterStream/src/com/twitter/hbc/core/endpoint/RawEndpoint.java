@@ -13,15 +13,15 @@
 
 package com.twitter.hbc.core.endpoint;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ConcurrentMap;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Maps;
 import com.twitter.hbc.core.HttpConstants;
 import com.twitter.joauth.UrlCodec;
-
-import java.util.Collections;
-import java.util.Map;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * A convenience class for users that want to hit an arbitrary endpoint w/o having to implement

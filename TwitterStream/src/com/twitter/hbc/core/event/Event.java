@@ -13,9 +13,9 @@
 
 package com.twitter.hbc.core.event;
 
-import com.google.common.base.Preconditions;
-
 import javax.annotation.Nullable;
+
+import com.google.common.base.Preconditions;
 
 public class Event {
 

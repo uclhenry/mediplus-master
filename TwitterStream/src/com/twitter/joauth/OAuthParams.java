@@ -12,10 +12,10 @@
 
 package com.twitter.joauth;
 
-import com.twitter.joauth.keyvalue.KeyValueHandler;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.twitter.joauth.keyvalue.KeyValueHandler;
 
 public class OAuthParams {
 

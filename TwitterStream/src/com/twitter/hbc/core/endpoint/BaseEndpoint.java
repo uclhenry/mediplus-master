@@ -13,15 +13,15 @@
 
 package com.twitter.hbc.core.endpoint;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
 import com.twitter.hbc.core.Constants;
 import com.twitter.hbc.core.HttpConstants;
 import com.twitter.joauth.UrlCodec;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 public class BaseEndpoint implements Endpoint {
 

@@ -13,10 +13,10 @@
 
 package com.twitter.hbc.core.endpoint;
 
-import com.google.common.base.Preconditions;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.google.common.base.Preconditions;
 
 public class ReplayEnterpriseStreamingEndpoint extends EnterpriseStreamingEndpoint {
   private static final String DATE_FMT_STR = "yyyyMMddHHmm";

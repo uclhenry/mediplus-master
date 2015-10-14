@@ -13,11 +13,11 @@
 
 package com.twitter.hbc.common;
 
-import com.google.common.base.Preconditions;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+
+import com.google.common.base.Preconditions;
 
 /**
  * Only for charsets whose byte representations of \n and \r are 10 and 13 (Ascii compatible encodings)

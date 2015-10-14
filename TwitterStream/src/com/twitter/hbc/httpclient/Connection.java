@@ -13,16 +13,17 @@
 
 package com.twitter.hbc.httpclient;
 
-import com.google.common.base.Preconditions;
-import com.google.common.io.Closeables;
-import com.twitter.hbc.core.processor.HosebirdMessageProcessor;
+import java.io.IOException;
+import java.io.InputStream;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.google.common.base.Preconditions;
+import com.google.common.io.Closeables;
+import com.twitter.hbc.core.processor.HosebirdMessageProcessor;
 
 public class Connection {
 

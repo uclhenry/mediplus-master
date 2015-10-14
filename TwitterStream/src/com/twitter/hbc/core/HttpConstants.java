@@ -13,16 +13,17 @@
 
 package com.twitter.hbc.core;
 
-import com.google.common.collect.ImmutableSet;
-import com.twitter.hbc.core.endpoint.Endpoint;
-import com.twitter.hbc.httpclient.auth.Authentication;
+import java.util.Set;
+
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 
-import java.util.Set;
+import com.google.common.collect.ImmutableSet;
+import com.twitter.hbc.core.endpoint.Endpoint;
+import com.twitter.hbc.httpclient.auth.Authentication;
 
 public class HttpConstants {
   public static final String HTTP_GET = "GET";

@@ -13,9 +13,9 @@
 
 package com.twitter.hbc.core;
 
-import com.google.common.base.Charsets;
-
 import java.nio.charset.Charset;
+
+import com.google.common.base.Charsets;
 
 public class Constants {
 

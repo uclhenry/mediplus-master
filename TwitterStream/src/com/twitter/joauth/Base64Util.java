@@ -19,9 +19,9 @@
  */
 package com.twitter.joauth;
 
-import com.google.common.io.BaseEncoding;
-
 import java.nio.charset.Charset;
+
+import com.google.common.io.BaseEncoding;
 
 class Base64Util {
   /**
