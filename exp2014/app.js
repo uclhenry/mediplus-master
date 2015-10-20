@@ -19,13 +19,9 @@ var rssOutput = [];
 //////
 
 var HashMap = require('hashmap');
+var db;
 
 
-
-// view engine setup
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hjs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -51,6 +47,21 @@ var MongoClient = require('mongodb').MongoClient;
 var assert = require('assert');
 var ObjectId = require('mongodb').ObjectID;
 var url = 'mongodb://localhost/test';
+
+
+// view engine setup
+    MongoClient.connect(url, function(err, database) {
+        if(err) throw err;
+        db = database;
+
+        //Start the application after the database connection is ready
+        //app.listen(3000);
+        app.set('port', process.env.PORT || 3000);
+        app.set('views', path.join(__dirname, 'views'));
+        app.set('view engine', 'hjs');
+        console.log("listening on port 3000");
+    });
+
 
 
 var CronJob = require('cron').CronJob;
@@ -196,11 +207,7 @@ for (article in obj) {
     //set up mongo such that json.stringify(output) is imported into mongo test db collection medisys.
     //such that field guid is id of collection, and skip import of elements with same id.
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
         for (article in obj) {
             db.collection('medisys').save(obj[article], function(err, docs) {
@@ -210,7 +217,6 @@ for (article in obj) {
                 //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
             });
         }
-        db.close();
 
 
         //[
@@ -222,7 +228,6 @@ for (article in obj) {
 
         //);
 
-});
 
 
 
@@ -249,11 +254,7 @@ app.get('/tophashtags/:shortUrl', function(req, res) {
 
     var shorturl = ".*" + req.params.shortUrl;
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
 
         db.collection('mediboard1').aggregate(
@@ -326,10 +327,9 @@ app.get('/tophashtags/:shortUrl', function(req, res) {
 
 
             res.send(result);
-            callback(result);
+            //callback(result);
         });
 
-});
 
 
 
@@ -347,11 +347,7 @@ app.get('/topusers/summary/:day/:month/:year', function(req, res) {
 app.get('/keywords/vaccination/get', function(req, res) {
 
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
         db.collection('keywords').aggregate(
 
@@ -373,10 +369,9 @@ app.get('/keywords/vaccination/get', function(req, res) {
             assert.equal(err, null);
             console.log(result);
             res.send(result);
-            callback(result);
+            //callback(result);
         });
 
-    });
 
 });
 app.get('/keywords/vaccination/post/:value', function(req, res) {
@@ -390,22 +385,16 @@ app.get('/keywords/vaccination/post/:value', function(req, res) {
     }
     console.log(insert)
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
 
             db.collection('keywords').save(insert, function(err, docs) {
                 if (err) {
                     console.log('err: ' + err);
-                    db.close();
                 }else{
                     console.log("result saved!: "+docs);
                 }
                 //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
-                db.close();
             });
             
 
@@ -419,10 +408,9 @@ app.get('/keywords/vaccination/post/:value', function(req, res) {
 
         //);
 
-    });
     //console.log("result: "+keywordsArray[0]);
     //res.send("OK");
-    //callback("OK");
+    ////callback("OK");
 });
 
 
@@ -435,11 +423,7 @@ app.get('/topusers/:day/:month/:year', function(req, res) {
 
     var regexString = ".*" + month + " " + day + ".*" + year;
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
         db.collection('mediboard1').aggregate(
 
@@ -471,10 +455,9 @@ app.get('/topusers/:day/:month/:year', function(req, res) {
                     assert.equal(err, null);
                     console.log(result);
                     res.send(result);
-                    callback(result);
+                    //callback(result);
                 });
 
-            });
 
 });
 
@@ -488,11 +471,7 @@ app.get('/twittercount/:day/:month', function(req, res) {
     
     var regexString = ".*" + month + " " + day + ".*" + year;
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
         db.collection('mediboard1').aggregate(
 
@@ -523,13 +502,11 @@ app.get('/twittercount/:day/:month', function(req, res) {
                         }
                         console.log(result[0]);
                         res.send(result[0]);
-                        callback(result[0]);
-                        db.close();
+                        ////callback(result[0]);
                 //days[0] = JSON.stringify(result[0].count);
                 //requestsmade++;
             });
 
-                });    
 
 });
 
@@ -540,11 +517,7 @@ app.get('/newscount/:day/:month', function(req, res) {
     
     var regexString = year + "-" + month + "-" + day + ".*";
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
         db.collection('medisys').aggregate(
 
@@ -575,13 +548,11 @@ app.get('/newscount/:day/:month', function(req, res) {
                         }
                         console.log(result[0]);
                         res.send(result[0]);
-                        callback(result[0]);
-                        db.close();
+                        //callback(result[0]);
                 //days[0] = JSON.stringify(result[0].count);
                 //requestsmade++;
             });
 
-                });    
 
 
 });
@@ -597,11 +568,7 @@ app.get('/newscount/:day/:month', function(req, res) {
 app.get('/topusers', function(req, res) {
 
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+   
 
         db.collection('mediboard1').aggregate(
 
@@ -629,10 +596,9 @@ app.get('/topusers', function(req, res) {
                     assert.equal(err, null);
                     console.log(result);
                     res.send(result);
-                    callback(result);
+                    //callback(result);
                 });
 
-            });
 
 });
 
@@ -640,12 +606,7 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
 
     var regexString = ".*" + hashtag + ".*";
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
-
+    
         db.collection('mediboard1').aggregate(
 
             [
@@ -861,10 +822,9 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
 
 
             res.send(g);
-            callback(g);
+            ////callback(g);
         });
 
-});
 
 });
 
@@ -880,6 +840,19 @@ app.get('/networktweetgraph/:category', function(req, res) {
     }
     //var regexString = ".*"+hashtag+".*";
     //var result = [];
+
+
+    var stopwordsstring = "antivaccination,anti,pro,vaccin,vaccinated,vaccination,antivax,good,bad,vaccinations,problem,disease,problems,diseases,vaccines,vaccine,antivax,antivaxxers,vaccination,vax,vaxx,antivaccine,a’s,able,about,above,according,accordingly,across,actually,after,afterwards,again,against,ain’t,all,allow,allows,almost,alone,along,already,also,although,always,am,among,amongst,an,and,another,any,anybody,anyhow,anyone,anything,anyway,anyways,anywhere,apart,appear,appreciate,appropriate,are,aren’t,around,as,aside,ask,asking,associated,at,available,away,awfully,be,became,because,become,becomes,becoming,been,before,beforehand,behind,being,believe,below,beside,besides,best,better,between,beyond,both,brief,but,by,c’mon,c’s,came,can,can’t,cannot,cant,cause,causes,certain,certainly,changes,clearly,co,com,come,comes,concerning,consequently,consider,considering,contain,containing,contains,corresponding,could,couldn’t,course,currently,definitely,described,despite,did,didn’t,different,do,does,doesn’t,doing,don’t,done,down,downwards,during,each,edu,eg,eight,either,else,elsewhere,enough,entirely,especially,et,etc,even,ever,every,everybody,everyone,everything,everywhere,ex,exactly,example,except,far,few,fifth,first,five,followed,following,follows,for,former,formerly,forth,four,from,further,furthermore,get,gets,getting,given,gives,go,goes,going,gone,got,gotten,greetings,had,hadn’t,happens,hardly,has,hasn’t,have,haven’t,having,he,he’s,hello,help,hence,her,here,here’s,hereafter,hereby,herein,hereupon,hers,herself,hi,him,himself,his,hither,hopefully,how,howbeit,however,i’d,i’ll,i’m,i’ve,ie,if,ignored,immediate,in,inasmuch,inc,indeed,indicate,indicated,indicates,inner,insofar,instead,into,inward,is,isn’t,it,it’d,it’ll,it’s,its,itself,just,keep,keeps,kept,know,knows,known,last,lately,later,latter,latterly,least,less,lest,let,let’s,like,liked,likely,little,look,looking,looks,ltd,mainly,many,may,maybe,me,mean,meanwhile,merely,might,more,moreover,most,mostly,much,must,my,myself,name,namely,nd,near,nearly,necessary,need,needs,neither,never,nevertheless,new,next,nine,no,nobody,non,none,noone,nor,normally,not,nothing,novel,now,nowhere,obviously,of,off,often,oh,ok,okay,old,on,once,one,ones,only,onto,or,other,others,otherwise,ought,our,ours,ourselves,out,outside,over,overall,own,particular,particularly,per,perhaps,placed,please,plus,possible,presumably,probably,provides,que,quite,qv,rather,rd,re,really,reasonably,regarding,regardless,regards,relatively,respectively,right,said,same,saw,say,saying,says,second,secondly,see,seeing,seem,seemed,seeming,seems,seen,self,selves,sensible,sent,serious,seriously,seven,several,shall,she,should,shouldn’t,since,six,so,some,somebody,somehow,someone,something,sometime,sometimes,somewhat,somewhere,soon,sorry,specified,specify,specifying,still,sub,such,sup,sure,t’s,take,taken,tell,tends,th,than,thank,thanks,thanx,that,that’s,thats,the,their,theirs,them,themselves,then,thence,there,there’s,thereafter,thereby,therefore,therein,theres,thereupon,these,they,they’d,they’ll,they’re,they’ve,think,third,this,thorough,thoroughly,those,though,three,through,throughout,thru,thus,to,together,too,took,toward,towards,tried,tries,truly,try,trying,twice,two,un,under,unfortunately,unless,unlikely,until,unto,up,upon,us,use,used,useful,uses,using,usually,value,various,very,via,viz,vs,want,wants,was,wasn’t,way,we,we’d,we’ll,we’re,we’ve,welcome,well,went,were,weren’t,what,what’s,whatever,when,whence,whenever,where,where’s,whereafter,whereas,whereby,wherein,whereupon,wherever,whether,which,while,whither,who,who’s,whoever,whole,whom,whose,why,will,willing,wish,with,within,without,won’t,wonder,would,would,wouldn’t,yes,yet,you,you’d,you’ll,you’re,you’ve,your,yours,yourself,yourselves,zero";
+    var stopWordsArr = stopwordsstring.split(",");
+
+    var stopWordsHashMap = [];
+    for(word in stopWordsArr){
+        stopWordsHashMap[stopWordsArr[word]] = 1;
+    }
+
+        console.log(stopWordsHashMap['where']);
+
+
 
     var i = 0 //,
         //N = 10,
@@ -900,6 +873,23 @@ app.get('/networktweetgraph/:category', function(req, res) {
 
         function nodeFunction(node) {
             try {
+                var outputstring = "";
+                var text = node.text.split(" ");
+                var regextoMatch = "/^[a-z0-9]+$/i";
+                for(word in text){
+
+
+                    if (((text[word].indexOf("@") == -1 && text[word].length > 2 && text[word].indexOf("http://") == -1)|| text[word].indexOf("#") > -1 ) && text[word].indexOf("...") == -1 && /^[ A-Za-z0-9_@./#&+-]*$/.test(text[word]) ) {
+                        var punctuationless = text[word].replace(/[.,-\/!$%\^&\*;:{}=\-_`~()]/g,""); //removed #
+                        var finalString = punctuationless.replace(/\s{2,}/g," ").toLowerCase();
+                        if(stopWordsHashMap[finalString] != 1 && stopWordsHashMap[finalString.split('#')[1]] != 1){
+                            outputstring += finalString + " ";
+                        }
+                    }
+                }
+                if(outputstring != ""){
+                    //console.log(outputstring /*+ ", orig: "+ node.text*/);
+                }
 
                 if (node.retweeted_status.user) {
 
@@ -1109,11 +1099,7 @@ i++;
         }
     };
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
+    
 
         var cursor = db.collection('mediboard1').aggregate(
 
@@ -1154,7 +1140,6 @@ i++;
 
 cursor.on('end', function() {
     console.log(", now processing..");
-    db.close();
             //assert.equal(err, null);
 
             //console.log(result);
@@ -1398,7 +1383,7 @@ nodeMap.forEach(function(value, key) {
             //console.log("g1: "+JSON.stringify(g1));
 
             res.send(g);
-            callback(g);
+            ////callback(g);
         });
 
 cursor.on('data', function(doc) {
@@ -1413,7 +1398,6 @@ cursor.on('data', function(doc) {
 
 
 
-});
 
 });
 
@@ -1757,11 +1741,6 @@ i++;
         }
     };
 
-    MongoClient.connect(url, function(err, db) {
-        assert.equal(null, err);
-        var callback = function() {
-            db.close();
-        };
 
         var cursor = db.collection('mediboard1').aggregate(
 
@@ -1803,7 +1782,6 @@ i++;
 
 cursor.on('end', function() {
     console.log(", now processing..");
-    db.close();
             //assert.equal(err, null);
 
             //console.log(result);
@@ -2294,7 +2272,7 @@ for (segsize in tobesorted) {
             //console.log("g1: "+JSON.stringify(g1));
 
             res.send(g);
-            callback(g);
+            //////callback(g);
         });
 
 cursor.on('data', function(doc) {
@@ -2309,7 +2287,6 @@ cursor.on('data', function(doc) {
 
 
 
-});
 
 });
 
@@ -2323,7 +2300,7 @@ cursor.on('data', function(doc) {
       //make use of day month year to perform query on top user for that specific day
       MongoClient.connect(url, function(err,db) {
             assert.equal(null, err);
-            var callback = function() {
+            var //callback = function() {
               db.close();
             };
 
