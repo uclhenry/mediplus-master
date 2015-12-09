@@ -28,5 +28,6 @@
 	<classpathentry kind="lib" path="src/lib/gwt-2.6.0/requestfactory-server+src.jar"/>
 	<classpathentry kind="lib" path="src/lib/gwt-2.6.0/validation-api-1.0.0.GA-sources.jar"/>
 	<classpathentry kind="lib" path="src/lib/gwt-2.6.0/validation-api-1.0.0.GA.jar"/>
+	<classpathentry kind="lib" path="/Users/vinom/Downloads/bson-3.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

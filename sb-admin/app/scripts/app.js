@@ -115,11 +115,8 @@ angular
             return $ocLazyLoad.load({
               name:'chart.js',
               files:[
-                'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                'bower_components/angular-chart.js/dist/angular-chart.css',
-                'bower_components/timelinejs/css/timeline.css?v1',
-                'bower_components/timelinejs/css/fonts/font.default.css?v1',
-                'bower_components/timelinejs/css/mediTimeline.css'
+                //'bower_components/angular-chartjsold.js/dist/angular-chart.js',
+                //'bower_components/angular-chartjsold.js/dist/angular-chart.css'
               ]
             }),
             $ocLazyLoad.load({
@@ -138,11 +135,8 @@ angular
             return $ocLazyLoad.load({
               name:'chart.js',
               files:[
-                'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                'bower_components/angular-chart.js/dist/angular-chart.css',
-                'bower_components/timelinejs/css/timeline.css?v1',
-                'bower_components/timelinejs/css/fonts/font.default.css?v1',
-                'bower_components/timelinejs/css/mediTimeline.css'
+                //'bower_components/angular-chart.js.old/dist/angular-chart.js',
+                //'bower_components/angular-chart.js.old/dist/angular-chart.css'
               ]
             }),
             $ocLazyLoad.load({

@@ -6,11 +6,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.bson.Document;
+
+import static java.util.Arrays.asList;
+
 import com.google.common.collect.Lists;
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
@@ -32,7 +39,7 @@ public class TwitterStream {
 
 	public static void main(String[] args) {
 		try {
-				if(args.length != 13)
+				if(args.length != 14)
 				{
 					System.out.println("ERROR! Please supply all of the following:");
 					System.out.println("\t - Twitter App Consumer Key");
@@ -43,6 +50,7 @@ public class TwitterStream {
 					System.out.println("\t - MongoDB Host Port");
 					System.out.println("\t - MongoDB Name");
 					System.out.println("\t - MongoDB Collection");
+					System.out.println("\t - MongoDB Cache Collection");					
 					System.out.println("\t - MongoDB UserName");
 					System.out.println("\t - MongoDB Password");
 					System.out.println("\t - File containting all keywords (separated by newlines)");
@@ -60,11 +68,12 @@ public class TwitterStream {
 				String dbPort = args[5];
 				String dbName = args[6];
 				String dbCollection = args[7];
-				String dbUserName = args[8];
-				String dbPassword = args[9];
-				String keywordsFile = args[10];
-				String combinationKeywordsFile = args[11];
-				String singleKeywordsFile = args[12];
+				String dbCollectionCache = args[8];
+				String dbUserName = args[9];
+				String dbPassword = args[10];
+				String keywordsFile = args[11];
+				String combinationKeywordsFile = args[12];
+				String singleKeywordsFile = args[13];
 				
 				System.out.println("Please Note: ");
 				
@@ -80,13 +89,14 @@ public class TwitterStream {
 				System.out.println("\t\t - Host: " + dbHost);
 				System.out.println("\t\t - Port: " + dbPort);
 				System.out.println("\t\t - Collection: " + dbCollection);
+				System.out.println("\t\t - Collection Cache: " + dbCollectionCache);
 				System.out.println();
 				
 				System.out.println("Starting Stream...");
 				
 				TwitterStream.run(consumerKey, consumerSecret, token, secret,
 						keywordsFile, combinationKeywordsFile, singleKeywordsFile,
-						dbHost, dbPort, dbName, dbCollection,
+						dbHost, dbPort, dbName, dbCollection, dbCollectionCache,
 						dbUserName, dbPassword);
 
 		    } catch (InterruptedException e) {
@@ -151,7 +161,7 @@ public class TwitterStream {
 	
 	public static void run(String consumerKey, String consumerSecret, String token, String secret,
 			String keywordsFile, String combinationKeywordsFile, String singleKeywordsFile,
-			String dbHost, String dbPort, String dbName, String dbCollection,
+			String dbHost, String dbPort, String dbName, String dbCollection, String dbCollectionCache,
 			String dbUserName, String dbPassword) throws InterruptedException {
 	    // Process Messages
 	    try
@@ -165,6 +175,7 @@ public class TwitterStream {
 			DB db = clientMongo1.getDB(dbName);
 				
 			DBCollection collection = db.getCollection(dbCollection);
+			DBCollection collectionCache = db.getCollection(dbCollectionCache);
 			
 			//Process in batches of 1m tweets
 		    while(true)
@@ -203,11 +214,23 @@ public class TwitterStream {
 			        
 					// convert JSON to DBObject directly
 					DBObject dbObject = (DBObject) JSON.parse(msg);
-					DBObject dbObjectId = dbObject.get(_id);
-					System.out.println(dbObject.put("_id", ));
 					
 					collection.insert(dbObject);
-						
+					
+					//to increment cache collection of number of tweets as new tweet is being fed in
+					String timestamp =  (String) dbObject.get("timestamp_ms");
+					Calendar cal = Calendar.getInstance();
+					cal.setTimeInMillis(Long.parseLong(timestamp));
+					cal.set(Calendar.HOUR_OF_DAY, 0);
+					cal.set(Calendar.MINUTE, 0);
+					cal.set(Calendar.SECOND, 0);
+					cal.set(Calendar.MILLISECOND, 0);
+					long _id = cal.getTimeInMillis();
+					
+					BasicDBObject newDocument = new BasicDBObject().append("$inc", new BasicDBObject().append("value", 1));
+					collectionCache.update(new BasicDBObject().append("_id", _id), newDocument,true,false);
+					
+					
 					System.out.println("Added Tweet : [" + msg.substring(0, 20) + " ... ].");
 			    }
 			    

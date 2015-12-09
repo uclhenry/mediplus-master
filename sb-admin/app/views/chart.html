@@ -15,11 +15,70 @@
             </div>
         </div>
     </div>
-    <script src="bower_components/timelinejs/js/timeline.js"></script>
+    <!--<script src="bower_components/timelinejs/js/timeline.js"></script>
     <script>
         var timeline = new VCO.Timeline('timeline', 'bower_components/timelinejs/examples/welcome.json', {
             timenav_position: "top",
         });
+    </script>-->
+    <input type="text" id="dataRangeSlider"/>
+    <script type="text/javascript">
+        $("#dataRangeSlider").ionRangeSlider({
+            type: "double",
+            min: +moment("Jul 01 2015", "MMM DD YYYY").format("X"),
+            max: +moment().format("X"),
+            prettify: function (num) {
+                return moment(num, "X").format("MMM Do YYYY, hh:mm A");
+            },
+            onFinish: function (data) {
+                //console.log(data.from);
+                reloadTwitterLineGraphData(data.from * 1000,data.to * 1000);
+
+                var mode = "tweet";
+                var hashes;
+                try {
+                    var url = window.location.href
+                    hashes = url.split("?")[1];
+                    hashes = hashes.split("#")[0];
+                    if(hashes.split("-")[1]){
+                        mode = hashes.split("-")[1];
+                        console.log("mode: "+mode);
+                    }
+
+                    if(mode == "user"){
+                        document.getElementById('tweetgraphtab').classList.remove('active');
+                        document.getElementById('usergraphtab').classList.add('active');
+                        document.getElementById('graphtitlevalue').innerHTML = "Top 1000 Users: General";
+                    }else if (mode == "tweet"){
+                        document.getElementById('usergraphtab').classList.remove('active');
+                        document.getElementById('tweetgraphtab').classList.add('active');
+                    }
+
+                    hashes = hashes.split("-")[0];
+                    //console.log("mode: "+hashes);
+
+                    
+
+                } catch (e) {
+                    hashes = "";
+                }
+
+                if (hashes == "") {
+                    hashes = "generic";
+                } else {
+                    document.getElementById('graphtitle').innerHTML = "<h5>Top 1000 "+mode+"s on '" + hashes + "'</h5>"
+
+                    document.getElementById('searchcriteriaremovespan').innerHTML = "<button type='button' class='btn btn-default btn-xs' > " + hashes + " <span class='glyphicon glyphicon-remove'></span></button>";
+
+
+                }
+
+
+
+                loadNetworkGraph(mode,hashes,data.from * 1000,data.to * 1000);
+            }
+        });
+
     </script>
 </div>
 <div class="row col-lg-12" style="margin-top:10px;margin-left:12px;">
@@ -79,11 +138,14 @@
         <!--<div class="panel-heading">Rumours</div>-->
         <div class="panel-body" ng-init="globalTab=0;init()">
 
-            <div class="col-sm-12" ng-controller="ChartCtrl" id="twitterchart" ng-if="globalTab == 0">
+            <div class="col-sm-12"><!-- included before ng-if="globalTab == 0"-->
 
-                <div class="col-sm-4" id="twitterreload">
-                    <canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>
+                <div style="min-height:250px" class="col-sm-4" id="twitterreload">
+                    
+                    <!--<canvas id="twitterline customline-v" class="chart chart-line chart-xl" data="twitterline.data" labels="twitterline.labels" legend="true" click="twitterline.onClick" series="twitterline.series"></canvas>-->
 
+
+                    <canvas id="twitterlinegraph"></canvas>
 
                 </div>
 
@@ -100,12 +162,15 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr ng-repeat="rowContent in rows">
+                        <tbody id="lineTableBody-v">
+                            <tr id="lineTableRow-v">
+                                <td style="padding:0px;border-top:0;">Screen name</td>
+                                <td style="padding:0px;border-top:0;">Count</td>
+                            </tr>
+                            <!--<tr ng-repeat="rowContent in rows">
                                 <td style="padding:0px;border-top:0;">{{rowContent._id}}</td>
                                 <td style="padding:0px;border-top:0;">{{rowContent.count}}</td>
-                                <!--<td>{{rowContent.count}}</td>-->
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </table>
                 </div>
@@ -130,7 +195,7 @@
 
             </div>
 
-            <div class="col-sm-12" ng-controller="ChartCtrl" id="newschart" ng-if="globalTab == 1">
+            <!--<div class="col-sm-12" ng-controller="ChartCtrl" id="newschart" ng-if="globalTab == 1">
                 <div class="col-sm-4">
                     <canvas id="newsline customline-v" class="chart chart-line chart-xl" data="newsline.data" labels="newsline.labels" legend="true" click="newsline.onClick" series="newsline.series"></canvas>
                 </div>
@@ -148,7 +213,7 @@
 
 
 
-            </div>
+            </div>-->
 
 
 
@@ -488,6 +553,119 @@
 
 <script type="text/javascript">
 
+function refreshNetworkGraph(start,end){
+
+}
+
+
+
+var twitterlinegraphData = {
+            type: 'line',
+            data: {
+                labels: [0], // unix timestamps
+                //labels: [newTimestamp(0), newTimestamp(1), newTimestamp(2), newTimestamp(3), newTimestamp(4), newTimestamp(5), newTimestamp(6)], // unix timestamps
+                // labels: [newDate(0), newDate(1), newDate(2), newDate(3), newDate(4), newDate(5), newDate(6)], // Date Objects
+                //labels: ["01/01/2015 20:00", "01/02/2015 21:00", "01/03/2015 22:00", "01/05/2015 23:00", "01/07/2015 03:00", "01/08/2015 10:00", "01/10/2015"], // Hours
+                // labels: ["01/01/2015", "01/02/2015", "01/03/2015", "01/06/2015", "01/15/2015", "01/17/2015", "01/30/2015"], // Days
+                // labels: ["12/25/2014", "01/08/2015", "01/15/2015", "01/22/2015", "01/29/2015", "02/05/2015", "02/12/2015"], // Weeks
+                datasets: [{
+                    label: "Tweets",
+                    data: [0],
+                    //data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+                    fill: true,
+                    //borderDash: [5, 5],
+                }/*, {
+                    label: "My Second dataset",
+                    data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()],
+                }, {
+                    label: "Dataset with point data",
+                    data: [{
+                        x: "12/31/2014 06:00",
+                        y: randomScalingFactor()
+                    }, {
+                        x: "01/04/2015 13:00",
+                        y: randomScalingFactor()
+                    }, {
+                        x: "01/07/2015 01:15",
+                        y: randomScalingFactor()
+                    }, {
+                        x: "01/15/2015 01:15",
+                        y: randomScalingFactor()
+                    }],
+                    fill: false
+                }*/]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        display: true,
+                        time: {
+                            format: 'DD/MM/YYYY HH:mm',
+                            // round: 'day'
+                        },
+                        scaleLabel: {
+                            show: true,
+                            labelString: 'Date'
+                        }
+                    }, ],
+                    yAxes: [{
+                        display: true,
+                        scaleLabel: {
+                            show: true,
+                            labelString: '# of tweets'
+                        }
+                    }]
+                },
+                elements: {
+                    line: {
+                        tension: 0.3
+                    }
+                },
+            }
+        };
+
+function displayTopUsers(start,end){
+    $.getJSON("../api/topusers/"+start+"/"+end, function(result) {
+            console.log("topusers: "+result);
+
+            var table = document.getElementById('lineTableBody-v');
+            table.innerHTML = '';
+            for (topuser in result){
+
+                var row = document.createElement('tr');
+
+                  console.log("newrow: "+row.innerHTML);          
+                row.innerHTML = "<td style='padding:0px;border-top:0;'>"+result[topuser]._id+"</td>"+
+                "<td style='padding:0px;border-top:0;'>"+result[topuser].count+"</td>";
+
+
+                table.appendChild(row);
+
+            }
+    });
+}
+
+function reloadTwitterLineGraphData(start,end){
+    $.getJSON("../api/twittercount/"+start+"/"+end, function(result) {
+            console.log("tcount: "+result);
+
+            twitterlinegraphData.data.labels = [];
+            twitterlinegraphData.data.datasets[0].data = [];
+            for(item in result){
+                twitterlinegraphData.data.labels.push(result[item]._id);
+                twitterlinegraphData.data.datasets[0].data.push(result[item].value);
+            }
+            window.myLine.update();
+            displayTopUsers(start,end);
+            refreshNetworkGraph(start,end);
+
+    });
+}
+
+
+
 
 function addKeywords(){
         /*vex.dialog.confirm({
@@ -564,52 +742,13 @@ function addKeywords(){
         g = {};
 
 
-    $(document).ready(function() {
-        var hashes;
-        var mode = "tweet";
-
-        try {
-            var url = window.location.href
-            hashes = url.split("?")[1];
-            hashes = hashes.split("#")[0];
-            if(hashes.split("-")[1]){
-                mode = hashes.split("-")[1];
-                console.log("mode: "+mode);
-            }
-
-            if(mode == "user"){
-                document.getElementById('tweetgraphtab').classList.remove('active');
-                document.getElementById('usergraphtab').classList.add('active');
-                document.getElementById('graphtitlevalue').innerHTML = "Top 1000 Users: General";
-            }else if (mode == "tweet"){
-                document.getElementById('usergraphtab').classList.remove('active');
-                document.getElementById('tweetgraphtab').classList.add('active');
-            }
-
-            hashes = hashes.split("-")[0];
-            //console.log("mode: "+hashes);
-
-            
-
-        } catch (e) {
-            hashes = "";
-        }
-
-        if (hashes == "") {
-            hashes = "generic";
-        } else {
-            document.getElementById('graphtitle').innerHTML = "<h5>Top 1000 "+mode+"s on '" + hashes + "'</h5>"
-
-            document.getElementById('searchcriteriaremovespan').innerHTML = "<button type='button' class='btn btn-default btn-xs' > " + hashes + " <span class='glyphicon glyphicon-remove'></span></button>";
+function loadNetworkGraph(mode,hashes,start,end){
+    $('#graph-container').remove(); 
 
 
-        }
-
-
-        console.log("vars0: " + JSON.stringify(hashes));
-        loadTabData("twitter");
-
-        $.getJSON("../api/network" + mode + "graph/" + hashes, function(result) {
+$('#network-graph').html("<div id='container'><style>#graph-container {top: 0;bottom: 0;left: 0;right: 0;position: absolute;height: 500px;}</style><div id='graph-container'></div></div>");
+    
+    $.getJSON("../api/network" + mode + "graph/" + hashes + "/" + start + "/" + end, function(result) {
             var g = result;
             console.log(g);
             //var mode = "user";
@@ -617,7 +756,7 @@ function addKeywords(){
             if (mode == "user") {
 
                 // Instantiate sigma:
-                var s = new sigma({
+                s = new sigma({
                     graph: g,
                     renderer: {
                         container: document.getElementById('graph-container'),
@@ -738,7 +877,6 @@ function addKeywords(){
                     });
                 */
             } else if (mode == "tweet") {
-                // Instantiate sigma:
                 s = new sigma({
                     graph: g,
                     container: 'graph-container'
@@ -765,6 +903,156 @@ function addKeywords(){
                 });
             }
         });
+}
+
+
+        var randomScalingFactor = function() {
+            return Math.round(Math.random() * 100 * (Math.random() > 0.5 ? -1 : 1));
+        };
+        var randomColorFactor = function() {
+            return Math.round(Math.random() * 255);
+        };
+        var randomColor = function(opacity) {
+            return 'rgba(' + randomColorFactor() + ',' + randomColorFactor() + ',' + randomColorFactor() + ',' + (opacity || '.3') + ')';
+        };
+        var newDate = function(days) {
+            var date = new Date();
+            return date.setDate(date.getDate() + days);
+        };
+        var newTimestamp = function(days) {
+            return Date.now() - days * 100000;
+        };
+
+        
+
+
+
+
+        $('#randomizeData').click(function() {
+            $.each(config.data.datasets, function(i, dataset) {
+                dataset.data = dataset.data.map(function() {
+                    return randomScalingFactor();
+                });
+            });
+
+            window.myLine.update();
+            updateLegend();
+        });
+
+        $('#addDataset').click(function() {
+            var newDataset = {
+                label: 'Dataset ' + config.data.datasets.length,
+                borderColor: randomColor(0.4),
+                backgroundColor: randomColor(0.5),
+                pointBorderColor: randomColor(0.7),
+                pointBackgroundColor: randomColor(0.5),
+                pointBorderWidth: 1,
+                data: [],
+            };
+
+            for (var index = 0; index < config.data.labels.length; ++index) {
+                newDataset.data.push(randomScalingFactor());
+            }
+
+            config.data.datasets.push(newDataset);
+            window.myLine.update();
+            updateLegend();
+        });
+
+        $('#addData').click(function() {
+            if (config.data.datasets.length > 0) {
+                config.data.labels.push(
+                    myLine.scales['x-axis-0'].labelMoments[myLine.scales['x-axis-0'].labelMoments.length - 1]
+                    .clone()
+                    .add(1, 'day')
+                    .format('MM/DD/YYYY HH:mm')
+                );
+
+                for (var index = 0; index < config.data.datasets.length; ++index) {
+                    config.data.datasets[index].data.push(randomScalingFactor());
+                }
+
+                window.myLine.update();
+                updateLegend();
+            }
+        });
+
+        $('#removeDataset').click(function() {
+            config.data.datasets.splice(0, 1);
+            window.myLine.update();
+            updateLegend();
+        });
+
+        $('#removeData').click(function() {
+            config.data.labels.splice(-1, 1); // remove the label first
+
+            config.data.datasets.forEach(function(dataset, datasetIndex) {
+                dataset.data.pop();
+            });
+
+            window.myLine.update();
+            updateLegend();
+        });
+
+    $(document).ready(function() {
+        var hashes;
+        var mode = "tweet";
+
+        
+
+        //load twitter graph data
+        var currentunixms = (new Date).getTime();
+        reloadTwitterLineGraphData(1435708800,currentunixms);
+
+
+
+        var ctx = document.getElementById("twitterlinegraph").getContext("2d");
+        window.myLine = new Chart(ctx, twitterlinegraphData);
+
+        try {
+            var url = window.location.href
+            hashes = url.split("?")[1];
+            hashes = hashes.split("#")[0];
+            if(hashes.split("-")[1]){
+                mode = hashes.split("-")[1];
+                console.log("mode: "+mode);
+            }
+
+            if(mode == "user"){
+                document.getElementById('tweetgraphtab').classList.remove('active');
+                document.getElementById('usergraphtab').classList.add('active');
+                document.getElementById('graphtitlevalue').innerHTML = "Top 1000 Users: General";
+            }else if (mode == "tweet"){
+                document.getElementById('usergraphtab').classList.remove('active');
+                document.getElementById('tweetgraphtab').classList.add('active');
+            }
+
+            hashes = hashes.split("-")[0];
+            //console.log("mode: "+hashes);
+
+            
+
+        } catch (e) {
+            hashes = "";
+        }
+
+        if (hashes == "") {
+            hashes = "generic";
+        } else {
+            document.getElementById('graphtitle').innerHTML = "<h5>Top 1000 "+mode+"s on '" + hashes + "'</h5>"
+
+            document.getElementById('searchcriteriaremovespan').innerHTML = "<button type='button' class='btn btn-default btn-xs' > " + hashes + " <span class='glyphicon glyphicon-remove'></span></button>";
+
+
+        }
+
+
+        console.log("vars0: " + JSON.stringify(hashes));
+        loadTabData("twitter");
+
+        var date = new Date()
+        loadNetworkGraph(mode,hashes,0,date.getDate());
+        
     });
 
 

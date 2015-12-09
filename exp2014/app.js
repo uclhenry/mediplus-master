@@ -50,23 +50,23 @@ var url = 'mongodb://localhost/test';
 
 
 // view engine setup
-    MongoClient.connect(url, function(err, database) {
-        if(err) throw err;
-        db = database;
+MongoClient.connect(url, function(err, database) {
+    if (err) throw err;
+    db = database;
 
-        //Start the application after the database connection is ready
-        //app.listen(3000);
-        app.set('port', process.env.PORT || 3000);
-        app.set('views', path.join(__dirname, 'views'));
-        app.set('view engine', 'hjs');
-        console.log("listening on port 3000");
-    });
+    //Start the application after the database connection is ready
+    //app.listen(3000);
+    app.set('port', process.env.PORT || 3000);
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'hjs');
+    console.log("listening on port 3000");
+});
 
 
 
 var CronJob = require('cron').CronJob;
 //new CronJob('*/10 * * * *', function() {
-    new CronJob('*/15 * * * *', function() {
+new CronJob('*/1 * * * *', function() {
 
     // Don't worry about this. It's just a localhost file server so you can be
     // certain the "remote" feed is available when you run this example.
@@ -77,7 +77,7 @@ var CronJob = require('cron').CronJob;
     });
     server.listen(0, function() {
         //fetch('http://localhost:' + this.address().port + '/iconv.xml');
-        fetch('http://medusa.jrc.it/rss?type=category&id=Vaccination&language=en');
+        fetch('http://medusa.jrc.it/rss?type=category&id=Vaccination&language=en&duplicates=false');
     });
 
 
@@ -86,9 +86,9 @@ var CronJob = require('cron').CronJob;
 }, null, true);
 
 
-    function genColor(seed) {
-        color = Math.floor((Math.abs(Math.tan(seed) * 16777215)) % 16777215);
-        color = color.toString(16);
+function genColor(seed) {
+    color = Math.floor((Math.abs(Math.tan(seed) * 16777215)) % 16777215);
+    color = color.toString(16);
     // pad any colors shorter than 6 characters with leading 0s
     while (color.length < 6) {
         color = '0' + color;
@@ -113,16 +113,21 @@ function fetch(feed) {
     var feedparser = new FeedParser();
 
     // Define our handlers
-    req.on('error', done);
+    req.on('error', function(error){
+        console.log(error);
+    });
     req.on('response', function(res) {
-        if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+        if (res.statusCode != 200) return this.emit('error', console.log('Bad status code') /*new Error('Bad status code')*/ );
         var charset = getParams(res.headers['content-type'] || '').charset;
         res = maybeTranslate(res, charset);
+        //console.log(res);
         // And boom goes the dynamite
         res.pipe(feedparser);
     });
 
-    feedparser.on('error', done);
+    feedparser.on('error', function(error){
+        console.log(error);
+    });
     feedparser.on('end', done);
     feedparser.on('readable', function() {
         var post;
@@ -180,12 +185,12 @@ delete obj._id;
 
 json = JSON.stringify([obj]);*/
 
-var processedJson = [];
+    var processedJson = [];
 
-var json = JSON.stringify(rssOutput);
-var obj = JSON.parse(json);
+    var json = JSON.stringify(rssOutput);
+    var obj = JSON.parse(json);
 
-for (article in obj) {
+    for (article in obj) {
         //console.log(obj[article].guid);
         //break;
         obj[article]._id = obj[article].guid;
@@ -207,27 +212,26 @@ for (article in obj) {
     //set up mongo such that json.stringify(output) is imported into mongo test db collection medisys.
     //such that field guid is id of collection, and skip import of elements with same id.
 
-    
-
-        for (article in obj) {
-            db.collection('medisys').save(obj[article], function(err, docs) {
-                if (err) {
-                    console.log('err: ' + err);
-                }
-                //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
-            });
-        }
 
 
-        //[
+    for (article in obj) {
+        db.collection('medisys').save(obj[article], function(err, docs) {
+            if (err) {
+                console.log('err: ' + err);
+            }
+            //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
+        });
+    }
 
-        //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-        //{}
-        //]
-        //finalJson
 
-        //);
+    //[
 
+    //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+    //{}
+    //]
+    //finalJson
+
+    //);
 
 
 
@@ -250,16 +254,18 @@ if (app.get('env') === 'development') {
     });
 }
 
+
+
 app.get('/tophashtags/:shortUrl', function(req, res) {
 
     var shorturl = ".*" + req.params.shortUrl;
 
-    
 
 
-        db.collection('mediboard1').aggregate(
 
-            [
+    db.collection('mediboard1').aggregate(
+
+        [
 
             {
                 $match: {
@@ -285,50 +291,50 @@ app.get('/tophashtags/:shortUrl', function(req, res) {
                 $limit: 10
             }
 
-            ]
+        ]
 
-            ).toArray(function(err, result) {
-                assert.equal(err, null);
-            //console.log(result);
+    ).toArray(function(err, result) {
+        assert.equal(err, null);
+        //console.log(result);
 
-            var hashmap = {};
-            console.log(result + "imhger");
+        var hashmap = {};
+        console.log(result + "imhger");
 
-            for (var key in result) {
+        for (var key in result) {
+            console.log(result[key].entities.hashtags + "imhger");
+
+            if (result.hasOwnProperty(key)) {
                 console.log(result[key].entities.hashtags + "imhger");
 
-                if (result.hasOwnProperty(key)) {
-                    console.log(result[key].entities.hashtags + "imhger");
 
+                for (var key1 in result[key].entities.hashtags) {
 
-                    for (var key1 in result[key].entities.hashtags) {
+                    console.log(result[key].entities.hashtags[key1]);
 
-                        console.log(result[key].entities.hashtags[key1]);
-
-                        if (result[key].entities.hashtags.hasOwnProperty(key1)) {
-                            console.log(result[key].entities.hashtags[key1].text);
-                            if (!hashmap[result[key].entities.hashtags[key1].text]) {
-                                hashmap[result[key].entities.hashtags[key1].text] = 1;
-                            } else {
-                                hashmap[result[key].entities.hashtags[key1].text]++;
-                            }
-
-
-
+                    if (result[key].entities.hashtags.hasOwnProperty(key1)) {
+                        console.log(result[key].entities.hashtags[key1].text);
+                        if (!hashmap[result[key].entities.hashtags[key1].text]) {
+                            hashmap[result[key].entities.hashtags[key1].text] = 1;
+                        } else {
+                            hashmap[result[key].entities.hashtags[key1].text]++;
                         }
+
+
+
                     }
-
-
                 }
+
+
             }
+        }
 
-            result = hashmap
+        result = hashmap
 
 
 
-            res.send(result);
-            //callback(result);
-        });
+        res.send(result);
+        //callback(result);
+    });
 
 
 
@@ -347,30 +353,29 @@ app.get('/topusers/summary/:day/:month/:year', function(req, res) {
 app.get('/keywords/vaccination/get', function(req, res) {
 
 
-    
 
-        db.collection('keywords').aggregate(
 
-            [
+    db.collection('keywords').aggregate(
 
-                //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-                {
-                    $match: {
-                        "_id": "vaccination"
-                   }
-                },
-               {
-                    $limit: 1000
+        [
+
+            //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+            {
+                $match: {
+                    "_id": "vaccination"
                 }
+            }, {
+                $limit: 1000
+            }
 
-            ]
+        ]
 
-        ).toArray(function(err, result) {
-            assert.equal(err, null);
-            console.log(result);
-            res.send(result);
-            //callback(result);
-        });
+    ).toArray(function(err, result) {
+        assert.equal(err, null);
+        console.log(result);
+        res.send(result);
+        //callback(result);
+    });
 
 
 });
@@ -380,33 +385,33 @@ app.get('/keywords/vaccination/post/:value', function(req, res) {
     var insert = {};
     insert._id = "vaccination";
     insert.value = [];
-    for(keyword in keywordsArray){
+    for (keyword in keywordsArray) {
         insert.value.push(keywordsArray[keyword]);
     }
     console.log(insert)
 
-    
 
 
-            db.collection('keywords').save(insert, function(err, docs) {
-                if (err) {
-                    console.log('err: ' + err);
-                }else{
-                    console.log("result saved!: "+docs);
-                }
-                //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
-            });
-            
+
+    db.collection('keywords').save(insert, function(err, docs) {
+        if (err) {
+            console.log('err: ' + err);
+        } else {
+            console.log("result saved!: " + docs);
+        }
+        //if(!err) console.log(obj[article]._id+' : data inserted successfully!\n');
+    });
 
 
-        //[
 
-        //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-        //{}
-        //]
-        //finalJson
+    //[
 
-        //);
+    //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+    //{}
+    //]
+    //finalJson
+
+    //);
 
     //console.log("result: "+keywordsArray[0]);
     //res.send("OK");
@@ -415,7 +420,7 @@ app.get('/keywords/vaccination/post/:value', function(req, res) {
 
 
 
-app.get('/topusers/:day/:month/:year', function(req, res) {
+app.get('/topusersbydate/:day/:month/:year', function(req, res) {
 
     var day = req.params.day;
     var month = req.params.month;
@@ -423,89 +428,152 @@ app.get('/topusers/:day/:month/:year', function(req, res) {
 
     var regexString = ".*" + month + " " + day + ".*" + year;
 
-    
 
-        db.collection('mediboard1').aggregate(
 
-            [
+    db.collection('mediboard1').aggregate(
 
-                //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-                {
-                    $match: {
-                        "created_at": new RegExp(regexString, 'i')
-                    }
-                }, {
-                    $group: {
-                        _id: '$user.screen_name',
-                        count: {
-                            $sum: 1
-                        }
-                    }
-                }, {
-                    $sort: {
-                        count: -1
-                    }
-                }, {
-                    $limit: 10
+        [
+
+            //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+            {
+                $match: {
+                    "created_at": new RegExp(regexString, 'i')
                 }
+            }, {
+                $group: {
+                    _id: '$user.screen_name',
+                    count: {
+                        $sum: 1
+                    }
+                }
+            }, {
+                $sort: {
+                    count: -1
+                }
+            }, {
+                $limit: 10
+            }
 
-                ]
+        ]
 
-                ).toArray(function(err, result) {
-                    assert.equal(err, null);
-                    console.log(result);
-                    res.send(result);
-                    //callback(result);
-                });
+    ).toArray(function(err, result) {
+        assert.equal(err, null);
+        console.log(result);
+        res.send(result);
+        //callback(result);
+    });
 
 
 });
 
-app.get('/twittercount/:day/:month', function(req, res) {
+app.get('/twittercount/:starttime/:endtime', function(req,res){
+    var starttime = Number(req.params.starttime);
+    var endtime = Number(req.params.endtime);
+
+    var date = new Date(endtime);
+    date.setDate(date.getDate()+1);
+
+    
+    
+    console.log("test next day val: "+date.getTime());
+
+    var newendtime = date.getTime();
+
+
+
+    db.collection('dailyTweetCountCache').find(
+        { _id: { $gte: starttime, $lt: newendtime } }
+            
+        ).toArray(function(err,docs) {
+            assert.equal(err,null);
+            
+                console.log(docs);
+                res.send(docs);
+        })
+    
+
+});
+
+
+app.get('/interviewq')
+
+app.get('/generatetwittercount/:starttime/:endtime', function(req, res) { // start and end time not used
 
     //var days = ['06','06','06','06','06','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','29','29'];
     //var day = "06";
-    var month = req.params.month;
-    var year = "2015";
-    var day = req.params.day;
-    
-    var regexString = ".*" + month + " " + day + ".*" + year;
+    var starttime = req.params.starttime;
+    var endtime = req.params.endtime;
+
+
+    mapTweets = function() {
+        //for (var idx = 0; idx < this.items)
+        var date = new Date(Number(this.timestamp_ms));
+        //print(date);
+        var day = date.getDate();
+        var month = date.getMonth()+1;
+        var year = date.getFullYear();
+
+        var newDate = month+"/"+day+"/"+year;
+
+
+                //print(""+date);
+
+        emit(NumberLong(new Date(newDate).getTime()),1);
+    }
+
+    reduceCount = function(dateId,val) {
+        //var reducedCountVals = 0;
+        
+        var res = 0;
+        for (idx in val){
+            res += val[idx];
+        }
+
+        //print(dateId + ", "+res);
+        return res;
+        //print(dateId);
+        //return 0;
+    }
+
+
+    db.collection('mediboard1').mapReduce(
+
+        mapTweets,
+        reduceCount,
+        {
+            //query: {"timestamp_ms": { $gte: starttime, $lte: starttime } }, //USE OF START END TIME HERE
+            out: { merge : "dailyTweetCountCache" }
+        }
+
+    );
 
     
 
-        db.collection('mediboard1').aggregate(
+    //var ans = db.collection('mediboard1').mapReduce(mapTweets, reduceCount)
+    //var finalans = db[ans.result].find()
+    
+    //var regexString = ".*" + month + " " + day + ".*" + year;
 
-            [
 
-                    //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-                    {
-                        $match: {
-                            "created_at": new RegExp(regexString, 'i')
-                        }
-                    }, {
-                        $group: {
-                            _id: null,
-                            count: {
-                                $sum: 1
-                            }
-                        }
-                    }
 
-                    ]
+    //db.collection('mediboard1').find(
 
-                    ).toArray(function(err, result) {
-                        assert.equal(err, null);
-                        if(result[0]){
-                            result[0]._id = day;
-                        }else{
-                            result[0] = "undefined"
-                        }
-                        console.log(result[0]);
-                        res.send(result[0]);
-                        ////callback(result[0]);
-                //days[0] = JSON.stringify(result[0].count);
-                //requestsmade++;
-            });
+
+            //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+      //      {
+        //             timestamp_ms: { $gte: starttime, $lte: endtime } 
+          //  }
+
+          res.send(200);
+    /*).toArray(function(err, result) {
+        assert.equal(err, null);
+        
+        console.log(result);
+        res.send(result);
+        ////callback(result[0]);
+        //days[0] = JSON.stringify(result[0].count);
+        //requestsmade++;
+    });*/
 
 
 });
@@ -514,44 +582,44 @@ app.get('/newscount/:day/:month', function(req, res) {
     var month = req.params.month;
     var year = "2015";
     var day = req.params.day;
-    
+
     var regexString = year + "-" + month + "-" + day + ".*";
 
-    
 
-        db.collection('medisys').aggregate(
 
-            [
+    db.collection('medisys').aggregate(
 
-                    //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-                    {
-                        $match: {
-                            "pubDate": new RegExp(regexString, 'i')
-                        }
-                    }, {
-                        $group: {
-                            _id: null,
-                            count: {
-                                $sum: 1
-                            }
-                        }
+        [
+
+            //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+            {
+                $match: {
+                    "pubDate": new RegExp(regexString, 'i')
+                }
+            }, {
+                $group: {
+                    _id: null,
+                    count: {
+                        $sum: 1
                     }
+                }
+            }
 
-                    ]
+        ]
 
-                    ).toArray(function(err, result) {
-                        assert.equal(err, null);
-                        if(result[0]){
-                            result[0]._id = day;
-                        }else{
-                            result[0] = "undefined"
-                        }
-                        console.log(result[0]);
-                        res.send(result[0]);
-                        //callback(result[0]);
-                //days[0] = JSON.stringify(result[0].count);
-                //requestsmade++;
-            });
+    ).toArray(function(err, result) {
+        assert.equal(err, null);
+        if (result[0]) {
+            result[0]._id = day;
+        } else {
+            result[0] = "undefined"
+        }
+        console.log(result[0]);
+        res.send(result[0]);
+        //callback(result[0]);
+        //days[0] = JSON.stringify(result[0].count);
+        //requestsmade++;
+    });
 
 
 
@@ -565,39 +633,48 @@ app.get('/newscount/:day/:month', function(req, res) {
 
 //})
 
-app.get('/topusers', function(req, res) {
+app.get('/topusers/:start/:end', function(req, res) {
+
+    var start = req.params.start;
+    var end = req.params.end;
 
 
-   
+    db.collection('mediboard1').aggregate(
 
-        db.collection('mediboard1').aggregate(
+        [
 
-            [
-
-                //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
-                {
-                    $group: {
-                        _id: '$user.screen_name',
-                        count: {
-                            $sum: 1
-                        }
-                    }
-                }, {
-                    $sort: {
-                        count: -1
-                    }
-                }, {
-                    $limit: 10
+            //{$group : { _id : '$user.id', count : {$sum : 1}}},{$sort : { count: -1}}, {$limit:10} 
+            {    
+                $match : { 
+                    timestamp_ms: { 
+                        $gte: start, $lt: end
+                    } 
                 }
+            },
+            { 
 
-                ]
+                $group: {
+                    _id: '$user.screen_name',
+                    count: {
+                        $sum: 1
+                    }
+                }
+            }, {
+                $sort: {
+                    count: -1
+                }
+            }, {
+                $limit: 10
+            }
 
-                ).toArray(function(err, result) {
-                    assert.equal(err, null);
-                    console.log(result);
-                    res.send(result);
-                    //callback(result);
-                });
+        ]
+
+    ).toArray(function(err, result) {
+        assert.equal(err, null);
+        console.log(result);
+        res.send(result);
+        //callback(result);
+    });
 
 
 });
@@ -606,10 +683,10 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
 
     var regexString = ".*" + hashtag + ".*";
 
-    
-        db.collection('mediboard1').aggregate(
 
-            [
+    db.collection('mediboard1').aggregate(
+
+        [
 
             {
                 $match: {
@@ -630,17 +707,17 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
 
 
 
-                //{$project: {"text" : 1, "retweeted_status.text": 1, "user.id_str": 1,"user.screen_name": 1, "retweeted_status.user.id_str": 1, "retweeted_status.user.screen_name": 1} }, {$limit:1000}
+            //{$project: {"text" : 1, "retweeted_status.text": 1, "user.id_str": 1,"user.screen_name": 1, "retweeted_status.user.id_str": 1, "retweeted_status.user.screen_name": 1} }, {$limit:1000}
 
-                ]
+        ]
 
-                ).toArray(function(err, result) {
-                    assert.equal(err, null);
-            //console.log(result);
+    ).toArray(function(err, result) {
+        assert.equal(err, null);
+        //console.log(result);
 
-            //code to convert to node edge graph
+        //code to convert to node edge graph
 
-            var i = 0,
+        var i = 0,
             N = 10,
             E = 50,
             g = {
@@ -648,15 +725,15 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
                 edges: []
             };
 
-            var segmentSizes = {};
-            var tweetSegmentMap = {};
-            var segmentId = 0;
-            //var keys = [];
+        var segmentSizes = {};
+        var tweetSegmentMap = {};
+        var segmentId = 0;
+        //var keys = [];
 
-            for (var key in result) {
-                if (result.hasOwnProperty(key)) {
+        for (var key in result) {
+            if (result.hasOwnProperty(key)) {
 
-                    /*
+                /*
                       var tweetUserId = result[key].user.id_str;//key.user.id_str;
 
 
@@ -687,154 +764,157 @@ app.get('/networkgraph/searchbyhashtag/:hashtag', function(req, res) {
 
 
 
-                    //REMOVE NODES/EDGES WITH LOW CONNECTIVITY.... too many nodes to send across network.
-                    //do this by storing connectivity number and updating it when inputting nodes, adding new nodes with edges...
+                //REMOVE NODES/EDGES WITH LOW CONNECTIVITY.... too many nodes to send across network.
+                //do this by storing connectivity number and updating it when inputting nodes, adding new nodes with edges...
 
-                    try {
+                try {
 
-                        if (result[key].retweeted_status.user) {
+                    if (result[key].retweeted_status.user) {
 
-                            var tweetText = result[key].text;
-                            var retweetText = result[key].retweeted_status.text;
+                        var tweetText = result[key].text;
+                        var retweetText = result[key].retweeted_status.text;
 
-                            var tweetUserId = result[key].user.id_str; //key.user.id_str;
-                            var tweetUserName = result[key].user.screen_name;;
+                        var tweetUserId = result[key].user.id_str; //key.user.id_str;
+                        var tweetUserName = result[key].user.screen_name;;
 
 
-                            //check if node/edge already exists..
+                        //check if node/edge already exists..
 
-                            var alreadyExists_tweet = false;
+                        var alreadyExists_tweet = false;
 
-                            for (var key1 in g.nodes) {
-                                //console.log(g.nodes[key1].id + "her");
-                                if (g.nodes.hasOwnProperty(key1) && g.nodes[key1].id == tweetUserId) {
-                                    alreadyExists_tweet = true;
-                                    //console.log("already exists now true" + tweetUserId);
-                                    break;
-                                }
+                        for (var key1 in g.nodes) {
+                            //console.log(g.nodes[key1].id + "her");
+                            if (g.nodes.hasOwnProperty(key1) && g.nodes[key1].id == tweetUserId) {
+                                alreadyExists_tweet = true;
+                                //console.log("already exists now true" + tweetUserId);
+                                break;
                             }
+                        }
 
-                            var retweetUserId = result[key].retweeted_status.user.id_str;
-                            var retweetUserName = result[key].retweeted_status.user.screen_name;
+                        var retweetUserId = result[key].retweeted_status.user.id_str;
+                        var retweetUserName = result[key].retweeted_status.user.screen_name;
 
 
-                            var alreadyExists_retweet = false;
+                        var alreadyExists_retweet = false;
 
-                            for (var key1 in g.nodes) {
-                                //console.log(g.nodes[key1].id + "here");
+                        for (var key1 in g.nodes) {
+                            //console.log(g.nodes[key1].id + "here");
 
-                                if (g.nodes.hasOwnProperty(key1) && g.nodes[key1].id == retweetUserId) {
-                                    alreadyExists_retweet = true;
-                                    //console.log("already exists now true" + retweetUserId);
+                            if (g.nodes.hasOwnProperty(key1) && g.nodes[key1].id == retweetUserId) {
+                                alreadyExists_retweet = true;
+                                //console.log("already exists now true" + retweetUserId);
 
-                                    break;
-                                }
+                                break;
                             }
+                        }
 
-                            if (!alreadyExists_tweet && !alreadyExists_retweet) {
-                                segmentId++;
-                                tweetSegmentMap[tweetUserId] = segmentId;
-                                tweetSegmentMap[retweetUserId] = segmentId;
-                                segmentSizes[segmentId] = 2;
+                        if (!alreadyExists_tweet && !alreadyExists_retweet) {
+                            segmentId++;
+                            tweetSegmentMap[tweetUserId] = segmentId;
+                            tweetSegmentMap[retweetUserId] = segmentId;
+                            segmentSizes[segmentId] = 2;
 
-                            } else if (!alreadyExists_tweet && alreadyExists_retweet) {
-                                tweetSegmentMap[tweetUserId] = tweetSegmentMap[retweetUserId];
-                                segmentSizes[tweetSegmentMap[tweetUserId]]++;
+                        } else if (!alreadyExists_tweet && alreadyExists_retweet) {
+                            tweetSegmentMap[tweetUserId] = tweetSegmentMap[retweetUserId];
+                            segmentSizes[tweetSegmentMap[tweetUserId]]++;
 
-                            } else if (alreadyExists_tweet && !alreadyExists_retweet) {
-                                tweetSegmentMap[retweetUserId] = tweetSegmentMap[tweetUserId];
-                                segmentSizes[tweetSegmentMap[tweetUserId]]++;
+                        } else if (alreadyExists_tweet && !alreadyExists_retweet) {
+                            tweetSegmentMap[retweetUserId] = tweetSegmentMap[tweetUserId];
+                            segmentSizes[tweetSegmentMap[tweetUserId]]++;
 
-                            }
-
-
-                            if (!alreadyExists_tweet) {
+                        }
 
 
-
-                                g.nodes.push({
-                                    id: "" + tweetUserId,
-                                    label: "" + tweetText.substring(0,30) /*+","+tweetSegmentMap[tweetUserId]*/ ,
-                                    username: "" + tweetUserName,
-                                    x: Math.random(),
-                                    y: Math.random(),
-                                    size: Math.random(),
-                                    color: "#" + genColor(tweetSegmentMap[tweetUserId]),
-                                    segment: tweetSegmentMap[tweetUserId],
-                                    text: tweetText
-                                });
+                        if (!alreadyExists_tweet) {
 
 
 
-
-                            }
-
-
-
-
-                            if (!alreadyExists_retweet) {
-
-
-                                g.nodes.push({
-                                    id: "" + retweetUserId,
-                                    label: "" + retweetText.substring(0,30) /*+","+tweetSegmentMap[retweetUserId]*/ ,
-                                    username: "" + retweetUserName,
-                                    x: Math.random(),
-                                    y: Math.random(),
-                                    size: Math.random(),
-                                    color: "#" + genColor(tweetSegmentMap[retweetUserId]),
-                                    segment: tweetSegmentMap[retweetUserId],
-                                    text: retweetText
-                                });
-
-
-                            }
-
-
-                            g.edges.push({
-                                id: 'e' + i,
-                                source: "" + tweetUserId,
-                                target: "" + retweetUserId,
+                            g.nodes.push({
+                                id: "" + tweetUserId,
+                                label: "" + tweetText.substring(0, 30) /*+","+tweetSegmentMap[tweetUserId]*/ ,
+                                username: "" + tweetUserName,
+                                x: Math.random(),
+                                y: Math.random(),
                                 size: Math.random(),
-                                color: "#666"
+                                color: "#" + genColor(tweetSegmentMap[tweetUserId]),
+                                segment: tweetSegmentMap[tweetUserId],
+                                text: tweetText
                             });
-                            i++;
+
 
 
 
                         }
 
-                    } catch (e) {
+
+
+
+                        if (!alreadyExists_retweet) {
+
+
+                            g.nodes.push({
+                                id: "" + retweetUserId,
+                                label: "" + retweetText.substring(0, 30) /*+","+tweetSegmentMap[retweetUserId]*/ ,
+                                username: "" + retweetUserName,
+                                x: Math.random(),
+                                y: Math.random(),
+                                size: Math.random(),
+                                color: "#" + genColor(tweetSegmentMap[retweetUserId]),
+                                segment: tweetSegmentMap[retweetUserId],
+                                text: retweetText
+                            });
+
+
+                        }
+
+
+                        g.edges.push({
+                            id: 'e' + i,
+                            source: "" + tweetUserId,
+                            target: "" + retweetUserId,
+                            size: Math.random(),
+                            color: "#666"
+                        });
+                        i++;
 
 
 
                     }
 
+                } catch (e) {
 
 
-
-                    //keys.push(g);
-                    //keys.push(result[key].user.id_str);
-                    //break;
 
                 }
+
+
+
+
+                //keys.push(g);
+                //keys.push(result[key].user.id_str);
+                //break;
+
             }
+        }
 
 
-            res.send(g);
-            ////callback(g);
-        });
+        res.send(g);
+        ////callback(g);
+    });
 
 
 });
 
-app.get('/networktweetgraph/:category', function(req, res) {
+app.get('/networktweetgraph/:category/:start/:end', function(req, res) {
 
     var category = req.params.category;
-    var regexString = ".*";
+    var start = req.params.start;
+    var end = req.params.end;
+
+    var regexString = "";
     //console.log(category);
     if (category !== "generic") {
-        regexString = ".*" + category + ".*";
+        regexString = "" + category + "";
         //console.log(category);
 
     }
@@ -846,11 +926,11 @@ app.get('/networktweetgraph/:category', function(req, res) {
     var stopWordsArr = stopwordsstring.split(",");
 
     var stopWordsHashMap = [];
-    for(word in stopWordsArr){
+    for (word in stopWordsArr) {
         stopWordsHashMap[stopWordsArr[word]] = 1;
     }
 
-        console.log(stopWordsHashMap['where']);
+    console.log(stopWordsHashMap['where']);
 
 
 
@@ -861,37 +941,37 @@ app.get('/networktweetgraph/:category', function(req, res) {
             nodes: [],
             edges: []
         }*/
-        ;
+    ;
 
-        var nodeMap = new HashMap();
-        var edgeMap = new HashMap();
+    var nodeMap = new HashMap();
+    var edgeMap = new HashMap();
 
-        var segmentSizes = new HashMap();
-        var tweetSegmentMap = {};
-        var segmentId = 0;
-        var largestSegmentSize = 0;
+    var segmentSizes = new HashMap();
+    var tweetSegmentMap = {};
+    var segmentId = 0;
+    var largestSegmentSize = 0;
 
-        function nodeFunction(node) {
-            try {
-                var outputstring = "";
-                var text = node.text.split(" ");
-                var regextoMatch = "/^[a-z0-9]+$/i";
-                for(word in text){
+    function nodeFunction(node) {
+        try {
+            var outputstring = "";
+            var text = node.text.split(" ");
+            var regextoMatch = "/^[a-z0-9]+$/i";
+            for (word in text) {
 
 
-                    if (((text[word].indexOf("@") == -1 && text[word].length > 2 && text[word].indexOf("http://") == -1)|| text[word].indexOf("#") > -1 ) && text[word].indexOf("...") == -1 && /^[ A-Za-z0-9_@./#&+-]*$/.test(text[word]) ) {
-                        var punctuationless = text[word].replace(/[.,-\/!$%\^&\*;:{}=\-_`~()]/g,""); //removed #
-                        var finalString = punctuationless.replace(/\s{2,}/g," ").toLowerCase();
-                        if(stopWordsHashMap[finalString] != 1 && stopWordsHashMap[finalString.split('#')[1]] != 1){
-                            outputstring += finalString + " ";
-                        }
+                if (((text[word].indexOf("@") == -1 && text[word].length > 2 && text[word].indexOf("http://") == -1) || text[word].indexOf("#") > -1) && text[word].indexOf("...") == -1 && /^[ A-Za-z0-9_@./#&+-]*$/.test(text[word])) {
+                    var punctuationless = text[word].replace(/[.,-\/!$%\^&\*;:{}=\-_`~()]/g, ""); //removed #
+                    var finalString = punctuationless.replace(/\s{2,}/g, " ").toLowerCase();
+                    if (stopWordsHashMap[finalString] != 1 && stopWordsHashMap[finalString.split('#')[1]] != 1) {
+                        outputstring += finalString + " ";
                     }
                 }
-                if(outputstring != ""){
-                    //console.log(outputstring /*+ ", orig: "+ node.text*/);
-                }
+            }
+            if (outputstring != "") {
+                //console.log(outputstring /*+ ", orig: "+ node.text*/);
+            }
 
-                if (node.retweeted_status.user) {
+            if (node.retweeted_status.user) {
 
                 //var tweetId = result[key].id;
                 var tweetIdStr = node.id_str;
@@ -996,7 +1076,7 @@ app.get('/networktweetgraph/:category', function(req, res) {
                     nodeMap.set(tweetIdStr, {
 
                         id: "" + tweetIdStr,
-                        label: "" + tweetText.substring(0,30) /*+","+tweetSegmentMap[tweetUserId]*/ ,
+                        label: "" + tweetText.substring(0, 30) /*+","+tweetSegmentMap[tweetUserId]*/ ,
                         username: "" + tweetUserName,
                         x: Math.random(),
                         y: Math.random(),
@@ -1023,27 +1103,27 @@ app.get('/networktweetgraph/:category', function(req, res) {
 
 
 
-}
+                }
 
 
 
 
-if (!alreadyExists_retweet) {
+                if (!alreadyExists_retweet) {
 
-    nodeMap.set(retweetIdStr, {
+                    nodeMap.set(retweetIdStr, {
 
-        id: "" + retweetIdStr,
-        label: "" + retweetText.substring(0,30) /*+","+tweetSegmentMap[retweetUserId]*/ ,
-        username: "" + tweetUserName,
-        x: Math.random(),
-        y: Math.random(),
-        size: Math.random(),
-        color: "#" + genColor(tweetSegmentMap[retweetIdStr]),
-        segment: tweetSegmentMap[retweetIdStr],
-        text: retweetText + "<p><h5>Retweeted users:</h5></p>",
-        type: "tweet"
+                        id: "" + retweetIdStr,
+                        label: "" + retweetText.substring(0, 30) /*+","+tweetSegmentMap[retweetUserId]*/ ,
+                        username: "" + tweetUserName,
+                        x: Math.random(),
+                        y: Math.random(),
+                        size: Math.random(),
+                        color: "#" + genColor(tweetSegmentMap[retweetIdStr]),
+                        segment: tweetSegmentMap[retweetIdStr],
+                        text: retweetText + "<p><h5>Retweeted users:</h5></p>",
+                        type: "tweet"
 
-    });
+                    });
 
 
                     /*g.nodes.push({
@@ -1058,21 +1138,21 @@ if (!alreadyExists_retweet) {
                   });*/
 
 
-}
+                }
 
-edgeMap.set({
-    source: tweetIdStr,
-    target: retweetIdStr
-}, {
+                edgeMap.set({
+                    source: tweetIdStr,
+                    target: retweetIdStr
+                }, {
 
-    id: 'e' + i,
-    source: "" + tweetIdStr,
-    target: "" + retweetIdStr,
-    segment: tweetSegmentMap[tweetIdStr],
-    size: Math.random(),
-    color: "#666"
+                    id: 'e' + i,
+                    source: "" + tweetIdStr,
+                    target: "" + retweetIdStr,
+                    segment: tweetSegmentMap[tweetIdStr],
+                    size: Math.random(),
+                    color: "#666"
 
-});
+                });
 
                 /*g.edges.push({
                   id: 'e' + i,
@@ -1082,7 +1162,7 @@ edgeMap.set({
                   size: Math.random(),
                   color: "#666"
               });*/
-i++;
+                i++;
                 //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
 
 
@@ -1099,8 +1179,19 @@ i++;
         }
     };
 
-    
 
+
+
+
+    if (regexString ==""){
+        var cursor = db.collection('mediboard1').find(
+                    { timestamp_ms: { $gte: "1444843080784", $lt: "1445898027067" } }
+
+
+            
+        ).stream();
+
+    }else{
         var cursor = db.collection('mediboard1').aggregate(
 
             [
@@ -1110,7 +1201,11 @@ i++;
 
                 {
                     $match: {
-                        "text": new RegExp(regexString, 'i')
+                         timestamp_ms: { 
+                            $gte: start,
+                            $lt: end
+                         }, 
+                         $text: { $search: regexString } 
                     }
                 }, {
                     $project: {
@@ -1125,37 +1220,36 @@ i++;
                         "retweeted_status.user.id_str": 1,
                         "retweeted_status.user.screen_name": 1
                     }
-                }, {
-                    $limit: 50000
                 }
 
                 //general
                 //{$project: {"id" : 1, "id_str" : 1, "text" : 1, "retweeted_status.text": 1, "user.id_str": 1,"user.screen_name": 1, "retweeted_status.id" : 1, "retweeted_status.id_str" : 1, "retweeted_status.user.id_str": 1, "retweeted_status.user.screen_name": 1} }, {$limit:1000}
 
-                ]
+            ]
             //console.log("query finished, now processing..");
 
-            ).stream();
+        ).stream();
+    }
 
 
-cursor.on('end', function() {
-    console.log(", now processing..");
-            //assert.equal(err, null);
+    cursor.on('end', function() {
+        console.log(", now processing..");
+        //assert.equal(err, null);
 
-            //console.log(result);
+        //console.log(result);
 
-            //code to convert to node edge graph
+        //code to convert to node edge graph
 
 
-            //var keys = [];
+        //var keys = [];
 
-            //for (var key in result) {
-            //console.log("goes inside");
+        //for (var key in result) {
+        //console.log("goes inside");
 
-            //  if (result.hasOwnProperty(key)) {
-            //console.log(JSON.stringify(result));
-            //break;
-            /*
+        //  if (result.hasOwnProperty(key)) {
+        //console.log(JSON.stringify(result));
+        //break;
+        /*
                       var tweetUserId = result[key].user.id_str;//key.user.id_str;
 
 
@@ -1186,224 +1280,226 @@ cursor.on('end', function() {
 
 
 
-            //REMOVE NODES/EDGES WITH LOW CONNECTIVITY.... too many nodes to send across network.
-            //do this by storing connectivity number and updating it when inputting nodes, adding new nodes with edges...
+        //REMOVE NODES/EDGES WITH LOW CONNECTIVITY.... too many nodes to send across network.
+        //do this by storing connectivity number and updating it when inputting nodes, adding new nodes with edges...
 
 
 
 
-            //keys.push(g);
-            //keys.push(result[key].user.id_str);
-            //break;
+        //keys.push(g);
+        //keys.push(result[key].user.id_str);
+        //break;
 
-            //   }
-            // }
+        //   }
+        // }
 
-            //check number of total nodes, remove clusters of size < 10% of biggest cluster size -> if nodes left are still of size > 1000, then increase percentage until size <=1000!
+        //check number of total nodes, remove clusters of size < 10% of biggest cluster size -> if nodes left are still of size > 1000, then increase percentage until size <=1000!
 
-            // i.e. 70000 nodes total, biggest cluster size 130
-            //remove any clusters of up to size 13.
-            //
+        // i.e. 70000 nodes total, biggest cluster size 130
+        //remove any clusters of up to size 13.
+        //
 
-            //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
-            //console.log("printing" + JSON.stringify(nodeMap)); // 80
-            //console.log("printing" + JSON.stringify(segmentSizes)); // 80
-            console.log("printing" + JSON.stringify(largestSegmentSize)); // 7 here but pretend it is 20 -> therefore remove segments of size 2... (trial first)
+        //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
+        //console.log("printing" + JSON.stringify(nodeMap)); // 80
+        //console.log("printing" + JSON.stringify(segmentSizes)); // 80
+        console.log("printing" + JSON.stringify(largestSegmentSize)); // 7 here but pretend it is 20 -> therefore remove segments of size 2... (trial first)
 
-            /*var segmentsToRemove = [];
+        /*var segmentsToRemove = [];
             for (segment in segmentSizes){
               if (segmentSizes[segment] <= 2) {
                 segmentsToRemove.push(segment);
 
               }
           }*/
-            //console.log(segmentsToRemove);
+        //console.log(segmentsToRemove);
 
-            /*var g1 = {
-                nodes: [],
-                edges: []
-            };*/
+        /*var g1 = {
+            nodes: [],
+            edges: []
+        };*/
 
-            //var nodeMapReduced = new HashMap();
-            //var 
+        //var nodeMapReduced = new HashMap();
+        //var 
 
-            //map segmentsize to the tweet nodes/edges
+        //map segmentsize to the tweet nodes/edges
 
-            var totalNodes = 0;
-            segmentSizes.forEach(function(value, key) {
-                totalNodes += value;
-            });
-            console.log(totalNodes);
+        var totalNodes = 0;
+        segmentSizes.forEach(function(value, key) {
+            totalNodes += value;
+        });
+        console.log(totalNodes);
 
 
 
-            var tobesorted = segmentSizes.values();
+        var tobesorted = segmentSizes.values();
 
-            tobesorted.sort(function(a, b) {
-                return b - a
-            });
-            //console.log("sorted: "+JSON.stringify(tobesorted));
+        tobesorted.sort(function(a, b) {
+            return b - a
+        });
+        //console.log("sorted: "+JSON.stringify(tobesorted));
 
-            /*var minsegsize = Number.MAX_VALUE;
-            var subtotal = 0;
-            for(segsize in tobesorted) {
-                if (subtotal <= 1000){
-                    subtotal += tobesorted[segsize];
-                    minsegsize = tobesorted[segsize];
-                }
-            }*/
-            var i = 0;
-            while (i < 1000) {
-                if (tobesorted[i]) {
-                    i++;
-                } else {
-                    break;
-                }
+        /*var minsegsize = Number.MAX_VALUE;
+        var subtotal = 0;
+        for(segsize in tobesorted) {
+            if (subtotal <= 1000){
+                subtotal += tobesorted[segsize];
+                minsegsize = tobesorted[segsize];
             }
-            var minsegsize = tobesorted[i]
-                //console.log(subtotal);
+        }*/
+        var i = 0;
+        while (i < 1000) {
+            if (tobesorted[i]) {
+                i++;
+            } else {
+                break;
+            }
+        }
+        var minsegsize = tobesorted[i]
+            //console.log(subtotal);
 
-            //console.log(minsegsize);
+        //console.log(minsegsize);
 
 
-            edgeMap.forEach(function(value, key) {
-                //if(segmentSizes.get(parseInt(value.segment)) < minsegsize) {
-                    if (true) {
-                        if (nodeMap.get(value.source).type == "retweet") {
-                            var userNameToAppend = nodeMap.get(value.source).username;
-                            var node = nodeMap.get(value.target);
-                            node.text += "<p>" + userNameToAppend + "</p>";
-                            nodeMap.set(value.target, node);
-                        } else if (nodeMap.get(value.target).type == "retweet") {
-                            var userNameToAppend = nodeMap.get(value.target).username;
-                            var node = nodeMap.get(value.source);
-                            node.text += "<p>" + userNameToAppend + "</p>";
-                            nodeMap.set(value.source, node);
-                        }
-                        edgeMap.remove(key);
-                    //console.log("something removed...");
+        edgeMap.forEach(function(value, key) {
+            //if(segmentSizes.get(parseInt(value.segment)) < minsegsize) {
+            if (true) {
+                if (nodeMap.get(value.source).type == "retweet") {
+                    var userNameToAppend = nodeMap.get(value.source).username;
+                    var node = nodeMap.get(value.target);
+                    node.text += "<p>" + userNameToAppend + "</p>";
+                    nodeMap.set(value.target, node);
+                } else if (nodeMap.get(value.target).type == "retweet") {
+                    var userNameToAppend = nodeMap.get(value.target).username;
+                    var node = nodeMap.get(value.source);
+                    node.text += "<p>" + userNameToAppend + "</p>";
+                    nodeMap.set(value.source, node);
                 }
-            });
-
-nodeMap.forEach(function(value, key) {
-    if ((segmentSizes.get(parseInt(value.segment)) < minsegsize) || value.type == "retweet") {
-        nodeMap.remove(key);
-                    //console.log("something removed...");
-
-                } else {
-                    value.size = segmentSizes.get(parseInt(value.segment));
-                    //value.text += "<p>Retweeted users:<p>";
-                    nodeMap.set(key, value);
-                }
-            });
-
-
-
-            //for (tweet in tweetSegmentMap) {
-            //console.log(segmentSizes[tweetSegmentMap[tweet]]);
-            //  if (tweetSegmentMap.hasOwnProperty(tweet) && segmentSizes[tweetSegmentMap[tweet]] <= largestSegmentSize / 5) { //remove any segments less than 20% size of largest segment 
-            //remove associated node and edge
-
-            //console.log("line 868: " + tweet);
-
-            //if (edgeMap.has({source}))
-
-
-            //    nodeMap.remove(tweet);
-
-            /*for (edge in g.edges) {
-                if (g.edges.hasOwnProperty(edge) && (g.edges[edge].source == tweet || g.edges[edge].target == tweet)) {
-
-
-                    var alreadyExistsInG1edge = false;
-                    for (var key1 in g1.edges) {
-                        if (g1.edges.hasOwnProperty(key1) && g1.edges[key1].id == g.edges[edge].id) {
-                            alreadyExistsInG1edge = true;
-                            console.log("already exists node true in g1");
-                            break;
-                        }
-                    }
-                    if (!alreadyExistsInG1edge) {
-                        g1.edges.push(g.edges[edge]);
-                    }
-
-                    //g1.edges.push(g.edges[edge]);
-
-
-                    for (node in g.nodes) {
-                        if (g.nodes.hasOwnProperty(node) && g.nodes[node].id == tweet) {
-
-                            var alreadyExistsInG1 = false;
-                            for (var key1 in g1.nodes) {
-                                if (g1.nodes.hasOwnProperty(key1) && g1.nodes[key1].id == g.nodes[node].id) {
-                                    alreadyExistsInG1 = true;
-                                    console.log("already exists node true in g1");
-                                    break;
-                                }
-                            }
-                            if (!alreadyExistsInG1) {
-                                g1.nodes.push(g.nodes[node]);
-                            }
-                            //g1.nodes.push(g.nodes[])
-                        }
-                    }
-
-
-
-                    //g1.nodes.push(g.nodes)
-
-
-                    //console.log("went in : " + JSON.stringify(g.nodes[node]));
-                    //g.nodes.splice(node - 1, 1);
-
-                }
-            }*/
-            //g.nodes.
-
-            //     }
-            // }
-
-            var g = {
-                nodes: [],
-                edges: []
-            };
-            nodeMap.forEach(function(value, key) {
-                g.nodes.push(value);
-            });
-            edgeMap.forEach(function(value, key) {
-                g.edges.push(value);
-            })
-
-
-
-            //TAKE DIFF APPROAACH BECAUSE ALL NODES WITH SAME ID WILL BE REMOVED THIS WAY,
-            // we only want the specific node and its edge to remove, therefore remove edge first 
-            //before so node can be isolated...
-
-            //console.log("g1: "+JSON.stringify(g1));
-
-            res.send(g);
-            ////callback(g);
+                edgeMap.remove(key);
+                //console.log("something removed...");
+            }
         });
 
-cursor.on('data', function(doc) {
+        nodeMap.forEach(function(value, key) {
+            if ((segmentSizes.get(parseInt(value.segment)) < minsegsize) || value.type == "retweet") {
+                nodeMap.remove(key);
+                //console.log("something removed...");
 
-            //result.push(doc);
-            //console.log(doc);
-            nodeFunction(doc);
-            //console.log("push");
-
+            } else {
+                value.size = segmentSizes.get(parseInt(value.segment));
+                //value.text += "<p>Retweeted users:<p>";
+                nodeMap.set(key, value);
+            }
         });
 
+
+
+        //for (tweet in tweetSegmentMap) {
+        //console.log(segmentSizes[tweetSegmentMap[tweet]]);
+        //  if (tweetSegmentMap.hasOwnProperty(tweet) && segmentSizes[tweetSegmentMap[tweet]] <= largestSegmentSize / 5) { //remove any segments less than 20% size of largest segment 
+        //remove associated node and edge
+
+        //console.log("line 868: " + tweet);
+
+        //if (edgeMap.has({source}))
+
+
+        //    nodeMap.remove(tweet);
+
+        /*for (edge in g.edges) {
+            if (g.edges.hasOwnProperty(edge) && (g.edges[edge].source == tweet || g.edges[edge].target == tweet)) {
+
+
+                var alreadyExistsInG1edge = false;
+                for (var key1 in g1.edges) {
+                    if (g1.edges.hasOwnProperty(key1) && g1.edges[key1].id == g.edges[edge].id) {
+                        alreadyExistsInG1edge = true;
+                        console.log("already exists node true in g1");
+                        break;
+                    }
+                }
+                if (!alreadyExistsInG1edge) {
+                    g1.edges.push(g.edges[edge]);
+                }
+
+                //g1.edges.push(g.edges[edge]);
+
+
+                for (node in g.nodes) {
+                    if (g.nodes.hasOwnProperty(node) && g.nodes[node].id == tweet) {
+
+                        var alreadyExistsInG1 = false;
+                        for (var key1 in g1.nodes) {
+                            if (g1.nodes.hasOwnProperty(key1) && g1.nodes[key1].id == g.nodes[node].id) {
+                                alreadyExistsInG1 = true;
+                                console.log("already exists node true in g1");
+                                break;
+                            }
+                        }
+                        if (!alreadyExistsInG1) {
+                            g1.nodes.push(g.nodes[node]);
+                        }
+                        //g1.nodes.push(g.nodes[])
+                    }
+                }
+
+
+
+                //g1.nodes.push(g.nodes)
+
+
+                //console.log("went in : " + JSON.stringify(g.nodes[node]));
+                //g.nodes.splice(node - 1, 1);
+
+            }
+        }*/
+        //g.nodes.
+
+        //     }
+        // }
+
+        var g = {
+            nodes: [],
+            edges: []
+        };
+        nodeMap.forEach(function(value, key) {
+            g.nodes.push(value);
+        });
+        edgeMap.forEach(function(value, key) {
+            g.edges.push(value);
+        })
+
+
+
+        //TAKE DIFF APPROAACH BECAUSE ALL NODES WITH SAME ID WILL BE REMOVED THIS WAY,
+        // we only want the specific node and its edge to remove, therefore remove edge first 
+        //before so node can be isolated...
+
+        //console.log("g1: "+JSON.stringify(g1));
+
+        res.send(g);
+        ////callback(g);
+    });
+
+    cursor.on('data', function(doc) {
+
+        //result.push(doc);
+        //console.log(doc);
+        nodeFunction(doc);
+        //console.log("push");
+
+    });
 
 
 
 
 });
 
-app.get('/networkusergraph/:category', function(req, res) {
+app.get('/networkusergraph/:category/:start/:end', function(req, res) {
 
     var category = req.params.category;
+    var start = req.params.start;
+    var end = req.params.end;
+
     var regexString = ".*";
     //console.log(category);
     if (category !== "generic") {
@@ -1421,58 +1517,58 @@ app.get('/networkusergraph/:category', function(req, res) {
             nodes: [],
             edges: []
         }*/
-        ;
+    ;
 
-        var nodeMap = new HashMap();
-        var edgeMap = new HashMap();
+    var nodeMap = new HashMap();
+    var edgeMap = new HashMap();
 
-        var segmentSizes = new HashMap();
-        var tweetSegmentMap = {};
-        var segmentId = 0;
-        var largestSegmentSize = 0;
+    var segmentSizes = new HashMap();
+    var tweetSegmentMap = {};
+    var segmentId = 0;
+    var largestSegmentSize = 0;
 
-        var tweetretweetuserarray = [];
-        var duplicateSegmentMap = new HashMap();
-
-
-        function clusterSegments(){
-
-        }
-
-        function nodeFunction(node) {
-            try {
-
-                if (node.retweeted_status.user) {
-                if (true){//(node.user.id_str == "961231092" || node.retweeted_status.user.id_str == "961231092"|| node.user.id_str == "14819714" || node.retweeted_status.user.id_str == "14819714" || node.user.id_str == "218232928" || node.retweeted_status.user.id_str == "218232928" ){
-                //console.log("TWEET/RETWEET READ");
-                //var tweetId = result[key].id;
-                var tweetIdStr = node.id_str;
-
-                var timestamptweet = new Date(Number(node.timestamp_ms)).toDateString();
+    var tweetretweetuserarray = [];
+    var duplicateSegmentMap = new HashMap();
 
 
+    function clusterSegments() {
+
+    }
+
+    function nodeFunction(node) {
+        try {
+
+            if (node.retweeted_status.user) {
+                if (true) { //(node.user.id_str == "961231092" || node.retweeted_status.user.id_str == "961231092"|| node.user.id_str == "14819714" || node.retweeted_status.user.id_str == "14819714" || node.user.id_str == "218232928" || node.retweeted_status.user.id_str == "218232928" ){
+                    //console.log("TWEET/RETWEET READ");
+                    //var tweetId = result[key].id;
+                    var tweetIdStr = node.id_str;
+
+                    var timestamptweet = new Date(Number(node.timestamp_ms)).toDateString();
 
 
-                var tweetText = node.text;
-
-                //console.log("tweetid = "+tweetId + ", tweetText = "+ tweetText + "tweetidstr = "+ tweetIdStr);
-
-                var retweetText = node.retweeted_status.text;
-
-                var tweetUserId = node.user.id_str; //key.user.id_str;
-                var tweetUserName = node.user.screen_name;;
-
-                //check if node/edge already exists..
-
-                //var alreadyExists_tweet = false;
-                var alreadyExists_tweetuser = false;
-                if (nodeMap.get(tweetUserId)) {
-                    alreadyExists_tweetuser = true;
-                }
-                //var alreadyExists_tweet = nodeMap.has(JSON.stringify(tweetIdStr));
 
 
-                /*for(var key1 in g.nodes){
+                    var tweetText = node.text;
+
+                    //console.log("tweetid = "+tweetId + ", tweetText = "+ tweetText + "tweetidstr = "+ tweetIdStr);
+
+                    var retweetText = node.retweeted_status.text;
+
+                    var tweetUserId = node.user.id_str; //key.user.id_str;
+                    var tweetUserName = node.user.screen_name;;
+
+                    //check if node/edge already exists..
+
+                    //var alreadyExists_tweet = false;
+                    var alreadyExists_tweetuser = false;
+                    if (nodeMap.get(tweetUserId)) {
+                        alreadyExists_tweetuser = true;
+                    }
+                    //var alreadyExists_tweet = nodeMap.has(JSON.stringify(tweetIdStr));
+
+
+                    /*for(var key1 in g.nodes){
                   //console.log("id_str = "+g.nodes[key1].id_str + ", tweetstr = "+ tweetIdStr);
                   if (g.nodes.hasOwnProperty(key1) && g.nodes[key1].id == tweetId) {
                     alreadyExists_tweet = true;
@@ -1481,26 +1577,26 @@ app.get('/networkusergraph/:category', function(req, res) {
                   }
               }*/
 
-                //var retweetId = result[key].retweeted_status.id;
-                var retweetIdStr = node.retweeted_status.id_str;
+                    //var retweetId = result[key].retweeted_status.id;
+                    var retweetIdStr = node.retweeted_status.id_str;
 
-                var retweetUserId = node.retweeted_status.user.id_str;
-                var retweetUserName = node.retweeted_status.user.screen_name;
+                    var retweetUserId = node.retweeted_status.user.id_str;
+                    var retweetUserName = node.retweeted_status.user.screen_name;
 
-                //console.log(timestamptweet);
-                //var timestampretweet = node.retweeted_status.
+                    //console.log(timestamptweet);
+                    //var timestampretweet = node.retweeted_status.
 
-                tweetretweetuserarray.push([parseInt(tweetUserId), parseInt(retweetUserId)]);
+                    tweetretweetuserarray.push([parseInt(tweetUserId), parseInt(retweetUserId)]);
 
 
-                //var alreadyExists_retweet = false;
+                    //var alreadyExists_retweet = false;
 
-                var alreadyExists_retweetuser = false;
-                if (nodeMap.get(retweetUserId)) {
-                    alreadyExists_retweetuser = true;
-                }
+                    var alreadyExists_retweetuser = false;
+                    if (nodeMap.get(retweetUserId)) {
+                        alreadyExists_retweetuser = true;
+                    }
 
-                /*for(var key1 in g.nodes){
+                    /*for(var key1 in g.nodes){
                                           //console.log(g.nodes[key1].id + "here");
 
                   if (g.nodes.hasOwnProperty(key1) && g.nodes[key1].id == retweetId) {
@@ -1511,131 +1607,131 @@ app.get('/networkusergraph/:category', function(req, res) {
                   }
               }*/
 
-                //console.log(tweetIdStr + ", "+ retweetIdStr);
+                    //console.log(tweetIdStr + ", "+ retweetIdStr);
 
-                //console.log(alreadyExists_tweet + ", " + alreadyExists_retweet + ", " + nodeMap.keys());
-                //console.log("");
+                    //console.log(alreadyExists_tweet + ", " + alreadyExists_retweet + ", " + nodeMap.keys());
+                    //console.log("");
 
-                if (!alreadyExists_tweetuser && !alreadyExists_retweetuser) {
-                    segmentId++;
-                    tweetSegmentMap[tweetUserId] = segmentId;
-                    tweetSegmentMap[retweetUserId] = segmentId;
-                    segmentSizes.set(segmentId, 2)
-                    if (largestSegmentSize < segmentSizes.get(segmentId)) {
-                        largestSegmentSize = segmentSizes.get(segmentId);
-                    }
+                    if (!alreadyExists_tweetuser && !alreadyExists_retweetuser) {
+                        segmentId++;
+                        tweetSegmentMap[tweetUserId] = segmentId;
+                        tweetSegmentMap[retweetUserId] = segmentId;
+                        segmentSizes.set(segmentId, 2)
+                        if (largestSegmentSize < segmentSizes.get(segmentId)) {
+                            largestSegmentSize = segmentSizes.get(segmentId);
+                        }
 
-                } else if (!alreadyExists_tweetuser && alreadyExists_retweetuser) {
-                    tweetSegmentMap[tweetUserId] = tweetSegmentMap[retweetUserId];
-                    var item = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
-                    var valuetoset = item + 1;
-                    //console.log(item + ", " + valuetoset);
-                    segmentSizes.set(parseInt(tweetSegmentMap[tweetUserId]), valuetoset);
-                    //console.log("item: " + segmentSizes.get(parseInt(tweetSegmentMap[tweetIdStr])));
-                    if (largestSegmentSize < segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]))) {
-                        largestSegmentSize = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
-                    }
+                    } else if (!alreadyExists_tweetuser && alreadyExists_retweetuser) {
+                        tweetSegmentMap[tweetUserId] = tweetSegmentMap[retweetUserId];
+                        var item = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
+                        var valuetoset = item + 1;
+                        //console.log(item + ", " + valuetoset);
+                        segmentSizes.set(parseInt(tweetSegmentMap[tweetUserId]), valuetoset);
+                        //console.log("item: " + segmentSizes.get(parseInt(tweetSegmentMap[tweetIdStr])));
+                        if (largestSegmentSize < segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]))) {
+                            largestSegmentSize = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
+                        }
 
-                } else if (alreadyExists_tweetuser && !alreadyExists_retweetuser) {
-                    tweetSegmentMap[retweetUserId] = tweetSegmentMap[tweetUserId];
-                    var item = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
-                    var valuetoset = item + 1;
-                    //console.log(item + ",, " + valuetoset);
+                    } else if (alreadyExists_tweetuser && !alreadyExists_retweetuser) {
+                        tweetSegmentMap[retweetUserId] = tweetSegmentMap[tweetUserId];
+                        var item = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
+                        var valuetoset = item + 1;
+                        //console.log(item + ",, " + valuetoset);
 
-                    segmentSizes.set(parseInt(tweetSegmentMap[tweetUserId]), valuetoset);
-                    if (largestSegmentSize < segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]))) {
-                        largestSegmentSize = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
-                    }
+                        segmentSizes.set(parseInt(tweetSegmentMap[tweetUserId]), valuetoset);
+                        if (largestSegmentSize < segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]))) {
+                            largestSegmentSize = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
+                        }
 
-                } else { //if both tweet user and retweet user exists already
-                    if(tweetSegmentMap[tweetUserId] != tweetSegmentMap[retweetUserId]){
-                        console.log("dupsegmap keys: "+duplicateSegmentMap.keys());
-                        console.log("dupsegmap values: "+duplicateSegmentMap.values());
+                    } else { //if both tweet user and retweet user exists already
+                        if (tweetSegmentMap[tweetUserId] != tweetSegmentMap[retweetUserId]) {
+                            console.log("dupsegmap keys: " + duplicateSegmentMap.keys());
+                            console.log("dupsegmap values: " + duplicateSegmentMap.values());
 
-                        console.log("dup, tweetid: "+tweetUserId+", segment: "+ tweetSegmentMap[tweetUserId]);
-                        console.log("dup, retweetid: "+retweetUserId+", segment: "+ tweetSegmentMap[retweetUserId]);
+                            console.log("dup, tweetid: " + tweetUserId + ", segment: " + tweetSegmentMap[tweetUserId]);
+                            console.log("dup, retweetid: " + retweetUserId + ", segment: " + tweetSegmentMap[retweetUserId]);
 
-                        if (!duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])){
-                            //duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
-                            duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], tweetSegmentMap[tweetUserId]);
-                        }else {
-                            var segmentPointer = tweetSegmentMap[tweetUserId]; //just to initialise
-                            while(duplicateSegmentMap.get(segmentPointer)){
-                                if (segmentPointer == duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])){
-                                    break;
+                            if (!duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])) {
+                                //duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
+                                duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], tweetSegmentMap[tweetUserId]);
+                            } else {
+                                var segmentPointer = tweetSegmentMap[tweetUserId]; //just to initialise
+                                while (duplicateSegmentMap.get(segmentPointer)) {
+                                    if (segmentPointer == duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])) {
+                                        break;
+                                    }
+                                    segmentPointer = duplicateSegmentMap.get(tweetSegmentMap[tweetUserId]);
+                                    console.log("segPointer: " + segmentPointer);
+
+                                    //duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], )
                                 }
-                                segmentPointer = duplicateSegmentMap.get(tweetSegmentMap[tweetUserId]);
-                                console.log("segPointer: "+segmentPointer);
-
-                                //duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], )
+                                duplicateSegmentMap.set(segmentPointer, tweetSegmentMap[retweetUserId]);
                             }
-                            duplicateSegmentMap.set(segmentPointer, tweetSegmentMap[retweetUserId]);
-                        }
-                        
-                        /*if (duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])){
-                            var seg = duplicateSegmentMap.get(tweetSegmentMap[tweetUserId]);
-                            duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], seg);
-                        }else{
-                            duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
 
-                        }*/
-                        //var entered = false;
-                        /*duplicateSegmentMap.forEach(function(value, key) {
-                            if (value == tweetSegmentMap[tweetUserId]){
-                                entered = true;
-                                value = tweetSegmentMap[retweetUserId];
-                                duplicateSegmentMap.set(key,value);
+                            /*if (duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])){
+                                var seg = duplicateSegmentMap.get(tweetSegmentMap[tweetUserId]);
+                                duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], seg);
+                            }else{
+                                duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
+
+                            }*/
+                            //var entered = false;
+                            /*duplicateSegmentMap.forEach(function(value, key) {
+                                if (value == tweetSegmentMap[tweetUserId]){
+                                    entered = true;
+                                    value = tweetSegmentMap[retweetUserId];
+                                    duplicateSegmentMap.set(key,value);
+                                }
+                            });
+                            if (!entered){
+                                duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
+                                duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], tweetSegmentMap[tweetUserId]);
+
                             }
-                        });
-                        if (!entered){
-                            duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
-                            duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], tweetSegmentMap[tweetUserId]);
+                            if (duplicateSegmentMap.get(tweetSegmentMap[retweetUserId])){
+                                var seg = duplicateSegmentMap.get(tweetSegmentMap[retweetUserId]);
+                                duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], seg);
+                            }else{
+                                duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
+                                duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], tweetSegmentMap[tweetUserId]);
 
-                        }
-                        if (duplicateSegmentMap.get(tweetSegmentMap[retweetUserId])){
-                            var seg = duplicateSegmentMap.get(tweetSegmentMap[retweetUserId]);
-                            duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], seg);
-                        }else{
-                            duplicateSegmentMap.set(tweetSegmentMap[tweetUserId], tweetSegmentMap[retweetUserId]);
-                            duplicateSegmentMap.set(tweetSegmentMap[retweetUserId], tweetSegmentMap[tweetUserId]);
-
-                        }
-                        //if(tweetSegmentMap[retweetUserId])
-                        //if (duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])){
-                          //  duplicateSegmentMap.set()
-                        //}else{
-                            //}*/
-                        }else{
-                            console.log("node edge going to itself?: "+tweetSegmentMap[tweetUserId]+ ", "+tweetSegmentMap[retweetUserId]);
+                            }
+                            //if(tweetSegmentMap[retweetUserId])
+                            //if (duplicateSegmentMap.get(tweetSegmentMap[tweetUserId])){
+                              //  duplicateSegmentMap.set()
+                            //}else{
+                                //}*/
+                        } else {
+                            console.log("node edge going to itself?: " + tweetSegmentMap[tweetUserId] + ", " + tweetSegmentMap[retweetUserId]);
                         }
                         var item = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
                         var valuetoset = item + 1;
-                    //console.log(item + ", " + valuetoset);
-                    segmentSizes.set(parseInt(tweetSegmentMap[tweetUserId]), valuetoset);
-                    //console.log("item: " + segmentSizes.get(parseInt(tweetSegmentMap[tweetIdStr])));
-                    if (largestSegmentSize < segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]))) {
-                        largestSegmentSize = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
+                        //console.log(item + ", " + valuetoset);
+                        segmentSizes.set(parseInt(tweetSegmentMap[tweetUserId]), valuetoset);
+                        //console.log("item: " + segmentSizes.get(parseInt(tweetSegmentMap[tweetIdStr])));
+                        if (largestSegmentSize < segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]))) {
+                            largestSegmentSize = segmentSizes.get(parseInt(tweetSegmentMap[tweetUserId]));
+                        }
                     }
-                }
 
 
-                if (!alreadyExists_tweetuser) {
+                    if (!alreadyExists_tweetuser) {
 
-                    nodeMap.set(tweetUserId, {
+                        nodeMap.set(tweetUserId, {
 
-                        id: "" + tweetUserId,
-                        label: "" + tweetUserName /*+","+tweetSegmentMap[tweetUserId]*/ ,
-                        x: Math.random(),
-                        y: Math.random(),
-                        size: Math.random(),
-                        color: "#000000", //+ genColor(tweetSegmentMap[tweetUserId]),
-                        segment: tweetSegmentMap[tweetUserId],
-                        text: tweetUserName
+                            id: "" + tweetUserId,
+                            label: "" + tweetUserName /*+","+tweetSegmentMap[tweetUserId]*/ ,
+                            x: Math.random(),
+                            y: Math.random(),
+                            size: Math.random(),
+                            color: "#000000", //+ genColor(tweetSegmentMap[tweetUserId]),
+                            segment: tweetSegmentMap[tweetUserId],
+                            text: tweetUserName
 
 
-                    });
+                        });
 
-                    /*g.nodes.push({
+                        /*g.nodes.push({
                       id: ""+tweetId,
                       label: ""+tweetUserName//+","+tweetSegmentMap[tweetUserId],
                       x: Math.random(),
@@ -1649,28 +1745,28 @@ app.get('/networkusergraph/:category', function(req, res) {
 
 
 
-}
+                    }
 
 
 
 
-if (!alreadyExists_retweetuser) {
+                    if (!alreadyExists_retweetuser) {
 
-    nodeMap.set(retweetUserId, {
+                        nodeMap.set(retweetUserId, {
 
-        id: "" + retweetUserId,
-        label: "" + retweetUserName /*+","+tweetSegmentMap[retweetUserId]*/ ,
-        x: Math.random(),
-        y: Math.random(),
-        size: Math.random(),
-                        color: "#000000", // + genColor(tweetSegmentMap[retweetUserId]),
-                        segment: tweetSegmentMap[retweetUserId],
-                        text: retweetUserName
+                            id: "" + retweetUserId,
+                            label: "" + retweetUserName /*+","+tweetSegmentMap[retweetUserId]*/ ,
+                            x: Math.random(),
+                            y: Math.random(),
+                            size: Math.random(),
+                            color: "#000000", // + genColor(tweetSegmentMap[retweetUserId]),
+                            segment: tweetSegmentMap[retweetUserId],
+                            text: retweetUserName
 
-                    });
+                        });
 
 
-                    /*g.nodes.push({
+                        /*g.nodes.push({
                       id: ""+retweetId,
                       label: ""+retweetUserName,//+","+tweetSegmentMap[retweetUserId],
                       x: Math.random(),
@@ -1682,19 +1778,19 @@ if (!alreadyExists_retweetuser) {
                   });*/
 
 
-}
+                    }
 
 
-                //check if edgemap value already exists....
+                    //check if edgemap value already exists....
 
-                //var alreadyExists_edge = false;
-                //var uniquetweetid = tweetUserId+""+retweetUserId;
-                //var key = [tweetUserId,retweetUserId];
-                /*if(edgeMap.get(parseInt(tweetIdStr)-parseInt(retweetIdStr))) {
-                    alreadyExists_edge = true;
-                    console.log("dup tweet -> retweet edge");
-                }*/
-                //if(!alreadyExists_edge){
+                    //var alreadyExists_edge = false;
+                    //var uniquetweetid = tweetUserId+""+retweetUserId;
+                    //var key = [tweetUserId,retweetUserId];
+                    /*if(edgeMap.get(parseInt(tweetIdStr)-parseInt(retweetIdStr))) {
+                        alreadyExists_edge = true;
+                        console.log("dup tweet -> retweet edge");
+                    }*/
+                    //if(!alreadyExists_edge){
                     edgeMap.set(tweetIdStr + "" + retweetIdStr, {
 
                         id: 'e' + i,
@@ -1703,18 +1799,18 @@ if (!alreadyExists_retweetuser) {
                         sourceName: "" + retweetUserName,
                         targetName: "" + tweetUserName,
                         segment: tweetSegmentMap[tweetUserId],
-                    size: 1, //Math.random(),
-                    color: "#666",
-                    timestamp: timestamptweet,
-                    text: retweetText,
-                    type: 'curvedArrow',
+                        size: 1, //Math.random(),
+                        color: "#666",
+                        timestamp: timestamptweet,
+                        text: retweetText,
+                        type: 'curvedArrow',
 
 
-                });
-                //}
-                //console.log("keys: "+edgeMap.keys());
+                    });
+                    //}
+                    //console.log("keys: "+edgeMap.keys());
 
-                /*g.edges.push({
+                    /*g.edges.push({
                   id: 'e' + i,
                   source: ""+tweetId,
                   target: ""+retweetId,
@@ -1722,14 +1818,14 @@ if (!alreadyExists_retweetuser) {
                   size: Math.random(),
                   color: "#666"
               });*/
-i++;
-                //console.log(edgeMap.values());
-                //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
-            }
+                    i++;
+                    //console.log(edgeMap.values());
+                    //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
+                }
 
 
 
-        } else {
+            } else {
                 //node with no edges from beginning
                 //console.log("else statement");
             }
@@ -1740,20 +1836,43 @@ i++;
 
         }
     };
-
-
+/*
+{
+                    $match: {
+                         timestamp_ms: { 
+                            $gte: start,
+                            $lt: end
+                         }, 
+                         $text: { $search: regexString } 
+                    }
+                }, {
+                    $project: {
+                        "id": 1,
+                        "id_str": 1,
+                        "text": 1,
+                        "retweeted_status.text": 1,
+                        "user.id_str": 1,
+                        "user.screen_name": 1,
+                        "retweeted_status.id": 1,
+                        "retweeted_status.id_str": 1,
+                        "retweeted_status.user.id_str": 1,
+                        "retweeted_status.user.screen_name": 1
+                    }
+                }
+*/
+    if (regexString==".*"){
         var cursor = db.collection('mediboard1').aggregate(
 
             [
 
-
-                //hpv
-
                 {
                     $match: {
-                        "text": new RegExp(regexString, 'i')
+                         timestamp_ms: { 
+                            $gte: start,
+                            $lt: end
+                         }
                     }
-                }, {
+                },{
                     $project: {
                         "id": 1,
                         "id_str": 1,
@@ -1767,37 +1886,80 @@ i++;
                         "retweeted_status.user.screen_name": 1,
                         "timestamp_ms": 1
                     }
-                }, {
+                },{
                     $limit: 5000
                 }
 
                 //general
                 //{$project: {"id" : 1, "id_str" : 1, "text" : 1, "retweeted_status.text": 1, "user.id_str": 1,"user.screen_name": 1, "retweeted_status.id" : 1, "retweeted_status.id_str" : 1, "retweeted_status.user.id_str": 1, "retweeted_status.user.screen_name": 1} }, {$limit:1000}
 
-                ]
-            //console.log("query finished, now processing..");
+            ]
 
-            ).stream();
+        ).stream();
+        console.log("generic detect");
 
+    }else{
+        var cursor = db.collection('mediboard1').aggregate(
 
-cursor.on('end', function() {
-    console.log(", now processing..");
-            //assert.equal(err, null);
-
-            //console.log(result);
-
-            //code to convert to node edge graph
+        [
 
 
-            //var keys = [];
+            //hpv
 
-            //for (var key in result) {
-            //console.log("goes inside");
+            {
+                $match: {
+                    timestamp_ms: { 
+                            $gte: start,
+                            $lt: end
+                         },
+                         $text: { $search: regexString } 
+                }
+            }, {
+                $project: {
+                    "id": 1,
+                    "id_str": 1,
+                    "text": 1,
+                    "retweeted_status.text": 1,
+                    "user.id_str": 1,
+                    "user.screen_name": 1,
+                    "retweeted_status.id": 1,
+                    "retweeted_status.id_str": 1,
+                    "retweeted_status.user.id_str": 1,
+                    "retweeted_status.user.screen_name": 1,
+                    "timestamp_ms": 1
+                }
+            }
 
-            //  if (result.hasOwnProperty(key)) {
-            //console.log(JSON.stringify(result));
-            //break;
-            /*
+            //general
+            //{$project: {"id" : 1, "id_str" : 1, "text" : 1, "retweeted_status.text": 1, "user.id_str": 1,"user.screen_name": 1, "retweeted_status.id" : 1, "retweeted_status.id_str" : 1, "retweeted_status.user.id_str": 1, "retweeted_status.user.screen_name": 1} }, {$limit:1000}
+
+        ]
+        //console.log("query finished, now processing..");
+
+    ).stream();
+
+
+    }
+    
+
+    cursor.on('end', function() {
+        console.log(", now processing..");
+        //assert.equal(err, null);
+
+        //console.log(result);
+
+        //code to convert to node edge graph
+
+
+        //var keys = [];
+
+        //for (var key in result) {
+        //console.log("goes inside");
+
+        //  if (result.hasOwnProperty(key)) {
+        //console.log(JSON.stringify(result));
+        //break;
+        /*
                       var tweetUserId = result[key].user.id_str;//key.user.id_str;
 
 
@@ -1828,188 +1990,185 @@ cursor.on('end', function() {
 
 
 
-            //REMOVE NODES/EDGES WITH LOW CONNECTIVITY.... too many nodes to send across network.
-            //do this by storing connectivity number and updating it when inputting nodes, adding new nodes with edges...
+        //REMOVE NODES/EDGES WITH LOW CONNECTIVITY.... too many nodes to send across network.
+        //do this by storing connectivity number and updating it when inputting nodes, adding new nodes with edges...
 
 
 
 
-            //keys.push(g);
-            //keys.push(result[key].user.id_str);
-            //break;
+        //keys.push(g);
+        //keys.push(result[key].user.id_str);
+        //break;
 
-            //   }
-            // }
+        //   }
+        // }
 
-            //check number of total nodes, remove clusters of size < 10% of biggest cluster size -> if nodes left are still of size > 1000, then increase percentage until size <=1000!
+        //check number of total nodes, remove clusters of size < 10% of biggest cluster size -> if nodes left are still of size > 1000, then increase percentage until size <=1000!
 
-            // i.e. 70000 nodes total, biggest cluster size 130
-            //remove any clusters of up to size 13.
-            //
+        // i.e. 70000 nodes total, biggest cluster size 130
+        //remove any clusters of up to size 13.
+        //
 
-            //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
-            //console.log("printing" + JSON.stringify(nodeMap)); // 80
-            //console.log("printing" + JSON.stringify(segmentSizes)); // 80
+        //console.log("printing"+JSON.stringify(tweetSegmentMap)); // 80
+        //console.log("printing" + JSON.stringify(nodeMap)); // 80
+        //console.log("printing" + JSON.stringify(segmentSizes)); // 80
 
 
-            //console.log("tweetretweetuserarray: "+JSON.stringify(tweetretweetuserarray));
+        //console.log("tweetretweetuserarray: "+JSON.stringify(tweetretweetuserarray));
 
-            /*for (item1 in tweetretweetuserarray) {
-                for(item2 in tweetretweetuserarray) {
-                    if(tweetretweetuserarray[item1][0] == tweetretweetuserarray[item2][1] && tweetretweetuserarray[item1][1] == tweetretweetuserarray[item2][0]){
-                        console.log("duplicate found: tweetuserid:"+ tweetretweetuserarray[item1][0] + "retweet id: "+ tweetretweetuserarray[item1][1]);
-                    }
+        /*for (item1 in tweetretweetuserarray) {
+            for(item2 in tweetretweetuserarray) {
+                if(tweetretweetuserarray[item1][0] == tweetretweetuserarray[item2][1] && tweetretweetuserarray[item1][1] == tweetretweetuserarray[item2][0]){
+                    console.log("duplicate found: tweetuserid:"+ tweetretweetuserarray[item1][0] + "retweet id: "+ tweetretweetuserarray[item1][1]);
                 }
-            }*/
+            }
+        }*/
 
 
-            //console.log("printing" + JSON.stringify(largestSegmentSize)); // 7 here but pretend it is 20 -> therefore remove segments of size 2... (trial first)
+        //console.log("printing" + JSON.stringify(largestSegmentSize)); // 7 here but pretend it is 20 -> therefore remove segments of size 2... (trial first)
 
-            /*var segmentsToRemove = [];
+        /*var segmentsToRemove = [];
             for (segment in segmentSizes){
               if (segmentSizes[segment] <= 2) {
                 segmentsToRemove.push(segment);
 
               }
           }*/
-            //console.log(segmentsToRemove);
+        //console.log(segmentsToRemove);
 
-            /*var g1 = {
-                nodes: [],
-                edges: []
-            };*/
+        /*var g1 = {
+            nodes: [],
+            edges: []
+        };*/
 
-            //var nodeMapReduced = new HashMap();
-            //var 
+        //var nodeMapReduced = new HashMap();
+        //var 
 
-            //map segmentsize to the tweet nodes/edges
+        //map segmentsize to the tweet nodes/edges
 
-            //var splitSegmentsMap = new HashMap();
-            //console.log(JSON.stringify(segmentSizes.values()));
-
-
-            
-            edgeMap.forEach(function(value, key) {
-                var segmentNumber = nodeMap.get(value.target).segment;
+        //var splitSegmentsMap = new HashMap();
+        //console.log(JSON.stringify(segmentSizes.values()));
 
 
-                //check if duplicate segment mapping exists for duplicate:
-                if(nodeMap.get(value.source).segment != nodeMap.get(value.target).segment){
-                    //console.log("needs changing: -> " + nodeMap.get(value.source).segment + ", "  + nodeMap.get(value.target).segment);
+
+        edgeMap.forEach(function(value, key) {
+            var segmentNumber = nodeMap.get(value.target).segment;
+
+
+            //check if duplicate segment mapping exists for duplicate:
+            if (nodeMap.get(value.source).segment != nodeMap.get(value.target).segment) {
+                //console.log("needs changing: -> " + nodeMap.get(value.source).segment + ", "  + nodeMap.get(value.target).segment);
+            }
+            var cycleCheck = new HashMap();
+            var maxval = 0;
+
+            while (duplicateSegmentMap.get(segmentNumber)) {
+                if (segmentNumber == duplicateSegmentMap.get(segmentNumber) || cycleCheck.get(segmentNumber)) {
+                    cycleCheck.forEach(function(value, key) {
+                        if (value > segmentNumber) {
+                            segmentNumber = value;
+                        }
+                    });
+                    break;
+                } else {
+                    segmentNumber = duplicateSegmentMap.get(segmentNumber);
+                    cycleCheck.set(segmentNumber, true);
+
+                    //var tempnode = nodeMap.get(value.target);
+                    //tempnode.color = "#" + genColor(segmentNumber);
+                    //nodeMap.set(value.target, tempnode);
+
                 }
-                var cycleCheck = new HashMap();
-                var maxval = 0;
+            }
+            //cycleCheck = null;
+            value.segment = segmentNumber;
+            edgeMap.set(key, value);
 
-                while(duplicateSegmentMap.get(segmentNumber)){
-                    if(segmentNumber == duplicateSegmentMap.get(segmentNumber) || cycleCheck.get(segmentNumber)){
-                        cycleCheck.forEach(function(value, key) {
-                            if(value > segmentNumber){
-                                segmentNumber = value;
-                            }
-                        });
-                        break;
-                    }else{
-                        segmentNumber = duplicateSegmentMap.get(segmentNumber);
-                        cycleCheck.set(segmentNumber, true);
+            //if(var newsegmentNumber = duplicateSegmentMap.get(originalsegment)){
 
-                        //var tempnode = nodeMap.get(value.target);
-                        //tempnode.color = "#" + genColor(segmentNumber);
-                        //nodeMap.set(value.target, tempnode);
+            //}else{
+            //no need to change segment number for the edge...
+            //}
+        });
 
-                    }
+        edgeMap.forEach(function(value, key) {
+
+            var sourcenode = nodeMap.get(value.source);
+            var targetnode = nodeMap.get(value.target);
+            sourcenode.segment = value.segment;
+            sourcenode.color = "#" + genColor(value.segment);
+            targetnode.segment = value.segment;
+            targetnode.color = "#" + genColor(value.segment);
+
+
+            nodeMap.set(value.source, sourcenode);
+            nodeMap.set(value.target, targetnode);
+        });
+
+
+
+
+        /*edgeMap.forEach(function(value, key) {
+          //  value.segment
+
+            var sourcenode = nodeMap.get(value.source);
+            var targetnode = nodeMap.get(value.target);
+
+            //if(targetnode.segment !=  sourcenode.segment){
+
+                
+
+                if(segmentSizes.get(sourcenode.segment) > segmentSizes.get(targetnode.segment)){
+                    targetnode.segment = sourcenode.segment;
+                    nodeMap.set(nodeMap.get(value.target), targetnode);
+
+                    var newsegsize = segmentSizes.get(sourcenode.segment) - 1;
+                    segmentSizes.set(nodeMap.get(value.source).segment, newsegsize);
+                    //console.log("opt1");
+                    //console.log(newsegsize);
+                      //          console.log(JSON.stringify(segmentSizes.values()));
+
+                }else if(segmentSizes.get(sourcenode.segment) < segmentSizes.get(targetnode.segment)){
+                    sourcenode.segment = targetnode.segment;
+                    nodeMap.set(nodeMap.get(value.source), sourcenode);
+                    var newsegsize = segmentSizes.get(targetnode.segment) - 1;
+                    segmentSizes.set(nodeMap.get(value.target).segment, newsegsize);
+
+
+                    //console.log("opt2");                        console.log(newsegsize);
+
+                                //console.log(JSON.stringify(segmentSizes.values()));
+
+
                 }
-                //cycleCheck = null;
-                value.segment = segmentNumber;
-                edgeMap.set(key, value);
 
-                //if(var newsegmentNumber = duplicateSegmentMap.get(originalsegment)){
+                
 
-                //}else{
-                    //no need to change segment number for the edge...
-                //}
-            });
+                //splitSegmentsMap.set(nodeMap.get(value.source).segment, nodeMap.get(value.target).segment);
 
-edgeMap.forEach(function(value, key) {
+                //var newsegsize = segmentSizes.get(nodeMap.get(value.source).segment) + segmentSizes.get(nodeMap.get(value.target).segment);
+                //var sourcesegment = nodeMap.get(value.source).segment;
+                //var targetsegment = nodeMap.get(value.target).segment;
 
-    var sourcenode = nodeMap.get(value.source);
-    var targetnode = nodeMap.get(value.target);
-    sourcenode.segment = value.segment;
-    sourcenode.color = "#" + genColor(value.segment);
-    targetnode.segment = value.segment;
-    targetnode.color = "#" + genColor(value.segment);
+                //var sourcesegmentsize = segmentSizes.get(sourcesegment);
+                //var targetsegmentsize = segmentSizes.get(targetsegment);
+                  //                  console.log(sourcesegmentsize + " " + targetsegmentsize);
 
 
-    nodeMap.set(value.source, sourcenode);
-    nodeMap.set(value.target, targetnode);
-});
+                //segmentSizes.set(sourcesegment, sourcesegmentsize+targetsegmentsize);
+                //segmentSizes.set(targetsegment, 0);
 
+                //console.log('segment fix');
+            //}
+        });*/
 
+        console.log("keys: " + JSON.stringify(duplicateSegmentMap.keys()));
+        console.log("values: " + JSON.stringify(duplicateSegmentMap.values()));
+        var totalNodes = 0;
 
 
 
-
-
-            /*edgeMap.forEach(function(value, key) {
-              //  value.segment
-
-                var sourcenode = nodeMap.get(value.source);
-                var targetnode = nodeMap.get(value.target);
-
-                //if(targetnode.segment !=  sourcenode.segment){
-
-                    
-
-                    if(segmentSizes.get(sourcenode.segment) > segmentSizes.get(targetnode.segment)){
-                        targetnode.segment = sourcenode.segment;
-                        nodeMap.set(nodeMap.get(value.target), targetnode);
-
-                        var newsegsize = segmentSizes.get(sourcenode.segment) - 1;
-                        segmentSizes.set(nodeMap.get(value.source).segment, newsegsize);
-                        //console.log("opt1");
-                        //console.log(newsegsize);
-                          //          console.log(JSON.stringify(segmentSizes.values()));
-
-                    }else if(segmentSizes.get(sourcenode.segment) < segmentSizes.get(targetnode.segment)){
-                        sourcenode.segment = targetnode.segment;
-                        nodeMap.set(nodeMap.get(value.source), sourcenode);
-                        var newsegsize = segmentSizes.get(targetnode.segment) - 1;
-                        segmentSizes.set(nodeMap.get(value.target).segment, newsegsize);
-
-
-                        //console.log("opt2");                        console.log(newsegsize);
-
-                                    //console.log(JSON.stringify(segmentSizes.values()));
-
-
-                    }
-
-                    
-
-                    //splitSegmentsMap.set(nodeMap.get(value.source).segment, nodeMap.get(value.target).segment);
-
-                    //var newsegsize = segmentSizes.get(nodeMap.get(value.source).segment) + segmentSizes.get(nodeMap.get(value.target).segment);
-                    //var sourcesegment = nodeMap.get(value.source).segment;
-                    //var targetsegment = nodeMap.get(value.target).segment;
-
-                    //var sourcesegmentsize = segmentSizes.get(sourcesegment);
-                    //var targetsegmentsize = segmentSizes.get(targetsegment);
-                      //                  console.log(sourcesegmentsize + " " + targetsegmentsize);
-
-
-                    //segmentSizes.set(sourcesegment, sourcesegmentsize+targetsegmentsize);
-                    //segmentSizes.set(targetsegment, 0);
-
-                    //console.log('segment fix');
-                //}
-            });*/
-
-console.log("keys: "+JSON.stringify(duplicateSegmentMap.keys()));
-console.log("values: "+JSON.stringify(duplicateSegmentMap.values()));
-var totalNodes = 0;
-
-
-
-            /*edgeMap.forEach(function(value, key) {
+        /*edgeMap.forEach(function(value, key) {
                 var segment;
                 if(tweetSegmentMap[value.source] != tweetSegmentMap[value.target]){
                     console.log("dup source: ->" + tweetSegmentMap[value.source] + "dup target: ->" + tweetSegmentMap[value.target]);
@@ -2079,211 +2238,200 @@ var totalNodes = 0;
 
 
 
+        //WHEN CLEANING CODE REMOVE old SEGMENTSIZES HASHMAP;
 
+        var segmentSizesMap = new HashMap();
 
-
-
-
-
-
-
-
-            //WHEN CLEANING CODE REMOVE old SEGMENTSIZES HASHMAP;
-
-            var segmentSizesMap = new HashMap();
-
-            edgeMap.forEach(function(value, key) {
-                if(segmentSizesMap.get(value.segment)) {
-                    var size = parseInt(segmentSizesMap.get(value.segment));
-                    segmentSizesMap.set(value.segment, ++size);
-                }else{
-                    segmentSizesMap.set(value.segment, 1);
-                }
-            });
-
-            //console.log("segment sizes map keys: "+segmentSizesMap.keys());
-            //console.log("segment sizes map values: "+segmentSizesMap.values());
-
-           /* segmentSizes.forEach(function(value, key) {
-                var actualSegmentSize;
-                if (duplicateSegmentMap.get(key)) {
-                    //key is segment number
-                    //value is current segment size 
-                    var referToSegment = duplicateSegmentMap.get(key);
-                    //var actualSegmentSize = segmentSizes.get(referToSegment);
-                } else {
-
-                }
-            });*/
-            //console.log(segmentSizes.values());
-            /*segmentSizes.forEach(function(value, key) {
-                totalNodes += value;
-            });*/
-            //console.log("total nodes: " + totalNodes);
-
-
-
-            var tobesorted = segmentSizesMap.values();
-            //console.log("usorted: " + JSON.stringify(tobesorted));
-
-
-            /*splitSegmentsMap.forEach(function(value, key) {
-                for(item in tobesorted){
-                    if(segmentSizes.get(value) == tobesorted[item]){
-                        console.log("goes into logic :)");
-                        tobesorted[item] = 0;
-
-                    }
-                }
-            });*/
-
-tobesorted.sort(function(a, b) {
-    return b - a
-});
-console.log("sorted: " + JSON.stringify(tobesorted));
-
-
-
-
-var minsegsize = Number.MAX_VALUE;
-var subtotal = 0;
-for (segsize in tobesorted) {
-    if (subtotal < 1000) {
-        subtotal += tobesorted[segsize];
-        minsegsize = tobesorted[segsize];
-    } else {
-        break;
-    }
-}
-            /*var i=0;
-            while(i<1000){
-                if(tobesorted[i]){
-                    i++;
-                }else{
-                    break;
-                }
-            }*/
-            //var minsegsize = tobesorted[i]
-            console.log(subtotal);
-
-            console.log(minsegsize);
-
-
-
-            
-
-            nodeMap.forEach(function(value, key) {
-                if ((segmentSizesMap.get(parseInt(value.segment)) < minsegsize) /*|| value.type == "retweet"*/ ) {
-                    //nodeMap.remove(key);
-                    //console.log("something removed node...");
-
-                }
-            });
-            edgeMap.forEach(function(value, key) {
-                if ((segmentSizesMap.get(parseInt(value.segment)) < minsegsize) /*|| value.type == "retweet"*/ ) {
-                    //edgeMap.remove(key);
-                    //console.log("something removed node...");
-
-                }
-            });
-
-
-            //for (tweet in tweetSegmentMap) {
-            //console.log(segmentSizes[tweetSegmentMap[tweet]]);
-            //  if (tweetSegmentMap.hasOwnProperty(tweet) && segmentSizes[tweetSegmentMap[tweet]] <= largestSegmentSize / 5) { //remove any segments less than 20% size of largest segment 
-            //remove associated node and edge
-
-            //console.log("line 868: " + tweet);
-
-            //if (edgeMap.has({source}))
-
-
-            //    nodeMap.remove(tweet);
-
-            /*for (edge in g.edges) {
-                if (g.edges.hasOwnProperty(edge) && (g.edges[edge].source == tweet || g.edges[edge].target == tweet)) {
-
-
-                    var alreadyExistsInG1edge = false;
-                    for (var key1 in g1.edges) {
-                        if (g1.edges.hasOwnProperty(key1) && g1.edges[key1].id == g.edges[edge].id) {
-                            alreadyExistsInG1edge = true;
-                            console.log("already exists node true in g1");
-                            break;
-                        }
-                    }
-                    if (!alreadyExistsInG1edge) {
-                        g1.edges.push(g.edges[edge]);
-                    }
-
-                    //g1.edges.push(g.edges[edge]);
-
-
-                    for (node in g.nodes) {
-                        if (g.nodes.hasOwnProperty(node) && g.nodes[node].id == tweet) {
-
-                            var alreadyExistsInG1 = false;
-                            for (var key1 in g1.nodes) {
-                                if (g1.nodes.hasOwnProperty(key1) && g1.nodes[key1].id == g.nodes[node].id) {
-                                    alreadyExistsInG1 = true;
-                                    console.log("already exists node true in g1");
-                                    break;
-                                }
-                            }
-                            if (!alreadyExistsInG1) {
-                                g1.nodes.push(g.nodes[node]);
-                            }
-                            //g1.nodes.push(g.nodes[])
-                        }
-                    }
-
-
-
-                    //g1.nodes.push(g.nodes)
-
-
-                    //console.log("went in : " + JSON.stringify(g.nodes[node]));
-                    //g.nodes.splice(node - 1, 1);
-
-                }
-            }*/
-            //g.nodes.
-
-            //     }
-            // }
-
-            var g = {
-                nodes: [],
-                edges: []
-            };
-            nodeMap.forEach(function(value, key) {
-                g.nodes.push(value);
-            });
-            edgeMap.forEach(function(value, key) {
-                g.edges.push(value);
-            })
-
-
-
-            //TAKE DIFF APPROAACH BECAUSE ALL NODES WITH SAME ID WILL BE REMOVED THIS WAY,
-            // we only want the specific node and its edge to remove, therefore remove edge first 
-            //before so node can be isolated...
-
-            //console.log("g1: "+JSON.stringify(g1));
-
-            res.send(g);
-            //////callback(g);
+        edgeMap.forEach(function(value, key) {
+            if (segmentSizesMap.get(value.segment)) {
+                var size = parseInt(segmentSizesMap.get(value.segment));
+                segmentSizesMap.set(value.segment, ++size);
+            } else {
+                segmentSizesMap.set(value.segment, 1);
+            }
         });
 
-cursor.on('data', function(doc) {
+        //console.log("segment sizes map keys: "+segmentSizesMap.keys());
+        //console.log("segment sizes map values: "+segmentSizesMap.values());
 
-            //result.push(doc);
-            //console.log(doc);
-            nodeFunction(doc);
-            //console.log("push");
+        /* segmentSizes.forEach(function(value, key) {
+             var actualSegmentSize;
+             if (duplicateSegmentMap.get(key)) {
+                 //key is segment number
+                 //value is current segment size 
+                 var referToSegment = duplicateSegmentMap.get(key);
+                 //var actualSegmentSize = segmentSizes.get(referToSegment);
+             } else {
 
+             }
+         });*/
+        //console.log(segmentSizes.values());
+        /*segmentSizes.forEach(function(value, key) {
+            totalNodes += value;
+        });*/
+        //console.log("total nodes: " + totalNodes);
+
+
+
+        var tobesorted = segmentSizesMap.values();
+        //console.log("usorted: " + JSON.stringify(tobesorted));
+
+
+        /*splitSegmentsMap.forEach(function(value, key) {
+            for(item in tobesorted){
+                if(segmentSizes.get(value) == tobesorted[item]){
+                    console.log("goes into logic :)");
+                    tobesorted[item] = 0;
+
+                }
+            }
+        });*/
+
+        tobesorted.sort(function(a, b) {
+            return b - a
+        });
+        console.log("sorted: " + JSON.stringify(tobesorted));
+
+
+
+
+        var minsegsize = Number.MAX_VALUE;
+        var subtotal = 0;
+        for (segsize in tobesorted) {
+            if (subtotal < 1000) {
+                subtotal += tobesorted[segsize];
+                minsegsize = tobesorted[segsize];
+            } else {
+                break;
+            }
+        }
+        /*var i=0;
+        while(i<1000){
+            if(tobesorted[i]){
+                i++;
+            }else{
+                break;
+            }
+        }*/
+        //var minsegsize = tobesorted[i]
+        console.log(subtotal);
+
+        console.log(minsegsize);
+
+
+
+
+        nodeMap.forEach(function(value, key) {
+            if ((segmentSizesMap.get(parseInt(value.segment)) < minsegsize) /*|| value.type == "retweet"*/ ) {
+                //nodeMap.remove(key);
+                //console.log("something removed node...");
+
+            }
+        });
+        edgeMap.forEach(function(value, key) {
+            if ((segmentSizesMap.get(parseInt(value.segment)) < minsegsize) /*|| value.type == "retweet"*/ ) {
+                //edgeMap.remove(key);
+                //console.log("something removed node...");
+
+            }
         });
 
+
+        //for (tweet in tweetSegmentMap) {
+        //console.log(segmentSizes[tweetSegmentMap[tweet]]);
+        //  if (tweetSegmentMap.hasOwnProperty(tweet) && segmentSizes[tweetSegmentMap[tweet]] <= largestSegmentSize / 5) { //remove any segments less than 20% size of largest segment 
+        //remove associated node and edge
+
+        //console.log("line 868: " + tweet);
+
+        //if (edgeMap.has({source}))
+
+
+        //    nodeMap.remove(tweet);
+
+        /*for (edge in g.edges) {
+            if (g.edges.hasOwnProperty(edge) && (g.edges[edge].source == tweet || g.edges[edge].target == tweet)) {
+
+
+                var alreadyExistsInG1edge = false;
+                for (var key1 in g1.edges) {
+                    if (g1.edges.hasOwnProperty(key1) && g1.edges[key1].id == g.edges[edge].id) {
+                        alreadyExistsInG1edge = true;
+                        console.log("already exists node true in g1");
+                        break;
+                    }
+                }
+                if (!alreadyExistsInG1edge) {
+                    g1.edges.push(g.edges[edge]);
+                }
+
+                //g1.edges.push(g.edges[edge]);
+
+
+                for (node in g.nodes) {
+                    if (g.nodes.hasOwnProperty(node) && g.nodes[node].id == tweet) {
+
+                        var alreadyExistsInG1 = false;
+                        for (var key1 in g1.nodes) {
+                            if (g1.nodes.hasOwnProperty(key1) && g1.nodes[key1].id == g.nodes[node].id) {
+                                alreadyExistsInG1 = true;
+                                console.log("already exists node true in g1");
+                                break;
+                            }
+                        }
+                        if (!alreadyExistsInG1) {
+                            g1.nodes.push(g.nodes[node]);
+                        }
+                        //g1.nodes.push(g.nodes[])
+                    }
+                }
+
+
+
+                //g1.nodes.push(g.nodes)
+
+
+                //console.log("went in : " + JSON.stringify(g.nodes[node]));
+                //g.nodes.splice(node - 1, 1);
+
+            }
+        }*/
+        //g.nodes.
+
+        //     }
+        // }
+
+        var g = {
+            nodes: [],
+            edges: []
+        };
+        nodeMap.forEach(function(value, key) {
+            g.nodes.push(value);
+        });
+        edgeMap.forEach(function(value, key) {
+            g.edges.push(value);
+        })
+
+
+
+        //TAKE DIFF APPROAACH BECAUSE ALL NODES WITH SAME ID WILL BE REMOVED THIS WAY,
+        // we only want the specific node and its edge to remove, therefore remove edge first 
+        //before so node can be isolated...
+
+        //console.log("g1: "+JSON.stringify(g1));
+
+        res.send(g);
+        //////callback(g);
+    });
+
+    cursor.on('data', function(doc) {
+
+        //result.push(doc);
+        //console.log(doc);
+        nodeFunction(doc);
+        //console.log("push");
+
+    });
 
 
 

@@ -41,7 +41,7 @@ function displayTopUsers(param){
 
 
 
-                $http.get("../api/topusers/"+param)
+                $http.get("../api/topusers/"/*+param*/)
                 .success(function (response) {
                     
 
@@ -207,15 +207,15 @@ function loadTwitterGraphValues(){
 
 }
 
-function getSearchData() {
+function getSearchData(starttime,endtime) {
     var $http = angular.injector(['ng']).get('$http');
 
     return {
         // returns a promise for an object like:
         // { abo: resultFromAbo, ser: resultFromSer, ... }
         loadDataFromUrls: function () {
-            var month = "Jul";
-            var days = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
+            //var month = "Jul";
+            //var days = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31'];
 
 
             return $q.all(days.map(function (day) {
@@ -232,10 +232,11 @@ function getSearchData() {
                 console.log(resultObj);
                 for (var obj in resultObj){
                   if(resultObj[obj]._id){
-                    $scope.twitterline.data[0][Number(resultObj[obj]._id)-1] = resultObj[obj].count;
+                    twitterline.data.datasets[0].data[Number(resultObj[obj]._id)-1] = resultObj[obj].count;
                   }
 
                 }
+                            window.myLine.update();
 
                 return resultObj;        
             });
@@ -247,11 +248,11 @@ function getSearchData() {
 $scope.init = function () {
     // do something on loaded
     //console.log(getSearchData()());
-      loadTwitterGraphValues();
+      //loadTwitterGraphValues();
 
-    var getSearchDataout = getSearchData().loadDataFromUrls; 
-    console.log(getSearchDataout());
-    displayTopUsers("");
+    //var getSearchDataout = getSearchData().loadDataFromUrls; 
+    //console.log(getSearchDataout());
+    //displayTopUsers("");
 
     
   };
